@@ -5,7 +5,6 @@ import { add } from 'date-fns';
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
-
 // A `main` function so that we can use async/await
 async function main() {
   const weekFromNow = add(new Date(), { days: 7 });

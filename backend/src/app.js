@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable import/extensions */
 import express from 'express';
 import dotenv from 'dotenv';
@@ -14,7 +15,6 @@ const app = express();
 app.use(bodyParser.json({ limit: '10mb' }));
 app.use(bodyParser.urlencoded({ limit: '10mb', extended: true, parameterLimit: 50000 }));
 app.use(cors({ origin: corsUrl, optionsSuccessStatus: 200 }));
-app.use(errorHandlerMiddleware);
 
 // Routes
 app.use('/', routes);
@@ -22,6 +22,7 @@ app.use('/', routes);
 /**
  * Any error handler middleware must be added AFTER you define your routes.
  */
+app.use(errorHandlerMiddleware);
 
 app.listen(port, () => console.log(`
 🚀 Server ready at: http://localhost:${port}`));
