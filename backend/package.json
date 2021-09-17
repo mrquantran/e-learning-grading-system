@@ -1,0 +1,40 @@
+{
+  "name": "rest-express",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/index.js",
+    "lint": "eslint 'src/*.{js,jsx}'",
+    "format": "prettier-eslint 'server/**/*.{js,json}' --write"
+  },
+  "dependencies": {
+    "@prisma/client": "3.0.2",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-promise": "^5.1.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier-eslint-cli": "^5.0.1",
+    "prisma": "3.0.2"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "prettier-eslint --write",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
+}
