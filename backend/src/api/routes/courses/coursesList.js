@@ -12,6 +12,43 @@ async function getCourses() {
   return courses;
 }
 
+/**
+ * @swagger
+ * components:
+ *    schemas:
+ *      Courses:
+ *        type:object
+ *        required:
+ *          - name
+ *          - courseDetails
+ *        properties
+ *          id:
+ *            type: string
+ *            description: The auto-generated id of the course.
+ *          name:
+ *            type:string
+ *            description: the name of the course.
+ *          courseDetails:
+ *            type: strings
+ *            description: the content of the course.
+ *
+ */
+
+// routes/coursesList.js
+
+/**
+ * @swagger
+ *  /courses:
+ *    get:
+ *      description: Use to request all courses
+ *      responses:
+ *          200:
+ *            description: A successful response
+ *          400:
+ *            description: It's bad request
+ *          500:
+ *            description: It's internal server error
+ */
 router.get('/', (req, res, next) => getCourses().then((coursesData) => res.json(coursesData)).catch((error) => {
   // 500 (Internal Server Error) - Something has gone wrong in your application.
   const httpError = createHttpError(500, error);

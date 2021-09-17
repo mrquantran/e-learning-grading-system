@@ -17,7 +17,7 @@
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "http-errors": "^1.8.0",
-    "nodemon": "^2.0.12"
+    "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
@@ -27,7 +27,8 @@
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
     "prettier-eslint-cli": "^5.0.1",
-    "prisma": "3.0.2"
+    "prisma": "3.0.2",
+    "nodemon": "^2.0.12"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
