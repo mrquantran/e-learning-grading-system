@@ -1,8 +1,8 @@
-const getCourses = {
+const getTests = {
   get: {
-    tags: ['Courses'],
-    description: 'Get courses',
-    operationId: 'getCourses',
+    tags: ['Test'],
+    description: 'Get Tests',
+    operationId: 'getTests',
     parameters: [],
     responses: {
       200: {
@@ -10,7 +10,7 @@ const getCourses = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/Courses',
+              $ref: '#/components/schemas/Tests',
             },
           },
         },
@@ -19,4 +19,4 @@ const getCourses = {
   },
 };
 
-export default getCourses;
+export default getTests;

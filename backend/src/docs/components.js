@@ -6,6 +6,29 @@ const components = {
         description: 'An id of a todo',
         example: 'tyVgf',
       },
+      Tests: {
+        type: 'object',
+        id: {
+          type: 'number',
+          description: 'Todo identification number',
+          example: '1',
+        },
+        name: {
+          type: 'string',
+          description: "Todo's title",
+          example: 'Coding in JavaScript',
+        },
+        date: {
+          type: 'string',
+          description: 'The status of the todo',
+          example: false,
+        },
+        updatedAt: {
+          type: 'string',
+          description: 'The status of the todo',
+          example: false,
+        },
+      },
       Courses: {
         type: 'object',
         properties: {

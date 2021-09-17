@@ -1,6 +1,6 @@
 const tag = {
   tags: {
-    name: 'Todo CRUD operations',
+    name: 'Course',
   },
 };
 

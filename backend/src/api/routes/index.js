@@ -11,8 +11,6 @@ const router = express.Router();
 // router.use('/', apikey);
 /*-------------------------------------------------------------------------*/
 
-// router.use('/login', login);
-
 router.use('/courses', coursesList);
 // router.use('/', signup);
 // router.use('/courses', coursesList);

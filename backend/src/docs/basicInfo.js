@@ -3,11 +3,11 @@ const basicInfo = {
   info: {
     version: '1.0.0',
     title: 'Elearning',
-    description: 'Elearning API',
+    description: 'Elearning API made by swagger',
     contact: {
-      name: 'Kennedy Mwangi',
-      email: 'info@mkibui.me',
-      url: 'https://mkibui.me',
+      name: 'Quan Tran',
+      email: 'quantran2381@gmail.com',
+      url: 'https://github.com/quan832',
     },
   },
 };
