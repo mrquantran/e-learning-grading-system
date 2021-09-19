@@ -45,22 +45,22 @@ const components = {
           coursesDetail: {
             type: 'string',
             description: 'The status of the todo',
-            example: false,
+            example: 'This is the description of courses to do identification number',
           },
         },
       },
       CoursesInput: {
         type: 'object',
         properties: {
-          title: {
+          name: {
             type: 'string',
             description: "Todo's title",
             example: 'Coding in JavaScript',
           },
-          completed: {
-            type: 'boolean',
+          coursesDetail: {
+            type: 'string',
             description: 'The status of the todo',
-            example: false,
+            example: 'This is the description of courses to do identification number',
           },
         },
       },
