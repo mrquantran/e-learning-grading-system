@@ -4,7 +4,9 @@
 import express from 'express';
 import pkg from '@prisma/client';
 import createHttpError from 'http-errors';
-import { body } from 'express-validator';
+import {
+  body, oneOf, param, validationResult,
+} from 'express-validator';
 import { validate } from '../../validation/validate.js';
 
 const router = express.Router();
@@ -48,6 +50,19 @@ async function createCourse(name, courseDetails, userId) {
   return createdCourse;
 }
 
+async function updateCourse(name, courseDetails, id) {
+  // update course
+  const updatedCourse = await prisma.course.update({
+    where: { id: Number(id) },
+    data: {
+      name,
+      courseDetails,
+    },
+  });
+
+  return updatedCourse;
+}
+
 // GET courses
 router.get('/', (req, res, next) => getCourses().then(() => {
   const message = 'Created succesfully';
@@ -67,8 +82,15 @@ router.get('/:id', (req, res, next) => getCourseById(req.params.id).then((course
 
 // POST courses
 router.post('/', validate([
-  body('name').notEmpty(),
-  body('courseDetails').notEmpty().isLength({ min: 20 }),
+  body('name')
+    .notEmpty()
+    .withMessage('name can not be empty'),
+  body('courseDetails')
+    .notEmpty()
+    .withMessage('course detail can not be empty')
+    .bail()
+    .isLength({ min: 20 })
+    .withMessage('course detail must be at least 20 characters'),
 ]), (req, res, next) => {
   const { name, courseDetails } = req.body;
 
@@ -76,6 +98,38 @@ router.post('/', validate([
     .then((createdCourse) => res.json(createdCourse))
     .catch((error) => {
       // 500 (Internal Server Error) - Something has gone wrong in your application.
+      const httpError = createHttpError(500, error);
+      next(httpError);
+    });
+});
+
+// PUT course
+router.put('/:id', validate([
+  param('id').notEmpty().withMessage('Please enter your id to update'),
+  oneOf([
+    body('name')
+      .notEmpty()
+      .withMessage('name can not be empty'),
+    body('courseDetails')
+      .notEmpty()
+      .withMessage('course detail can not be empty')
+      .isLength({ min: 20 })
+      .withMessage('course detail must be at least 20 characters'),
+  ]),
+]), (req, res, next) => {
+  try {
+    validationResult(req).throw();
+  } catch (err) {
+    // Oh noes. This user doesn't have enough skills for this...
+    res.status(400).json({ message: err.message });
+  }
+  const { name, courseDetails } = req.body;
+  const { id } = req.params;
+
+  updateCourse(name, courseDetails, id)
+    .then((updatedCourse) => res.json(updatedCourse))
+    .catch((error) => {
+    // 500 (Internal Server Error) - Something has gone wrong in your application.
       const httpError = createHttpError(500, error);
       next(httpError);
     });

@@ -42,7 +42,7 @@ const components = {
             description: "Todo's title",
             example: 'Coding in JavaScript',
           },
-          coursesDetail: {
+          courseDetails: {
             type: 'string',
             description: 'The status of the todo',
             example: 'This is the description of courses to do identification number',
@@ -57,7 +57,7 @@ const components = {
             description: "Todo's title",
             example: 'Coding in JavaScript',
           },
-          coursesDetail: {
+          courseDetails: {
             type: 'string',
             description: 'The status of the todo',
             example: 'This is the description of courses to do identification number',
