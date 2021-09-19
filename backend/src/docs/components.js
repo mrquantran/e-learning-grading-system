@@ -2,9 +2,9 @@ const components = {
   components: {
     schemas: {
       id: {
-        type: 'string',
-        description: 'An id of a todo',
-        example: 'tyVgf',
+        type: 'number',
+        description: 'Pass an id',
+        example: '1',
       },
       Tests: {
         type: 'object',

@@ -12,7 +12,25 @@ async function getCourses() {
   return courses;
 }
 
+async function getCourseById(id) {
+  const courseById = await prisma.course.findUnique({
+    where: {
+      id: Number(id),
+    },
+  });
+
+  return courseById;
+}
+
+// GET courses
 router.get('/', (req, res, next) => getCourses().then((coursesData) => res.json(coursesData)).catch((error) => {
+  // 500 (Internal Server Error) - Something has gone wrong in your application.
+  const httpError = createHttpError(500, error);
+  next(httpError);
+}));
+
+// GET courses by id
+router.get('/:id', (req, res, next) => getCourseById(req.params.id).then((courseById) => res.json(courseById)).catch((error) => {
   // 500 (Internal Server Error) - Something has gone wrong in your application.
   const httpError = createHttpError(500, error);
   next(httpError);
