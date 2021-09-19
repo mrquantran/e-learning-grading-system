@@ -3,6 +3,7 @@ import express from 'express';
 // import login from './user/login.js';
 // import signup from './courses/signup.js';
 import coursesList from './courses/coursesList.js';
+import testResults from './test-result/testResult.js';
 
 const router = express.Router();
 
@@ -14,5 +15,7 @@ const router = express.Router();
 router.use('/courses', coursesList);
 // router.use('/', signup);
 // router.use('/courses', coursesList);
+
+router.use('/testresults', testResults);
 
 export default router;
