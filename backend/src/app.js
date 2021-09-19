@@ -36,4 +36,4 @@ app.use('/', routes);
 app.use(errorHandlerMiddleware);
 
 app.listen(port, () => console.log(`
-🚀 Server ready at: http://localhost:${port}`));
+🚀 Docs swagger ready at: http://localhost:${port}/docs`));
