@@ -1,6 +1,9 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-await-in-loop */
 /* eslint-disable import/no-unresolved */
 import pkg from '@prisma/client';
 import { add } from 'date-fns';
+import data from './data';
 
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
@@ -28,6 +31,7 @@ async function main() {
       },
     },
   });
+  
   const course = await prisma.course.create({
     data: {
       name: 'CRUD with Prisma',
@@ -131,6 +135,30 @@ async function main() {
     });
 
     counter++;
+  }
+
+  //course 
+
+  // users
+  for (const user of data.users) {
+    await prisma.user.create({
+      data: {
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        courses: {
+          create: {
+            role: user.ROLE,
+            course: {
+              // connect : [{id:1},{id:2},{id:3}]
+              connect: user.courses.map((item) => ({
+                id: item,
+              })),
+            },
+          },
+        },
+      },
+    });
   }
 }
 
