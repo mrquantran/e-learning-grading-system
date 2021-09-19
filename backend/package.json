@@ -26,9 +26,9 @@
     "eslint-plugin-promise": "^5.1.0",
     "husky": "^7.0.2",
     "lint-staged": "^11.1.2",
+    "nodemon": "^2.0.12",
     "prettier-eslint-cli": "^5.0.1",
-    "prisma": "3.0.2",
-    "nodemon": "^2.0.12"
+    "prisma": "3.0.2"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
