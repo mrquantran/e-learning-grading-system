@@ -74,11 +74,17 @@ router.get('/', (req, res, next) => getCourses().then(() => {
 }));
 
 // GET courses by id
-router.get('/:id', (req, res, next) => getCourseById(req.params.id).then((courseById) => res.json(courseById)).catch((error) => {
+router.get('/:id', validate([
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number'),
+]), (req, res, next) => getCourseById(req.params.id)
+  .then((courseById) => res.json(courseById))
+  .catch((error) => {
   // 500 (Internal Server Error) - Something has gone wrong in your application.
-  const httpError = createHttpError(500, error);
-  next(httpError);
-}));
+    const httpError = createHttpError(500, error);
+    next(httpError);
+  }));
 
 // POST courses
 router.post('/', validate([
@@ -105,7 +111,9 @@ router.post('/', validate([
 
 // PUT course
 router.put('/:id', validate([
-  param('id').notEmpty().withMessage('Please enter your id to update'),
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number'),
   oneOf([
     body('name')
       .notEmpty()
