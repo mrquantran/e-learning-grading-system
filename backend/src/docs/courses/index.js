@@ -5,6 +5,8 @@ import getCoursesById from './getCourseById.js';
 const pathCourses = {
   '/courses': {
     ...getCourses,
+  },
+  '/courses/{id}': {
     ...getCoursesById,
   },
 };
