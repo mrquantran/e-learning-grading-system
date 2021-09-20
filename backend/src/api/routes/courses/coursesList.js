@@ -82,10 +82,7 @@ async function updateCourse(name, courseDetails, id) {
 }
 
 // GET courses
-router.get('/', (req, res, next) => getCourses().then(() => {
-  const message = 'Created succesfully';
-  return res.json({ message });
-}).catch((error) => {
+router.get('/', (req, res, next) => getCourses().then((courses) => res.json(courses)).catch((error) => {
   // 500 (Internal Server Error) - Something has gone wrong in your application.
   const httpError = createHttpError(500, error);
   next(httpError);
