@@ -1,3 +1,4 @@
+/* eslint-disable no-return-await */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable import/extensions */
@@ -46,6 +47,7 @@ async function main() {
     await prisma.course.create({
       data: {
         name: course.name,
+        courseDetails: course.courseDetails,
         members: {
           create:
             course.member.map((item) => ({
@@ -58,42 +60,60 @@ async function main() {
             })),
         },
         tests: {
-          create: course.testing.map((test) => ({
-            name: test.name,
-            date: test.date,
-            updatedAt: test.updatedAt,
-          })),
+          create: course.testing.map((test) => {
+            console.log(test.results);
+
+            return ({
+              name: test.name,
+              date: test.date,
+              updatedAt: test.updatedAt,
+              testResults: {
+                create: test.results.map((testResult) => ({
+                  createdAt: testResult.createdAt,
+                  result: testResult.result,
+                  gradedBy: {
+                    connect: {
+                      email: testResult.gradedBy,
+                    },
+                  },
+                  student: {
+                    connect: {
+                      email: testResult.student,
+                    },
+                  },
+                })),
+              },
+            });
+          }),
         },
       },
     });
   }
 
-  for (const test of data.testResults) {
-    const { result } = test;
-
-    for (const testResult of result) {
-      await prisma.testResult.create({
-        data: {
-          gradedBy: {
-            connect: {
-              email: testResult.gradedBy,
-            },
-          },
-          student: {
-            connect: {
-              email: testResult.student,
-            },
-          },
-          test: {
-            connect: {
-              name: test.testId,
-            },
-          },
-          result: testResult.result,
-        },
-      });
-    }
-  }
+  // for (const test of courses.tests) {
+  //   for (const testResult of data.testResults) {
+  //     await prisma.testResult.create({
+  //       data: {
+  //         gradedBy: {
+  //           connect: {
+  //             email: testResult.gradedBy,
+  //           },
+  //         },
+  //         student: {
+  //           connect: {
+  //             email: testResult.student,
+  //           },
+  //         },
+  //         test: {
+  //           connect: {
+  //             name: test.testId,
+  //           },
+  //         },
+  //         result: testResult.result,
+  //       },
+  //     });
+  //   }
+  // }
 
   // eslint-disable-next-line no-console
   console.log(data);
