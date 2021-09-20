@@ -1,141 +1,108 @@
-/* eslint-disable import/no-unresolved */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable import/extensions */
 import pkg from '@prisma/client';
-import { add } from 'date-fns';
+// import { add } from 'date-fns';
+import { data } from './data.js';
 
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
 // A `main` function so that we can use async/await
 async function main() {
-  const weekFromNow = add(new Date(), { days: 7 });
-  const twoWeekFromNow = add(new Date(), { days: 14 });
-  const monthFromNow = add(new Date(), { days: 28 });
+  // const weekFromNow = add(new Date(), { days: 7 });
+  // const twoWeekFromNow = add(new Date(), { days: 14 });
+  // const monthFromNow = add(new Date(), { days: 28 });
 
+  // xóa hết dữ liệu
   await prisma.testResult.deleteMany({});
   await prisma.courseEnrollment.deleteMany({});
   await prisma.test.deleteMany({});
   await prisma.user.deleteMany({});
   await prisma.course.deleteMany({});
 
-  const grace = await prisma.user.create({
-    data: {
-      email: 'grace@hey.com',
-      firstName: 'Grace',
-      lastName: 'Bell',
-      social: {
-        facebook: 'gracebell',
-        twitter: 'therealgracebell',
+  // users
+  for (const user of data.users) {
+    await prisma.user.create({
+      data: {
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        // courses: {
+        //   create: {
+        //     role: user.ROLE,
+        //     course: {
+        //       connect: user.courses.map((item) => ({
+        //         id: item,
+        //       })),
+        //     },
+        //   },
+        // },
       },
-    },
-  });
-  const course = await prisma.course.create({
-    data: {
-      name: 'CRUD with Prisma',
-      tests: {
-        create: [
-          {
-            date: weekFromNow,
-            name: 'First test',
-          },
-          {
-            date: twoWeekFromNow,
-            name: 'Second test',
-          },
-          {
-            date: monthFromNow,
-            name: 'Final exam',
-          },
-        ],
+    });
+  }
+
+  for (const course of data.courses) {
+    await prisma.course.create({
+      data: {
+        name: course.name,
+        members: {
+          create:
+            course.member.map((item) => ({
+              role: item.role,
+              user: {
+                connect: {
+                  email: item.email,
+                },
+              },
+            })),
+        },
+        tests: {
+          create: course.testing.map((test) => ({
+            name: test.name,
+            date: test.date,
+            updatedAt: test.updatedAt,
+          })),
+        },
       },
-      members: {
-        create: {
-          role: 'TEACHER',
-          user: {
+    });
+  }
+
+  for (const test of data.testResults) {
+    const { result } = test;
+
+    for (const testResult of result) {
+      await prisma.testResult.create({
+        data: {
+          gradedBy: {
             connect: {
-              email: grace.email,
+              email: testResult.gradedBy,
             },
           },
-        },
-      },
-    },
-    include: {
-      tests: true,
-    },
-  });
-
-  const shakuntala = await prisma.user.create({
-    data: {
-      email: 'devi@prisma.io',
-      firstName: 'Shakuntala',
-      lastName: 'Devi',
-      courses: {
-        create: {
-          role: 'STUDENT',
-          course: {
-            connect: { id: course.id },
+          student: {
+            connect: {
+              email: testResult.student,
+            },
           },
-        },
-      },
-    },
-  });
-
-  const david = await prisma.user.create({
-    data: {
-      email: 'david@prisma.io',
-      firstName: 'David',
-      lastName: 'Deutsch',
-      courses: {
-        create: {
-          role: 'STUDENT',
-          course: {
-            connect: { id: course.id },
+          test: {
+            connect: {
+              name: test.testId,
+            },
           },
+          result: testResult.result,
         },
-      },
-    },
-  });
-
-  const testResultsDavid = [650, 900, 950];
-  const testResultsShakuntala = [800, 950, 910];
-
-  let counter = 0;
-  for (const test of course.tests) {
-    await prisma.testResult.create({
-      data: {
-        gradedBy: {
-          connect: { email: grace.email },
-        },
-        student: {
-          connect: { email: shakuntala.email },
-        },
-        test: {
-          connect: { id: test.id },
-        },
-        result: testResultsShakuntala[counter],
-      },
-    });
-
-    await prisma.testResult.create({
-      data: {
-        gradedBy: {
-          connect: { email: grace.email },
-        },
-        student: {
-          connect: { email: david.email },
-        },
-        test: {
-          connect: { id: test.id },
-        },
-        result: testResultsDavid[counter],
-      },
-    });
-
-    counter++;
+      });
+    }
   }
+
+  // eslint-disable-next-line no-console
+  console.log(data);
 }
 
+// eslint-disable-next-line promise/catch-or-return
 main()
   .catch((e) => {
+    // eslint-disable-next-line no-console
     console.error(e);
     process.exit(1);
   })
