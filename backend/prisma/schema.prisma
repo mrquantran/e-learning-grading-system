@@ -47,7 +47,7 @@ model CourseEnrollment {
 model Test {
   id        Int      @id @default(autoincrement())
   updatedAt DateTime @updatedAt
-  name      String   @unique
+  name      String
   date      DateTime
 
   // Relation Fields
