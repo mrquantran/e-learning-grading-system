@@ -67,6 +67,162 @@ const users = [
   },
 ];
 
+const testResults = [
+  {
+    testId: 'Test1',
+    result: [
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'waston@hey.com',
+        student: 'jessica@hey.com',
+      },
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'waston@hey.com',
+        student: 'alex@hey.com',
+      },
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'waston@hey.com',
+        student: 'tim@hey.com',
+      },
+    ],
+  },
+  {
+    testId: 'Test2',
+    result: [
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'waston@hey.com',
+        student: 'jessica@hey.com',
+      },
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'waston@hey.com',
+        student: 'alex@hey.com',
+      },
+    ],
+  },
+  {
+    testId: 'Test3',
+    result: [
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'waston@hey.com',
+        student: 'jessica@hey.com',
+      },
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'waston@hey.com',
+        student: 'alex@hey.com',
+      },
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'waston@hey.com',
+        student: 'tim@hey.com',
+      },
+    ],
+  },
+  {
+    testId: 'Test4',
+    result: [
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'tim@hey.com',
+        student: 'gate@hey.com',
+      },
+    ],
+  },
+  {
+    testId: 'Test6',
+    result: [
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'gate@hey.com',
+        student: 'alex@hey.com',
+      },
+    ],
+  },
+  {
+    testId: 'Test7',
+    result: [
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'alex@hey.com',
+        student: 'jessica@hey.com',
+      },
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'alex@hey.com',
+        student: 'tim@hey.com',
+      },
+    ],
+  },
+  {
+    testId: 'Test8',
+    result: [
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'tim@hey.com',
+        student: 'gate@hey.com',
+      },
+    ],
+  },
+  {
+    testId: 'Test9',
+    result: [
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'jessica@hey.com',
+        student: 'jackson@hey.com',
+      },
+      {
+        createdAt: new Date(),
+        result: 50,
+        gradedBy: 'jessica@hey.com',
+        student: 'gate@hey.com',
+      },
+    ],
+  },
+  {
+    testId: 'Test12',
+    result: [
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'alex@hey.com',
+        student: 'jessica@hey.com',
+      },
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'alex@hey.com',
+        student: 'tim@hey.com',
+      },
+      {
+        createdAt: new Date(),
+        result: 100,
+        gradedBy: 'alex@hey.com',
+        student: 'gate@hey.com',
+      },
+    ],
+  },
+];
+
 const courses = [
   {
     name: 'Typescript course',
@@ -91,6 +247,8 @@ const courses = [
     member: [
       { role: 'TEACHER', email: 'waston@hey.com' },
       { role: 'STUDENT', email: 'jessica@hey.com' },
+      { role: 'STUDENT', email: 'alex@hey.com' },
+      { role: 'STUDENT', email: 'tim@hey.com' },
     ],
   },
   {
@@ -98,7 +256,7 @@ const courses = [
     courseDetails: 'c43214',
     testing: [
       {
-        name: 'Test1',
+        name: 'Test4',
         updatedAt: new Date(),
         date: monthFromNow,
       },
@@ -158,7 +316,7 @@ const courses = [
     courseDetails: 'c43214',
     testing: [
       {
-        name: 'Test4',
+        name: 'Test9',
         updatedAt: new Date(),
         date: monthFromNow,
       },
@@ -174,4 +332,5 @@ const courses = [
 export const data = {
   users,
   courses,
+  testResults,
 };

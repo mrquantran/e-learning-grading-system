@@ -57,9 +57,44 @@ async function main() {
               },
             })),
         },
+        tests: {
+          create: course.testing.map((test) => ({
+            name: test.name,
+            date: test.date,
+            updatedAt: test.updatedAt,
+          })),
+        },
       },
     });
   }
+
+  for (const test of data.testResults) {
+    const { result } = test;
+
+    for (const testResult of result) {
+      await prisma.testResult.create({
+        data: {
+          gradedBy: {
+            connect: {
+              email: testResult.gradedBy,
+            },
+          },
+          student: {
+            connect: {
+              email: testResult.student,
+            },
+          },
+          test: {
+            connect: {
+              name: test.testId,
+            },
+          },
+          result: testResult.result,
+        },
+      });
+    }
+  }
+
   // eslint-disable-next-line no-console
   console.log(data);
 }
