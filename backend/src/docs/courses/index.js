@@ -1,11 +1,13 @@
 /* eslint-disable import/extensions */
-import getCourses from './get-courses.js';
-import getCoursesById from './getCourseById.js';
+import courses from './courses.js';
+import courseId from './courseId.js';
 
 const pathCourses = {
   '/courses': {
-    ...getCourses,
-    ...getCoursesById,
+    ...courses,
+  },
+  '/courses/{id}': {
+    ...courseId,
   },
 };
 
