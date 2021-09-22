@@ -29,6 +29,29 @@ const components = {
           example: false,
         },
       },
+       TestResults: {
+        type: 'object',
+        id: {
+          type: 'number',
+          description: 'Todo identification number',
+          example: '1',
+        },
+        name: {
+          type: 'string',
+          description: "Todo's title",
+          example: 'Coding in JavaScript',
+        },
+        date: {
+          type: 'string',
+          description: 'The status of the todo',
+          example: false,
+        },
+        updatedAt: {
+          type: 'string',
+          description: 'The status of the todo',
+          example: false,
+        },
+      },
       Courses: {
         type: 'object',
         properties: {
@@ -42,25 +65,25 @@ const components = {
             description: "Todo's title",
             example: 'Coding in JavaScript',
           },
-          coursesDetail: {
+          courseDetails: {
             type: 'string',
             description: 'The status of the todo',
-            example: false,
+            example: 'This is the description of courses to do identification number',
           },
         },
       },
       CoursesInput: {
         type: 'object',
         properties: {
-          title: {
+          name: {
             type: 'string',
             description: "Todo's title",
             example: 'Coding in JavaScript',
           },
-          completed: {
-            type: 'boolean',
+          courseDetails: {
+            type: 'string',
             description: 'The status of the todo',
-            example: false,
+            example: 'This is the description of courses to do identification number',
           },
         },
       },

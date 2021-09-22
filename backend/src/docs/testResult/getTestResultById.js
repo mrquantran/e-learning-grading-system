@@ -1,6 +1,6 @@
-const getCoursesById = {
+const getTestResultById = {
   get: {
-    tags: ['Courses'],
+    tags: ['TestResult'],
     description: 'Get courses Id',
     operationId: 'getCoursesById',
     parameters: [
@@ -22,7 +22,7 @@ const getCoursesById = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/Courses',
+              $ref: '#/components/schemas/TestResults',
             },
           },
         },
@@ -41,4 +41,4 @@ const getCoursesById = {
   },
 };
 
-export default getCoursesById;
+export default getTestResultById;
