@@ -1,7 +1,12 @@
 const tag = {
-  tags: {
-    name: 'Course',
-  },
+  tags: [
+    {
+      name: 'Courses',
+    },
+    {
+      name: 'Test Results',
+    },
+  ],
 };
 
 export default tag;
