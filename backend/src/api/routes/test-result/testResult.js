@@ -1,7 +1,13 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable promise/no-callback-in-promise */
 import express from 'express';
 import pkg from '@prisma/client';
 import createHttpError from 'http-errors';
+import {
+  body, oneOf, param,
+} from 'express-validator';
+// eslint-disable-next-line import/extensions
+import { validate } from '../../validation/validate.js';
 
 const router = express.Router();
 const { PrismaClient } = pkg;
@@ -9,9 +15,9 @@ const prisma = new PrismaClient();
 
 async function getTestResult(id) {
 //   console.log(id);
-  const testResult = await prisma.testResult.findUnique({
+  const testResult = await prisma.testResult.findMany({
     where: {
-      id: Number(id),
+      testId: Number(id),
     },
   });
 
@@ -19,18 +25,12 @@ async function getTestResult(id) {
 }
 
 async function createTestResult(result, studentId, graderId, testId) {
-  if (result == null || studentId == null || graderId == null || testId == null) {
-    // eslint-disable-next-line no-console
-    console.log('You must provide all fields');
-    // eslint-disable-next-line no-useless-return
-    return;
-  }
   const testResult = await prisma.testResult.create({
     data: {
       result,
-      studentId,
+      studentId: Number(studentId),
       graderId,
-      testId,
+      testId: Number(testId),
     },
   });
   // eslint-disable-next-line consistent-return
@@ -47,7 +47,7 @@ async function deleteTestResult(id) {
   return testResult;
 }
 
-async function updateTestResult(id, result, studentId, graderId, testId) {
+async function updateTestResult(id, result, studentId, graderId) {
   const testResult = await prisma.testResult.update({
     where: {
       id: Number(id),
@@ -56,24 +56,44 @@ async function updateTestResult(id, result, studentId, graderId, testId) {
       result,
       studentId,
       graderId,
-      testId,
     },
   });
+  // eslint-disable-next-line consistent-return
   return testResult;
 }
 
-router.get('/:id', (req, res, next) => getTestResult(req.params.id)
+router.get('/:id/test-results', validate([
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number'),
+]), (req, res, next) => getTestResult(req.params.id)
   .then((data) => res.json(data))
   .catch((error) => {
     const httpError = createHttpError(500, error);
     next(httpError);
   }));
 
-router.post('/', (req, res, next) => {
+router.post('/:id/test-results', validate([
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number'),
+  body('result').isInt({ min: 0, max: 1000 }).withMessage('0 < Result < 1000'),
+  body('graderId')
+    .isNumeric()
+    .withMessage('graderId must be a number')
+    .notEmpty()
+    .withMessage('graderId is empty'),
+  body('studentId')
+    .isNumeric()
+    .withMessage('studentId must be a number')
+    .notEmpty()
+    .withMessage('studentId is empty'),
+
+]), (req, res, next) => {
   const {
-    result, studentId, graderId, testId,
+    result, studentId, graderId,
   } = req.body;
-  createTestResult(result, studentId, graderId, testId)
+  createTestResult(result, studentId, graderId, req.params.id)
     .then((data) => res.json(data))
     .catch((error) => {
       const httpError = createHttpError(500, error);
@@ -81,18 +101,27 @@ router.post('/', (req, res, next) => {
     });
 });
 
-router.delete('/:id', (req, res, next) => deleteTestResult(req.params.id)
+router.delete('/test-results/:id', validate([
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number'),
+]), (req, res, next) => deleteTestResult(req.params.id)
   .then((data) => res.json(data))
   .catch((error) => {
     const httpError = createHttpError(500, error);
     next(httpError);
   }));
 
-router.patch('/:id', (req, res, next) => {
+router.patch('/test-results/:id', validate([
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number'),
+  body('result').isInt({ min: 0, max: 1000 }).withMessage('0 < Result < 1000'),
+]), (req, res, next) => {
   const {
-    result, studentId, graderId, testId,
+    result, studentId, graderId,
   } = req.body;
-  updateTestResult(req.params.id, result, studentId, graderId, testId)
+  updateTestResult(req.params.id, result, studentId, graderId)
     .then((data) => res.json(data))
     .catch((error) => {
       const httpError = createHttpError(500, error);
