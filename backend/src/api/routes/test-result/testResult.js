@@ -77,7 +77,7 @@ router.post('/:id/test-results', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
-  body('result').isInt({ min: 1, max: 1000 }).withMessage('0 < Result < 1000'),
+  body('result').isInt({ min: 0, max: 1000 }).withMessage('0 < Result < 1000'),
   body('graderId')
     .isNumeric()
     .withMessage('graderId must be a number')
@@ -116,7 +116,7 @@ router.patch('/test-results/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
-  body('result').isInt({ min: 1, max: 1000 }).withMessage('0 < Result < 1000'),
+  body('result').isInt({ min: 0, max: 1000 }).withMessage('0 < Result < 1000'),
 ]), (req, res, next) => {
   const {
     result, studentId, graderId,
