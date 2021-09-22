@@ -1,9 +1,13 @@
 /* eslint-disable import/extensions */
-import getTestResultById from './getTestResultById.js';
+import getTestResultById from './testResultByTest.js';
+import testResultId from './testResultsId.js';
 
 const pathCourses = {
-  '/testresults': {
+  '/courses/tests/{testId}/testresults': {
     ...getTestResultById,
+  },
+  '/courses/tests/testresults/{testResultId}': {
+    ...testResultId,
   },
 };
 

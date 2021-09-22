@@ -15,7 +15,6 @@ const router = express.Router();
 router.use('/courses', coursesList);
 // router.use('/', signup);
 // router.use('/courses', coursesList);
-
-router.use('/testresults', testResults);
+router.use('/courses/tests', testResults);
 
 export default router;

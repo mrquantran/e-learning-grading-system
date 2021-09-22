@@ -4,7 +4,7 @@ import express from 'express';
 import pkg from '@prisma/client';
 import createHttpError from 'http-errors';
 import {
-  body, oneOf, param,
+  body, param,
 } from 'express-validator';
 // eslint-disable-next-line import/extensions
 import { validate } from '../../validation/validate.js';
@@ -28,9 +28,17 @@ async function createTestResult(result, studentId, graderId, testId) {
   const testResult = await prisma.testResult.create({
     data: {
       result,
-      studentId: Number(studentId),
-      graderId,
-      testId: Number(testId),
+      student: {
+        connect: { id: studentId },
+      },
+      gradedBy: {
+        connect: { id: graderId },
+      },
+      test: {
+        connect: {
+          id: Number(testId),
+        },
+      },
     },
   });
   // eslint-disable-next-line consistent-return
@@ -47,22 +55,20 @@ async function deleteTestResult(id) {
   return testResult;
 }
 
-async function updateTestResult(id, result, studentId, graderId) {
+async function updateTestResult(id, result) {
   const testResult = await prisma.testResult.update({
     where: {
       id: Number(id),
     },
     data: {
       result,
-      studentId,
-      graderId,
     },
   });
   // eslint-disable-next-line consistent-return
   return testResult;
 }
 
-router.get('/:id/test-results', validate([
+router.get('/:id/testresults', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
@@ -73,7 +79,7 @@ router.get('/:id/test-results', validate([
     next(httpError);
   }));
 
-router.post('/:id/test-results', validate([
+router.post('/:id/testresults', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
@@ -93,35 +99,42 @@ router.post('/:id/test-results', validate([
   const {
     result, studentId, graderId,
   } = req.body;
-  createTestResult(result, studentId, graderId, req.params.id)
-    .then((data) => res.json(data))
+
+  const { id } = req.params;
+
+  createTestResult(result, studentId, graderId, id)
+    .then(() => {
+      const message = 'created successfully';
+      return res.json({ message });
+    })
     .catch((error) => {
       const httpError = createHttpError(500, error);
       next(httpError);
     });
 });
 
-router.delete('/test-results/:id', validate([
+router.delete('/testresults/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
 ]), (req, res, next) => deleteTestResult(req.params.id)
-  .then((data) => res.json(data))
+  .then(() => {
+    const message = 'deleted successfully';
+    return res.json({ message });
+  })
   .catch((error) => {
     const httpError = createHttpError(500, error);
     next(httpError);
   }));
 
-router.patch('/test-results/:id', validate([
+router.put('/testresults/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
-  body('result').isInt({ min: 0, max: 1000 }).withMessage('0 < Result < 1000'),
+  body('result').optional().isInt({ min: 0, max: 1000 }).withMessage('0 < Result < 1000'),
 ]), (req, res, next) => {
-  const {
-    result, studentId, graderId,
-  } = req.body;
-  updateTestResult(req.params.id, result, studentId, graderId)
+  const { result } = req.body;
+  updateTestResult(req.params.id, result)
     .then((data) => res.json(data))
     .catch((error) => {
       const httpError = createHttpError(500, error);
