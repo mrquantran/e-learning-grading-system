@@ -28,9 +28,9 @@ async function createTestResult(result, studentId, graderId, testId) {
   const testResult = await prisma.testResult.create({
     data: {
       result,
-      studentId,
+      studentId: Number(studentId),
       graderId,
-      testId,
+      testId: Number(testId),
     },
   });
   // eslint-disable-next-line consistent-return
@@ -77,21 +77,17 @@ router.post('/:id/test-results', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
-  oneOf([
-    body('results')
-      .if(body('results') < 0 || body('results') > 1000)
-      .withMessage('Field error: 0 < result < 1000'),
-    body('graderId')
-      .isNumeric()
-      .withMessage('graderId must be a number')
-      .notEmpty()
-      .withMessage('graderId is empty'),
-    body('studentId')
-      .isNumeric()
-      .withMessage('studentId must be a number')
-      .notEmpty()
-      .withMessage('studentId is empty'),
-  ]),
+  body('result').isInt({ min: 1, max: 1000 }).withMessage('0 < Result < 1000'),
+  body('graderId')
+    .isNumeric()
+    .withMessage('graderId must be a number')
+    .notEmpty()
+    .withMessage('graderId is empty'),
+  body('studentId')
+    .isNumeric()
+    .withMessage('studentId must be a number')
+    .notEmpty()
+    .withMessage('studentId is empty'),
 
 ]), (req, res, next) => {
   const {
@@ -120,10 +116,7 @@ router.patch('/test-results/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
-  body('results')
-    .if(body('results') < 0 || body('results') > 1000)
-    .withMessage('Field error: 0 < result < 1000'),
-
+  body('result').isInt({ min: 1, max: 1000 }).withMessage('0 < Result < 1000'),
 ]), (req, res, next) => {
   const {
     result, studentId, graderId,
