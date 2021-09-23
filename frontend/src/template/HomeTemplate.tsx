@@ -1,6 +1,7 @@
-import React, { Fragment } from "react"
-
+import LeftMenu from "@/components/LeftMenu/LeftMenu"
+import React from "react"
 import { Route } from "react-router"
+import { LayoutStyled } from "./HomeTemplate.styled"
 
 export default function HomeTemplate(props) {
   // es6
@@ -11,9 +12,13 @@ export default function HomeTemplate(props) {
       {...restRoute}
       render={propsRoute => {
         return (
-          <Fragment>
-            <Component {...propsRoute} />
-          </Fragment>
+          <LayoutStyled className="site-layout">
+            {/* LeftMenu */}
+            <LeftMenu />
+            <LayoutStyled className="site-layout">
+              <Component {...propsRoute} />
+            </LayoutStyled>
+          </LayoutStyled>
         )
       }}
     />
