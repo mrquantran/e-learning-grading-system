@@ -1,25 +1,34 @@
 import styled from "styled-components"
-import { Layout } from "antd"
-import { LayoutProps } from "antd/lib/layout"
 
-const { Sider } = Layout
+export const Container = styled.div`
+  // .sider {
+  //   width: 256px !important;
+  //   flex: 0 0 256px !important;
+  //   max-width: 300px !important;
+  //   min-width: 256px !important;
+  // }
 
-export const SiderStyled: React.FunctionComponent<LayoutProps> = styled(Sider)`
-  width: 256px !important;
-  flex: 0 0 256px !important;
-  max-width: 300px !important;
-  min-width: 256px !important;
-  .site-layout .site-layout-background {
-    background: #fff;
-  }
+  // .site-layout .site-layout-background {
+  //   background: #fff;
+  // }
+
   .logo {
-    padding: 49px;
+    display: flex;
+    align-items: center;
+    img {
+      width: 108px;
+      padding: 10px;
+      height: 62px;
+    }
+    height: 80px;
     background: #fff;
   }
+
   .menu-style {
     height: 100vh;
-    width: 256px;
-    position: fixed;
+    // width: 256px;
+    background: #fff;
+    // position: fixed;
     .ant-menu-item {
       height: 57px !important;
     }

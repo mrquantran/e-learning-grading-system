@@ -1,4 +1,5 @@
 import LeftMenu from "@/components/LeftMenu/LeftMenu"
+import Navbar from "@/components/Navbar/Navbar"
 import React from "react"
 import { Route } from "react-router"
 import { LayoutStyled } from "./HomeTemplate.styled"
@@ -16,6 +17,7 @@ export default function HomeTemplate(props) {
             {/* LeftMenu */}
             <LeftMenu />
             <LayoutStyled className="site-layout">
+              <Navbar />
               <Component {...propsRoute} />
             </LayoutStyled>
           </LayoutStyled>
