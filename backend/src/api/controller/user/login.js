@@ -2,6 +2,7 @@
 /* eslint-disable max-len */
 import pkg from '@prisma/client';
 import { add } from 'date-fns';
+import bcrypt from 'bcrypt';
 import { accessTokenSecret, refreshTokenSecret, tokenInfo } from '../../../config.js';
 import * as jwtHelper from '../../helpers/jwt.helper.js';
 
@@ -48,7 +49,7 @@ const login = async (req, res) => {
     // Trong ví dụ demo này mình sẽ coi như tất cả các bước xác thực ở trên đều ok, mình chỉ xử lý phần JWT trở về sau thôi nhé:
 
     // 👇 get the email from the request payload
-    const { email: emailReq, password } = req.body;
+    const { email: emailReq, password: passwordReq } = req.body;
 
     const emailUser = await prisma.user.findUnique({
       where: {
@@ -59,12 +60,14 @@ const login = async (req, res) => {
         id: true,
         firstName: true,
         lastName: true,
+        password: true,
       },
     });
 
-    const { firstName, email } = emailUser;
+    const { firstName, email, password } = emailUser;
 
     // 👇 generate an alphanumeric token
+    // eslint-disable-next-line no-unused-vars
     const emailToken = generateEmailToken();
     // 👇 create a date object for the email token expiration
     const tokenExpiration = add(new Date(), {
@@ -73,6 +76,17 @@ const login = async (req, res) => {
 
     if (!email) {
       return res.status(403).json({ message: 'email not created' });
+    }
+
+    // const saltRounds = await bcrypt.genSalt(10);
+
+    // // now we set user password to hashed password
+    // const hash = bcrypt.hashSync(passwordReq, saltRounds);
+
+    // console.log(bcrypt.compareSync(password, hash));
+
+    if (!bcrypt.compareSync(passwordReq, password)) {
+      return res.status(402).json({ message: 'password not correct' });
     }
 
     const userData = {
@@ -89,6 +103,8 @@ const login = async (req, res) => {
     tokenList[refreshToken] = { accessToken, refreshToken };
 
     // 👇 create a short lived token and update user or create if they don't exist
+
+    // eslint-disable-next-line no-unused-vars
     const createdToken = await prisma.token.create({
       data: {
         accessToken,
@@ -110,7 +126,9 @@ const login = async (req, res) => {
 
     return res.status(200).json({ accessToken, refreshToken });
   } catch (error) {
-    return res.status(500).json(error);
+    // eslint-disable-next-line no-console
+    console.log(error);
+    return res.status(500).json({ message: error });
   }
 };
 
