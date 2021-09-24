@@ -4,7 +4,7 @@ import express from 'express';
 // import signup from './courses/signup.js';
 import coursesList from './courses/coursesList.js';
 import testResults from './test-result/testResult.js';
-import { login } from './user/login.js';
+import login from './user/login.js';
 
 const router = express.Router();
 

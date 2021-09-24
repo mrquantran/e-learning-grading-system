@@ -11,11 +11,11 @@ import jwt from 'jsonwebtoken';
 export const generateToken = (user, secretSignature, tokenLife) => new Promise((resolve, reject) => {
   // Định nghĩa những thông tin của user mà bạn muốn lưu vào token ở đây
   const userData = {
-    id: user.id,
     name: user.name,
     email: user.email,
   };
-    // Thực hiện ký và tạo token
+
+  // Thực hiện ký và tạo token
   jwt.sign(
     { data: userData },
     secretSignature,
@@ -25,8 +25,10 @@ export const generateToken = (user, secretSignature, tokenLife) => new Promise((
     },
     (error, token) => {
       if (error) {
+        console.log(error)
         return reject(error);
       }
+      console.log(token)
       resolve(token);
     },
   );
