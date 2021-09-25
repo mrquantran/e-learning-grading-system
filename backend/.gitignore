@@ -22,3 +22,5 @@ coverage
 
 # Environment varibles
 .env
+
+./prisma/migrations
