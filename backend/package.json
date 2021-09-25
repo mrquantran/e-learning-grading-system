@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "seed": "prisma db seed --preview-feature",
-    "dev": "nodemon --delay 500ms src/app.js",
+    "dev": "nodemon src/app.js",
     "lint": "eslint 'src/*.{js,jsx}'",
     "format": "prettier-eslint 'server/**/*.{js,json}' --write"
   },

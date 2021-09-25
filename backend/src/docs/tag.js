@@ -1,11 +1,8 @@
 const tag = {
   tags: [
-    {
-      name: 'Courses',
-    },
-    {
-      name: 'Test Results',
-    },
+    { name: 'Account' },
+    { name: 'Courses' },
+    { name: 'Test Results' },
   ],
 };
 

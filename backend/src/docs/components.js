@@ -6,6 +6,21 @@ const components = {
         description: 'Pass an id',
         example: 1,
       },
+      Account: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            description: 'email user',
+            example: 'grace@hey.com',
+          },
+          password: {
+            type: 'string',
+            description: 'password user',
+            example: '123456',
+          },
+        },
+      },
       Tests: {
         type: 'object',
         properties: {
