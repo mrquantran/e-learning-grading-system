@@ -4,6 +4,7 @@
 /* eslint-disable import/extensions */
 import pkg from '@prisma/client';
 // import { add } from 'date-fns';
+import bcrypt from 'bcrypt';
 import { data } from './data.js';
 
 const { PrismaClient } = pkg;
@@ -19,16 +20,23 @@ async function main() {
   await prisma.testResult.deleteMany({});
   await prisma.courseEnrollment.deleteMany({});
   await prisma.test.deleteMany({});
+  await prisma.token.deleteMany({});
   await prisma.user.deleteMany({});
   await prisma.course.deleteMany({});
 
   // users
   for (const user of data.users) {
+    const saltRounds = await bcrypt.genSalt(10);
+
+    // // now we set user password to hashed password
+    const hash = bcrypt.hashSync(user.password, saltRounds);
+
     await prisma.user.create({
       data: {
         email: user.email,
         firstName: user.firstName,
         lastName: user.lastName,
+        password: hash,
         // courses: {
         //   create: {
         //     role: user.ROLE,
@@ -60,31 +68,27 @@ async function main() {
             })),
         },
         tests: {
-          create: course.testing.map((test) => {
-            console.log(test.results);
-
-            return ({
-              name: test.name,
-              date: test.date,
-              updatedAt: test.updatedAt,
-              testResults: {
-                create: test.results.map((testResult) => ({
-                  createdAt: testResult.createdAt,
-                  result: testResult.result,
-                  gradedBy: {
-                    connect: {
-                      email: testResult.gradedBy,
-                    },
+          create: course.testing.map((test) => ({
+            name: test.name,
+            date: test.date,
+            updatedAt: test.updatedAt,
+            testResults: {
+              create: test.results.map((testResult) => ({
+                createdAt: testResult.createdAt,
+                result: testResult.result,
+                gradedBy: {
+                  connect: {
+                    email: testResult.gradedBy,
                   },
-                  student: {
-                    connect: {
-                      email: testResult.student,
-                    },
+                },
+                student: {
+                  connect: {
+                    email: testResult.student,
                   },
-                })),
-              },
-            });
-          }),
+                },
+              })),
+            },
+          })),
         },
       },
     });

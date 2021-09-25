@@ -100,7 +100,7 @@ const login = async (req, res) => {
 
     // Lưu lại 2 mã access & Refresh token, với key chính là cái refreshToken để đảm bảo unique và không sợ hacker sửa đổi dữ liệu truyền lên.
     // lưu ý trong dự án thực tế, nên lưu chỗ khác, có thể lưu vào Redis hoặc DB
-    tokenList[refreshToken] = { accessToken, refreshToken };
+    // tokenList[refreshToken] = { accessToken, refreshToken };
 
     // 👇 create a short lived token and update user or create if they don't exist
 

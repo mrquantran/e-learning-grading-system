@@ -11,59 +11,69 @@ const users = [
     email: 'grace@hey.com',
     firstName: 'Grace',
     lastName: 'Bell',
-
+    password: '123456',
   },
 
   {
     email: 'bill@hey.com',
     firstName: 'Bill',
     lastName: 'Tinder',
+    password: '123456',
   },
 
   {
     email: 'tim@hey.com',
     firstName: 'Tim',
     lastName: 'Jack',
+    password: '123456',
   },
   {
     email: 'tommy@hey.com',
     firstName: 'Tommy',
     lastName: 'Jackson',
+    password: '123456',
   },
   {
     email: 'alex@hey.com',
     firstName: 'Alex',
     lastName: 'Grace',
+    password: '123456',
   },
   {
     email: 'jessica@hey.com',
     firstName: 'Jessica',
     lastName: 'Jonhson',
+    password: '123456',
   },
   {
     email: 'jackson@hey.com',
     firstName: 'Jackson',
     lastName: 'Michael',
+    password: '123456',
   },
   {
     email: 'eilissh@hey.com',
     firstName: 'Eilish',
     lastName: 'Billie',
+    password: '123456',
   },
   {
     email: 'gate@hey.com',
     firstName: 'Gate',
     lastName: 'Bill',
+    password: '123456',
   },
   {
     email: 'chan@hey.com',
     firstName: 'Chan',
     lastName: 'Jackie',
+    password: '123456',
   },
   {
     email: 'waston@hey.com',
     firstName: 'Waston',
     lastName: 'Tommy',
+    password: '123456',
   },
 ];
 
