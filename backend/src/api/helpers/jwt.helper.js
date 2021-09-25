@@ -1,5 +1,7 @@
+/* eslint-disable import/extensions */
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
+import { JWT_ALGORITHM } from '../constant/auth.js';
 /**
  * private function generateToken
  * @param user
@@ -20,15 +22,17 @@ export const generateToken = (user, secretSignature, tokenLife) => new Promise((
     { data: userData },
     secretSignature,
     {
-      algorithm: 'HS256',
+      algorithm: JWT_ALGORITHM,
       expiresIn: tokenLife,
     },
     (error, token) => {
       if (error) {
-        console.log(error)
+        // eslint-disable-next-line no-console
+        console.log(error);
         return reject(error);
       }
-      console.log(token)
+      // eslint-disable-next-line no-console
+      console.log(token);
       resolve(token);
     },
   );

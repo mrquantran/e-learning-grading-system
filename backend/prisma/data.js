@@ -8,6 +8,12 @@ const monthFromNow = add(new Date(), { days: 28 });
 // user
 const users = [
   {
+    email: 'quantran2381@gmail.com',
+    firstName: 'Quan',
+    lastName: 'Tran',
+    password: '238200',
+  },
+  {
     email: 'grace@hey.com',
     firstName: 'Grace',
     lastName: 'Bell',

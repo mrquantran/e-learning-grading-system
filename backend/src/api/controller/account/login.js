@@ -27,11 +27,7 @@ export const findSpecificUser = async (emailInput) => {
 // Trong dự án thực tế, nên lưu chỗ khác, có thể lưu vào Redis hoặc DB
 const tokenList = {};
 
-const { accessTokenLife, refreshTokenLife, emailTokenLife } = tokenInfo;
-
-function generateEmailToken() {
-  return Math.floor(10000000 + Math.random() * 90000000).toString();
-}
+const { accessTokenLife, refreshTokenLife } = tokenInfo;
 
 /**
  * controller login
@@ -66,14 +62,6 @@ const login = async (req, res) => {
 
     const { firstName, email, password } = emailUser;
 
-    // 👇 generate an alphanumeric token
-    // eslint-disable-next-line no-unused-vars
-    const emailToken = generateEmailToken();
-    // 👇 create a date object for the email token expiration
-    const tokenExpiration = add(new Date(), {
-      minutes: emailTokenLife,
-    });
-
     if (!email) {
       return res.status(403).json({ message: 'email not created' });
     }
@@ -84,6 +72,11 @@ const login = async (req, res) => {
     // const hash = bcrypt.hashSync(passwordReq, saltRounds);
 
     // console.log(bcrypt.compareSync(password, hash));
+
+    // 👇 create a date object for the email token expiration
+    const tokenExpiration = add(new Date(), {
+      minutes: accessTokenLife,
+    });
 
     if (!bcrypt.compareSync(passwordReq, password)) {
       return res.status(402).json({ message: 'password not correct' });
@@ -109,7 +102,7 @@ const login = async (req, res) => {
       data: {
         accessToken,
         refreshToken,
-        type: TokenType.EMAIL,
+        type: TokenType.API,
         expiration: tokenExpiration,
         user: {
           connectOrCreate: {

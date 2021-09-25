@@ -13,12 +13,13 @@ export const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET || 'myrefresh
 //   password: process.env.DB_USER_PWD || '',
 // };
 
+export const sendGridEmailKey = process.env.SEND_GRID_EMAIL_KEY || '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';
 export const corsUrl = process.env.CORS_URL || '*';
 
 export const tokenInfo = {
-  accessTokenLife: process.env.ACCESS_TOKEN_LIFE || '1h',
+  accessTokenLife: process.env.ACCESS_TOKEN_LIFE || 60, // 60 minutes
   refreshTokenLife: process.env.REFRESH_TOKEN_LIFE || '3650d',
-  emailTokenLife: process.env.EMAIL_TOKEN_EXPIRATION_MINUTES,
+  emailTokenLife: process.env.EMAIL_TOKEN_EXPIRATION_MINUTES || 10,
 };
 
 // export const logDirectory = process.env.LOG_DIR;
