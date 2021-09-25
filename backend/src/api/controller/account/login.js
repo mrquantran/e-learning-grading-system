@@ -53,14 +53,11 @@ const login = async (req, res) => {
       },
       select: {
         email: true,
-        id: true,
-        firstName: true,
-        lastName: true,
         password: true,
       },
     });
 
-    const { firstName, email, password } = emailUser;
+    const { email, password } = emailUser;
 
     if (!email) {
       return res.status(403).json({ message: 'email not created' });
@@ -82,14 +79,9 @@ const login = async (req, res) => {
       return res.status(402).json({ message: 'password not correct' });
     }
 
-    const userData = {
-      name: firstName,
-      email: req.body.email,
-    };
+    const accessToken = await jwtHelper.generateToken(email, accessTokenSecret, accessTokenLife);
 
-    const accessToken = await jwtHelper.generateToken(userData, accessTokenSecret, accessTokenLife);
-
-    const refreshToken = await jwtHelper.generateToken(userData, refreshTokenSecret, refreshTokenLife);
+    const refreshToken = await jwtHelper.generateToken(email, refreshTokenSecret, refreshTokenLife);
 
     // Lưu lại 2 mã access & Refresh token, với key chính là cái refreshToken để đảm bảo unique và không sợ hacker sửa đổi dữ liệu truyền lên.
     // lưu ý trong dự án thực tế, nên lưu chỗ khác, có thể lưu vào Redis hoặc DB

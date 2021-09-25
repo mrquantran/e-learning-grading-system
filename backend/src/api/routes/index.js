@@ -24,6 +24,6 @@ router.use('/login', login);
 // endpoint to login with email
 router.use('/email', email);
 // end point to authenticate when email was sent
-router.use('/authenticate', auth);
+router.use('/auth', auth);
 
 export default router;
