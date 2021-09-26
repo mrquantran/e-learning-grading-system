@@ -2,6 +2,7 @@
 import login from './login.js';
 import auth from './auth.js';
 import email from './email.js';
+import signup from './signup.js';
 
 const pathAccount = {
   '/login': {
@@ -12,6 +13,9 @@ const pathAccount = {
   },
   '/email': {
     ...email,
+  },
+  '/signup': {
+    ...signup,
   },
 };
 
