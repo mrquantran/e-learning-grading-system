@@ -22,8 +22,14 @@ export const Container = styled.div`
     }
     height: 80px;
     background: #fff;
-  }
 
+  }
+  .logo img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  } 
+  
   .menu-style {
     height: 100vh;
     // width: 256px;
