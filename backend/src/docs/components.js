@@ -6,6 +6,21 @@ const components = {
         description: 'Pass an id',
         example: 1,
       },
+      AuthAccount: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            description: 'email user',
+            example: 'grace@hey.com',
+          },
+          emailToken: {
+            type: 'number',
+            description: 'email token user',
+            example: 238200610,
+          },
+        },
+      },
       Account: {
         type: 'object',
         properties: {

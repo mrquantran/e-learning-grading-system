@@ -4,7 +4,10 @@ import express from 'express';
 // import signup from './courses/signup.js';
 import coursesList from './courses/coursesList.js';
 import testResults from './test-result/testResult.js';
-import login from './user/login.js';
+
+import login from './account/login.js';
+import email from './account/email.js';
+import auth from './account/auth.js';
 
 const router = express.Router();
 
@@ -16,6 +19,11 @@ const router = express.Router();
 router.use('/courses', coursesList);
 router.use('/courses/tests', testResults);
 
-// Endpoint to login or regsiter and to send the short lived token
+// Endpoint to login or register and to send the short lived token
 router.use('/login', login);
+// endpoint to login with email
+router.use('/email', email);
+// end point to authenticate when email was sent
+router.use('/auth', auth);
+
 export default router;

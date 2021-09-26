@@ -1,5 +1,7 @@
+/* eslint-disable import/extensions */
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
+import { JWT_ALGORITHM } from '../constant/auth.js';
 /**
  * private function generateToken
  * @param user
@@ -8,27 +10,25 @@ import jwt from 'jsonwebtoken';
  */
 
 // eslint-disable-next-line max-len
-export const generateToken = (user, secretSignature, tokenLife) => new Promise((resolve, reject) => {
+export const generateToken = (email, secretSignature, tokenLife) => new Promise((resolve, reject) => {
   // Định nghĩa những thông tin của user mà bạn muốn lưu vào token ở đây
-  const userData = {
-    name: user.name,
-    email: user.email,
-  };
 
   // Thực hiện ký và tạo token
   jwt.sign(
-    { data: userData },
+    { data: email },
     secretSignature,
     {
-      algorithm: 'HS256',
+      algorithm: JWT_ALGORITHM,
       expiresIn: tokenLife,
     },
     (error, token) => {
       if (error) {
-        console.log(error)
+        // eslint-disable-next-line no-console
+        console.log(error);
         return reject(error);
       }
-      console.log(token)
+      // eslint-disable-next-line no-console
+      console.log(token);
       resolve(token);
     },
   );

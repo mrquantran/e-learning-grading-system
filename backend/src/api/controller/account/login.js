@@ -27,11 +27,7 @@ export const findSpecificUser = async (emailInput) => {
 // Trong dự án thực tế, nên lưu chỗ khác, có thể lưu vào Redis hoặc DB
 const tokenList = {};
 
-const { accessTokenLife, refreshTokenLife, emailTokenLife } = tokenInfo;
-
-function generateEmailToken() {
-  return Math.floor(10000000 + Math.random() * 90000000).toString();
-}
+const { accessTokenLife, refreshTokenLife } = tokenInfo;
 
 /**
  * controller login
@@ -57,22 +53,11 @@ const login = async (req, res) => {
       },
       select: {
         email: true,
-        id: true,
-        firstName: true,
-        lastName: true,
         password: true,
       },
     });
 
-    const { firstName, email, password } = emailUser;
-
-    // 👇 generate an alphanumeric token
-    // eslint-disable-next-line no-unused-vars
-    const emailToken = generateEmailToken();
-    // 👇 create a date object for the email token expiration
-    const tokenExpiration = add(new Date(), {
-      minutes: emailTokenLife,
-    });
+    const { email, password } = emailUser;
 
     if (!email) {
       return res.status(403).json({ message: 'email not created' });
@@ -85,18 +70,18 @@ const login = async (req, res) => {
 
     // console.log(bcrypt.compareSync(password, hash));
 
+    // 👇 create a date object for the email token expiration
+    const tokenExpiration = add(new Date(), {
+      minutes: accessTokenLife,
+    });
+
     if (!bcrypt.compareSync(passwordReq, password)) {
       return res.status(402).json({ message: 'password not correct' });
     }
 
-    const userData = {
-      name: firstName,
-      email: req.body.email,
-    };
+    const accessToken = await jwtHelper.generateToken(email, accessTokenSecret, accessTokenLife);
 
-    const accessToken = await jwtHelper.generateToken(userData, accessTokenSecret, accessTokenLife);
-
-    const refreshToken = await jwtHelper.generateToken(userData, refreshTokenSecret, refreshTokenLife);
+    const refreshToken = await jwtHelper.generateToken(email, refreshTokenSecret, refreshTokenLife);
 
     // Lưu lại 2 mã access & Refresh token, với key chính là cái refreshToken để đảm bảo unique và không sợ hacker sửa đổi dữ liệu truyền lên.
     // lưu ý trong dự án thực tế, nên lưu chỗ khác, có thể lưu vào Redis hoặc DB
@@ -109,7 +94,7 @@ const login = async (req, res) => {
       data: {
         accessToken,
         refreshToken,
-        type: TokenType.EMAIL,
+        type: TokenType.API,
         expiration: tokenExpiration,
         user: {
           connectOrCreate: {
