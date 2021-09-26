@@ -28,6 +28,7 @@ export const Container = styled.div`
     display: block;
     margin-left: auto;
     margin-right: auto;
+    width: 125px;
   } 
   
   .menu-style {
