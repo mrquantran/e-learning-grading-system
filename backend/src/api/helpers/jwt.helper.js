@@ -28,7 +28,7 @@ export const generateToken = (email, secretSignature, tokenLife) => new Promise(
         return reject(error);
       }
       // eslint-disable-next-line no-console
-      console.log(token);
+      // console.log(token);
       resolve(token);
     },
   );
