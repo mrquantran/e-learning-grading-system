@@ -2,7 +2,7 @@
 import express from 'express';
 import { body } from 'express-validator';
 import { REGEX_EMAIL, REGEX_PASSWORD } from '../../constant/auth.js';
-import { login } from '../../controller/account/login.js';
+import register from '../../controller/account/register.js';
 import { validate } from '../../validation/validate.js';
 
 const router = express.Router();
@@ -18,6 +18,12 @@ router.post('/', validate([
     .withMessage('password can not be empty')
     .matches(REGEX_PASSWORD)
     .withMessage('password is not a valid password'),
-]), login);
+  body('firstName')
+    .notEmpty()
+    .withMessage('firstName can not be empty'),
+  body('lastName')
+    .notEmpty()
+    .withMessage('lastName can not be empty'),
+]), register);
 
 export default router;

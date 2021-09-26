@@ -8,6 +8,7 @@ import testResults from './test-result/testResult.js';
 import login from './account/login.js';
 import email from './account/email.js';
 import auth from './account/auth.js';
+import signup from './account/register.js';
 
 const router = express.Router();
 
@@ -25,5 +26,7 @@ router.use('/login', login);
 router.use('/email', email);
 // end point to authenticate when email was sent
 router.use('/auth', auth);
+// end pont to register or register
+router.use('/signup', signup);
 
 export default router;

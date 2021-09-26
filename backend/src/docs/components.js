@@ -36,6 +36,31 @@ const components = {
           },
         },
       },
+      SignupAccount: {
+        type: 'object',
+        properties: {
+          email: {
+            type: 'string',
+            description: 'email user',
+            example: 'grace@hey.com',
+          },
+          password: {
+            type: 'string',
+            description: 'password user',
+            example: '123456',
+          },
+          firstName: {
+            type: 'string',
+            description: 'first name user',
+            example: 'grace',
+          },
+          lastName: {
+            type: 'string',
+            description: 'last name user',
+            example: 'bruce',
+          },
+        },
+      },
       Tests: {
         type: 'object',
         properties: {
