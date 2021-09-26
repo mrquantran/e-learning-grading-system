@@ -12,7 +12,7 @@ const { accessTokenLife, refreshTokenLife } = tokenInfo;
 
 /* eslint-disable import/extensions */
 const authenticateHandler = async (req, res) => {
-  const { email, emailToken } = req.body;
+  const { emailToken } = req.body;
 
   try {
     // Get short lived email token
@@ -36,14 +36,14 @@ const authenticateHandler = async (req, res) => {
     }
 
     // If token matches the user email passed in the payload, generate long lived API token
-    if (fetchedEmailToken.user.email === email) {
+    if (fetchedEmailToken.user.email) {
       const tokenExpiration = add(new Date(), {
         minutes: accessTokenLife,
       });
 
-      const accessToken = await jwtHelper.generateToken(email, accessTokenSecret, accessTokenLife);
+      const accessToken = await jwtHelper.generateToken(fetchedEmailToken.user.email, accessTokenSecret, accessTokenLife);
 
-      const refreshToken = await jwtHelper.generateToken(email, refreshTokenSecret, refreshTokenLife);
+      const refreshToken = await jwtHelper.generateToken(fetchedEmailToken.user.email, refreshTokenSecret, refreshTokenLife);
 
       // Persist token in DB so it's stateful
       // eslint-disable-next-line no-unused-vars
@@ -56,10 +56,10 @@ const authenticateHandler = async (req, res) => {
           user: {
             connectOrCreate: {
               create: {
-                email,
+                email: fetchedEmailToken.user.email,
               },
               where: {
-                email,
+                email: fetchedEmailToken.user.email,
               },
             },
           },
@@ -75,6 +75,17 @@ const authenticateHandler = async (req, res) => {
           valid: false,
         },
       });
+
+      if (!fetchedEmailToken.user.active) {
+        await prisma.user.update({
+          where: {
+            email: fetchedEmailToken.user.email,
+          },
+          data: {
+            active: true,
+          },
+        });
+      }
 
       return res.status(200).json({ accessToken, refreshToken, message: 'email is authenticated' });
     }

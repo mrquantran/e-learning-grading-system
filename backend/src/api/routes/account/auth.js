@@ -7,13 +7,13 @@ import authenticate from '../../controller/account/authenticate.js';
 const router = express.Router();
 
 const redirectAuth = async (req, res) => {
-  const { id: emailToken, email } = req.params;
+  const { id: emailToken } = req.params;
 
-  if (!emailToken || !email) {
+  if (!emailToken) {
     res.status(401).json({ message: 'email token not have' });
   }
 
-  const data = { emailToken, email };
+  const data = { emailToken };
 
   const authData = await fetch(`${clientURL}${port}/auth`, {
     method: 'POST',
@@ -26,6 +26,6 @@ const redirectAuth = async (req, res) => {
 };
 
 router.post('/', authenticate);
-router.get('/:id/:email', redirectAuth);
+router.get('/:id', redirectAuth);
 
 export default router;

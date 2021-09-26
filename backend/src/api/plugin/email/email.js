@@ -4,7 +4,7 @@ import { port, clientURL } from '../../../config.js';
 import emailTemplate from './emailTemplate.js';
 
 export async function sendEmailToken(email, token) {
-  const verifyURL = `${clientURL}${port}/auth/${token}/${email}`;
+  const verifyURL = `${clientURL}${port}/auth/${token}`;
   const template = emailTemplate(email, verifyURL);
 
   const msg = {

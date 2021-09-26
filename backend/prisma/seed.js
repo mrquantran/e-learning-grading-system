@@ -37,6 +37,7 @@ async function main() {
         firstName: user.firstName,
         lastName: user.lastName,
         password: hash,
+        active: true,
         // courses: {
         //   create: {
         //     role: user.ROLE,

@@ -1,38 +1,52 @@
 /* eslint-disable import/extensions */
-/* eslint-disable max-len */
 import pkg from '@prisma/client';
+import bcrypt from 'bcrypt';
 import { add } from 'date-fns';
 import sendgrid from '@sendgrid/mail';
-import {
-  sendGridEmailKey, tokenInfo,
-} from '../../../config.js';
-import { sendEmailToken } from '../../plugin/email/email.js';
 import { generateEmailToken } from '../../constant/auth.js';
+import { sendEmailToken } from '../../plugin/email/email.js';
+
+import { sendGridEmailKey, tokenInfo } from '../../../config.js';
 
 const { PrismaClient, TokenType } = pkg;
 const prisma = new PrismaClient();
 
 const { emailTokenLife } = tokenInfo;
 
-// eslint-disable-next-line consistent-return
-const sendEmail = async (req, res) => {
+const signup = async (req, res) => {
   try {
-    const { email: emailReq } = req.body;
+    const {
+      email, password, firstName, lastName,
+    } = req.body;
 
     const emailUser = await prisma.user.findUnique({
       where: {
-        email: emailReq,
+        email,
       },
       select: {
         email: true,
+        password: true,
       },
     });
 
-    const { email } = emailUser;
-
-    if (!email) {
-      return res.status(403).json({ message: 'email not created' });
+    if (emailUser) {
+      return res.status(401).json({ message: 'email is existed' });
     }
+
+    // salt
+    const saltRounds = await bcrypt.genSalt(10);
+    // now we set user password to hashed password
+    const hash = bcrypt.hashSync(password, saltRounds);
+
+    await prisma.user.create({
+      data: {
+        email,
+        firstName,
+        lastName,
+        password: hash,
+        active: false,
+      },
+    });
 
     // 👇 generate an alphanumeric token
     // eslint-disable-next-line no-unused-vars
@@ -72,7 +86,7 @@ const sendEmail = async (req, res) => {
     await sendEmailToken(email, emailToken);
 
     return res.status(200).json({
-      message: 'email sent successfully',
+      message: 'register successfully. You need to confirm account in your email',
       email,
       emailToken,
     });
@@ -83,4 +97,4 @@ const sendEmail = async (req, res) => {
   }
 };
 
-export default sendEmail;
+export default signup;
