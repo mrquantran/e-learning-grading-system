@@ -4,6 +4,11 @@ import React from "react"
 import "antd/dist/antd.css"
 import "./App.styled.scss"
 
+// asset
+// import "../assets/css/style.css"
+// import "../assets/css/skin_color.css"
+// import "../assets/css/vendors_css.css"
+
 // import route
 import { Router, Switch } from "react-router-dom"
 import { createBrowserHistory, History } from "history"

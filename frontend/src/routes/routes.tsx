@@ -1,10 +1,10 @@
-import Dashboard from "@/pages/Dashboard/Dashboard"
+import DashboardPage from "@/pages/Dashboard/DashboardPage"
 
 const routesHome = [
   {
     path: "/",
     exact: true,
-    component: Dashboard
+    component: DashboardPage
   }
 ]
 

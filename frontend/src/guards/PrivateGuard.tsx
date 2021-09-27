@@ -5,7 +5,7 @@ import {
   Redirect,
   RouteComponentProps
 } from "react-router-dom"
-import { connect } from "react-redux"
+// import { connect } from "react-redux"
 
 import configureStore from "../redux/saga/rootSaga"
 

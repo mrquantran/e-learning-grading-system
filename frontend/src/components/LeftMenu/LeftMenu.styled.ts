@@ -22,15 +22,14 @@ export const Container = styled.div`
     }
     height: 80px;
     background: #fff;
-
   }
-  .logo img{
+  .logo img {
     display: block;
     margin-left: auto;
     margin-right: auto;
     width: 125px;
-  } 
-  
+  }
+
   .menu-style {
     height: 100vh;
     // width: 256px;
