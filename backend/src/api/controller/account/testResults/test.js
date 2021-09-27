@@ -21,7 +21,7 @@ async function getTest(id) {
   return test;
 }
 
-async function createTest(courseID, role, name) {
+async function createTest(courseID, name) {
   const test = await prisma.test.create({
     data: {
       courseID: Number(courseID),
@@ -65,7 +65,7 @@ router.get('test/:id', validate([
     next(httpError);
   }));
 
-router.put('test/:id', validate([
+router.post('test/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
@@ -104,7 +104,7 @@ router.delete('test/:id', validate([
     next(httpError);
   }));
 
-router.patch('test/:id', validate([
+router.put('test/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
