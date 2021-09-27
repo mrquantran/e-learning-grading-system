@@ -1,5 +1,4 @@
-/* eslint-disable consistent-return */
-/* eslint-disable import/extensions */
+/* eslint-disable promise/no-callback-in-promise */
 import express from 'express';
 import pkg from '@prisma/client';
 import createHttpError from 'http-errors';
@@ -7,47 +6,26 @@ import {
   body, param,
 } from 'express-validator';
 // eslint-disable-next-line import/extensions
-import { format, parse } from 'date-fns';
-import { validate } from '../../validation/validate.js';
-// import { isValidDate } from '../../constant/ENUM.js';
+import { validate } from '../../../validation/validate.js';
 
 const router = express.Router();
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
 async function getTest(id) {
-  const test = await prisma.test.findUnique({
+  const test = await prisma.test.findMany({
     where: {
-      id: Number(id),
+      testId: Number(id),
     },
   });
   return test;
 }
 
-const formatDate = (dateString) => {
-  if (!dateString) {
-    return;
-  }
-
-  const date = parse(dateString, 'yyyy/MM/dd', new Date()); // not MM-DD-YY
-  const result = format(date, "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
-
-  return result;
-};
-
-async function createTest(name, date, courseId) {
-  // format date
-  const dateFormat = await formatDate(date);
-
+async function createTest(courseID, name) {
   const test = await prisma.test.create({
     data: {
+      courseID: Number(courseID),
       name,
-      date: dateFormat,
-      course: {
-        connect: {
-          id: Number(courseId),
-        },
-      },
     },
   });
   return test;
@@ -63,23 +41,19 @@ async function deleteTest(id) {
   return test;
 }
 
-async function updateTest(name, date, id) {
-// format date
-  const dateFormat = formatDate(date);
-
-  const test = await prisma.test.update({
+async function updateTest(id, newtest) {
+  const test = await prisma.testResult.update({
     where: {
       id: Number(id),
     },
     data: {
-      name,
-      date: dateFormat,
+      newtest,
     },
   });
   return test;
 }
 
-router.get('/tests/:id', validate([
+router.get('test/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
@@ -91,7 +65,7 @@ router.get('/tests/:id', validate([
     next(httpError);
   }));
 
-router.post('/:id/tests', validate([
+router.post('test/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
@@ -99,59 +73,49 @@ router.post('/:id/tests', validate([
     .isString()
     .withMessage('name must be a string')
     .notEmpty()
-    .withMessage('name is not empty'),
-  body('date')
+    .withMessage('name is empty'),
+  body('courseId ')
+    .isNumeric()
+    .withMessage('courseId  must be a number')
     .notEmpty()
-    .withMessage('date is not empty')
-    .isDate()
-    .withMessage('date is not correct format'),
+    .withMessage('courseId  is empty'),
+
 ]), (req, res, next) => {
   const {
-    name, date,
+    result, studentId,
   } = req.body;
-
-  createTest(name, date, req.params.id)
-    .then(() => res.json({ message: 'Test created successfully' }))
+  createTest(result, studentId, req.params.id)
+    .then((data) => res.json(data))
     .catch((error) => {
       const httpError = createHttpError(500, error);
-      // eslint-disable-next-line promise/no-callback-in-promise
       next(httpError);
     });
 });
 
-router.delete('/tests/:id', validate([
+router.delete('test/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
 ]), (req, res, next) => deleteTest(req.params.id)
-  .then(() => res.json({ message: 'Test is deleted successfully' }))
+  .then((data) => res.json(data))
   .catch((error) => {
     const httpError = createHttpError(500, error);
     // eslint-disable-next-line promise/no-callback-in-promise
     next(httpError);
   }));
 
-router.put('/tests/:id', validate([
+router.put('test/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
-  body('name')
-    .optional()
-    .isString()
-    .withMessage('name must be a string'),
-  body('date')
-    .optional()
-    .isDate()
-    .withMessage('date is not correct format'),
 ]), (req, res, next) => {
   const {
-    name, date,
+    newtest,
   } = req.body;
-  updateTest(name, date, req.params.id)
+  updateTest(req.params.id, newtest)
     .then((data) => res.json(data))
     .catch((error) => {
       const httpError = createHttpError(500, error);
-      // eslint-disable-next-line promise/no-callback-in-promise
       next(httpError);
     });
 });

@@ -5,6 +5,8 @@ import express from 'express';
 import coursesList from './courses/coursesList.js';
 import testResults from './test-result/testResult.js';
 
+import test from './test/test.js';
+
 import login from './account/login.js';
 import email from './account/email.js';
 import auth from './account/auth.js';
@@ -17,8 +19,14 @@ const router = express.Router();
 // router.use('/', apikey);
 /*-------------------------------------------------------------------------*/
 
+// courses
 router.use('/courses', coursesList);
+
+// test result
 router.use('/courses/tests', testResults);
+
+// test
+router.use('/courses', test);
 
 // Endpoint to login or register and to send the short lived token
 router.use('/login', login);

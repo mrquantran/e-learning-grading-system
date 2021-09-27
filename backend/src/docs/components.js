@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-escape */
 const components = {
   components: {
     schemas: {
@@ -86,6 +87,23 @@ const components = {
           },
         },
       },
+      TestInput: {
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string',
+            description: 'Result of test result',
+            example: 'Test',
+          },
+          date: {
+            type: 'date',
+            description: 'Date created',
+            pattern: '^\d{4}[\-\/\s]?((((0[13578])|(1[02]))[\-\/\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\-\/\s]?(([0-2][0-9])|(30)))|(02[\-\/\s]?[0-2][0-9]))',
+            example: '2019/05/17',
+          },
+
+        },
+      },
       TestResults: {
         type: 'object',
         properties: {
@@ -139,6 +157,7 @@ const components = {
           },
         },
       },
+
       Courses: {
         type: 'object',
         properties: {
