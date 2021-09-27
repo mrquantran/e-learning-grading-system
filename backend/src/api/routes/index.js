@@ -19,9 +19,14 @@ const router = express.Router();
 // router.use('/', apikey);
 /*-------------------------------------------------------------------------*/
 
+// courses
 router.use('/courses', coursesList);
+
+// test result
 router.use('/courses/tests', testResults);
-router.use('/courses/', test);
+
+// test
+router.use('/courses', test);
 
 // Endpoint to login or register and to send the short lived token
 router.use('/login', login);
