@@ -9,7 +9,15 @@ const initialState = {
 
 const dashboardReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case actions.FETCH_COURSES_DATA.REQUEST:
+    case actions.FETCH_COURSES_DATA.REQUEST: {
+      return {
+        ...state,
+        courses: {
+          isFetching: true
+        }
+      }
+    }
+    case actions.FETCH_COURSES_DATA.SUCCESS: {
       return {
         ...state,
         courses: {
@@ -17,6 +25,7 @@ const dashboardReducer = (state = initialState, { type, payload }) => {
           data: payload
         }
       }
+    }
     default:
       return state
   }

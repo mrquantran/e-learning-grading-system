@@ -1,7 +1,7 @@
 import React from "react"
 import { CourseItemStyled } from "./CourseItem.styled"
 
-export default function CourseItem() {
+export default function CourseItem({ name, firstName, lastName }) {
   return (
     <CourseItemStyled>
       <div className="box pull-up">
@@ -9,12 +9,12 @@ export default function CourseItem() {
           <div className="bg-primary rounded">
             <h5 className="text-white text-center p-10">It &amp; software</h5>
           </div>
-          <p className="mb-0 font-size-18">Quisque a felis quis</p>
+          <p className="mb-0 font-size-18">{name}</p>
           <p className="mb-0 font-size-18">Course A-Z</p>
           <div className="d-flex justify-content-between mt-30">
             <div>
               <p className="mb-0 text-fade">Author</p>
-              <p className="mb-0">Maical Doe</p>
+              <p className="mb-0">{`${firstName} ${lastName}`}</p>
             </div>
             <div>
               <p className="mb-5 font-weight-600">55%</p>
