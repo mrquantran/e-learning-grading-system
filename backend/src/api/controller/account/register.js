@@ -1,3 +1,4 @@
+/* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 import pkg from '@prisma/client';
 import bcrypt from 'bcrypt';
