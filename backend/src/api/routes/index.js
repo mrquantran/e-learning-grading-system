@@ -4,6 +4,7 @@ import express from 'express';
 // import signup from './courses/signup.js';
 import coursesList from './courses/coursesList.js';
 import testResults from './test-result/testResult.js';
+import users from './user/user.js';
 
 import test from './test/test.js';
 
@@ -24,6 +25,7 @@ router.use('/courses', coursesList);
 
 // test result
 router.use('/courses/tests', testResults);
+router.use('/users', users);
 
 // test
 router.use('/courses', test);
