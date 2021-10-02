@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable max-len */
 /* eslint-disable import/extensions */
 import * as jwtHelper from '../helpers/jwt.helper.js';
-import accessTokenSecret from '../../config.js';
+import { accessTokenSecret } from '../../config.js';
 
 /**
  * Middleware: Authorization user by Token
@@ -13,6 +14,7 @@ import accessTokenSecret from '../../config.js';
 
 // eslint-disable-next-line consistent-return
 const isAuth = async (req, res, next) => {
+  console.log('Auth middleware run');
   // Lấy token được gửi lên từ phía client, thông thường tốt nhất là các bạn nên truyền token vào header
   const tokenFromClient = req.body.token || req.query.token || req.headers['x-access-token'];
 
