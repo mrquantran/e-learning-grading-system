@@ -14,8 +14,8 @@ export default function CourseSlider() {
   const { data } = useSelector((state: any) => state.dashboard.courses)
 
   const renderCourses = () => {
-    return data?.map(item => (
-      <div className="col-3">
+    return data?.map((item, index) => (
+      <div key={index} className="col-3">
         <CourseItem
           name={item.name}
           firstName={item.firstName}
