@@ -13,9 +13,9 @@ export default function Dashboard() {
   return (
     <DashboardComponentsStyled>
       <Carousel />
-      <div className="row">
-        <CourseSlider />
-      </div>
+      {/* <div className="row"> */}
+      <CourseSlider />
+      {/* </div> */}
     </DashboardComponentsStyled>
   )
 }
