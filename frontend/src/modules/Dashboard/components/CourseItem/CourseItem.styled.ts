@@ -1,13 +1,10 @@
 import styled from "styled-components"
 
-export const CarouselBoxStyled = styled.div`
-  .bg-gradient-primary,
-  .theme-primary .bg-gradient-primary,
-  .theme-primary .art-bg {
-    background: linear-gradient(45deg, #0052cc, #00baff);
-  }
-
+export const CourseItemStyled = styled.div`
   .pull-up {
+    -webkit-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    -moz-transition: all 0.25s ease;
     transition: all 0.25s ease;
   }
 
@@ -28,10 +25,6 @@ export const CarouselBoxStyled = styled.div`
     box-shadow: 0 0 30px 0 rgb(82 63 105 / 5%);
   }
 
-  .overflow-hidden {
-    overflow: hidden !important;
-  }
-
   .box-body {
     padding: 1.5rem 1.5rem;
     -ms-flex: 1 1 auto;
@@ -39,16 +32,14 @@ export const CarouselBoxStyled = styled.div`
     border-radius: 10px;
   }
 
-  .box-body > *:last-child {
-    margin-bottom: 0;
+  .theme-primary .bg-primary {
+    background-color: #0052cc !important;
+    color: #ffffff;
   }
-  .align-items-center {
-    align-items: center !important;
-  }
-  .row {
-    display: flex;
-    flex-wrap: wrap;
-    margin-right: -15px;
-    margin-left: -15px;
+
+  .box-header .box-title {
+    display: inline-block;
+    margin: 0;
+    font-weight: 400;
   }
 `
