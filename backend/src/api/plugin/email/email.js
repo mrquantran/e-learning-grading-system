@@ -1,7 +1,7 @@
 /* eslint-disable import/extensions */
 import sendgrid from '@sendgrid/mail';
 import { port, clientURL } from '../../../config.js';
-import emailTemplate from './emailTemplate.js';
+import emailTemplate from './newEmailTemplate.js';
 
 export async function sendEmailToken(email, token) {
   const verifyURL = `${clientURL}${port}/auth/${token}`;
