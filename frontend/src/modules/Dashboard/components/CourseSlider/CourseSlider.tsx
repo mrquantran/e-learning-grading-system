@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import actions from "../../action/index"
-import CourseItem from "../../components/CourseItem/CourseItem"
+import CourseItem from "../CourseItem/CourseItem"
 
 import "@@/node_modules/slick-carousel/slick/slick.css"
 import "@@/node_modules/slick-carousel/slick/slick-theme.css"
