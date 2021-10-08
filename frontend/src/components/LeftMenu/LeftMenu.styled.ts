@@ -7,16 +7,14 @@ export const Container = styled.div`
   //   max-width: 300px !important;
   //   min-width: 256px !important;
   // }
- 
 
-
-  .ant-layout-sider{
-    height:100%;
+  .ant-layout-sider {
+    height: 100%;
   }
 
   .ant-layout-sider-children {
     background: white;
-}
+  }
 
   // .site-layout .site-layout-background {
   //   background: #fff;
@@ -48,7 +46,5 @@ export const Container = styled.div`
     .ant-menu-item {
       height: 57px !important;
     }
-    
-
   }
 `
