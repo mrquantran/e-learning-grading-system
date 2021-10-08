@@ -11,13 +11,14 @@ export default function GoodStudent() {
     <div className="col-12 ">
       <div className="box">
         <div className="box-header with-border">
-          <h4 className="box-title">Students Progress </h4>
+          <h4 className="box-title">Top score students </h4>
           <ul className="box-controls pull-right d-md-flex d-none">
             <li className="dropdown">
               <button
                 className="btn btn-primary px-10 "
                 data-toggle="dropdown"
                 // href="#"
+                style={{ color: "white" }}
               >
                 View List
               </button>

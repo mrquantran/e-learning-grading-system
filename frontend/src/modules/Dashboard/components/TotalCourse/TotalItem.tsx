@@ -14,7 +14,12 @@ export default function TotalItem({ title, total }) {
             <p className="font-weight-600 text-info">{title}</p>
           </div>
           <div className="box-body">
-            <h1 className="countnm font-size-50 m-0">{total}</h1>
+            <h1
+              className="countnm font-size-50 m-0"
+              style={{ color: "#2f579a" }}
+            >
+              {total}
+            </h1>
           </div>
         </a>
       </TotalItemStyled>
