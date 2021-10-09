@@ -18,6 +18,8 @@ import { CLOSE_SIDE_NAV } from "@/App/actions/App.actions"
 import { RootState } from "@/redux/reducer/rootReducer"
 import { HeaderContent, IconHeader } from "./Navbar.styled"
 
+import { Link } from "react-router-dom"
+
 const { Header } = Layout
 
 const styledIcon = {
@@ -128,11 +130,13 @@ export default function Navbar() {
               <NotificationFilled style={styledIcon} />
             </IconHeader>
           </Dropdown>
-          <Dropdown overlay={menuProfile} placement="bottomCenter">
+          {/* <Dropdown overlay={menuProfile} placement="bottomCenter"> */}
+          <Link to="/login">
             <IconHeader>
               <UserOutlined style={styledIcon} />
             </IconHeader>
-          </Dropdown>
+          </Link>
+          {/* </Dropdown> */}
           <Dropdown overlay={menu}>
             <IconHeader>
               <SettingOutlined style={styledIcon} />
