@@ -1,3 +1,5 @@
+/* eslint-disable no-lonely-if */
+/* eslint-disable import/extensions */
 /* eslint-disable no-shadow */
 /* eslint-disable no-else-return */
 /* eslint-disable prefer-const */
@@ -11,16 +13,20 @@
 import pkg from '@prisma/client';
 import createHttpError from 'http-errors';
 import bcrypt from 'bcrypt';
+import { REGEX_PASSWORD, PASSWORD_DEFAULT } from '../../constant/auth.js';
 
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g;
+// const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g;
 
 const createUser = async function (req, res, next) {
   const {
     firstName, lastName, email, password,
   } = req.body;
+
+  let storePassword = password;
+
   try {
     const checkEmailExist = await prisma.user.findUnique({
       where: {
@@ -31,19 +37,24 @@ const createUser = async function (req, res, next) {
       },
     });
 
-    // Check password: password does not matches the regex then return and notify error
-    if (!PASSWORD_REGEX.test(password)) {
-      return res.status(401).json({ message: 'Password should contain 6 characters, at least one uppercase letter, one lowercase letter and one number.' });
-    }
-
     // Check whether the email exists
     if (checkEmailExist) {
       return res.status(401).json({ message: 'Email is existed' });
     }
 
+    if (storePassword.isEmpty()) {
+      storePassword = PASSWORD_DEFAULT;
+    } else {
+      // Check password if not empty:
+      // password does not matches the regex then return and notify error
+      if (!REGEX_PASSWORD.test(storePassword)) {
+        return res.status(401).json({ message: 'Password should contain 8 characters, at least one uppercase letter, one lowercase letter and one number.' });
+      }
+    }
+
     // Hash password
     const saltRounds = await bcrypt.genSalt(10);
-    const passwordHash = bcrypt.hashSync(password, saltRounds);
+    const passwordHash = bcrypt.hashSync(storePassword, saltRounds);
 
     await prisma.user.create({
       data: {
@@ -65,15 +76,15 @@ const createUser = async function (req, res, next) {
 
 const getUsers = async function (req, res, next) {
   try {
-    const users = await prisma.user.findMany({ orderBy: { id: 'asc' } });
+    const users = await prisma.user.findMany({
+      orderBy: { id: 'asc' },
+    });
 
     if (users == null) {
       return res.status(401).json({ message: 'Do not have any user.' });
     }
 
-    return res.status(200).json({
-      users,
-    });
+    return res.status(200).json(users);
   } catch (err) {
     const httpError = createHttpError(500, err);
     next(httpError);
@@ -92,9 +103,7 @@ const getUser = async function (req, res, next) {
       return res.status(401).json({ message: 'User does not exist' });
     }
 
-    return res.status(200).json({
-      user,
-    });
+    return res.status(200).json(user);
   } catch (err) {
     const httpError = createHttpError(500, err);
     next(httpError);
@@ -107,9 +116,7 @@ const updateUser = async function (req, res, next) {
 
   // Check new password
   if (password != null) {
-    console.log(password);
-    if (PASSWORD_REGEX.test(password)) {
-      console.log(password);
+    if (REGEX_PASSWORD.test(password)) {
       // Hash new password
       const saltRounds = await bcrypt.genSalt(10);
       passwordHash = bcrypt.hashSync(password, saltRounds);
@@ -119,7 +126,7 @@ const updateUser = async function (req, res, next) {
   }
 
   try {
-    const user = await prisma.user.update({
+    await prisma.user.update({
       where: {
         id: Number(req.params.id),
       },
@@ -132,7 +139,6 @@ const updateUser = async function (req, res, next) {
 
     return res.status(200).json({
       message: 'Update user successfully',
-      user,
     });
   } catch (err) {
     const httpError = createHttpError(500, err);
@@ -141,12 +147,27 @@ const updateUser = async function (req, res, next) {
 };
 
 const deleteUser = async function (req, res, next) {
+  const { id } = req.params.id;
   try {
-    await prisma.user.delete({
+    const checkUserExist = await prisma.user.findUnique({
       where: {
-        id: Number(req.params.id),
+        id,
+      },
+      select: {
+        id: true,
       },
     });
+
+    if (!checkUserExist) {
+      return res.status(401).json({ message: 'User is not existed' });
+    }
+
+    await prisma.user.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
     return res.status(200).json({
       message: 'Delete user successfully',
     });
