@@ -1,8 +1,8 @@
-import { LOGIN_FAILURE, LOGIN_REQUEST, LOGIN_SUCCESS } from "../action/login"
 import actions from "../action/login"
+import { checkAuthenticate } from "../saga/authenticationSaga"
 
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticated: checkAuthenticate(),
   isFetching: false,
   user: {}
 }
