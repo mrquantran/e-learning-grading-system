@@ -24,11 +24,13 @@ export default class LoginAction {
     }
   }
 
-  static receiveLogin(accessToken, expiresAt) {
+  static receiveLogin(user, expiresAt) {
     return {
       type: this.LOGIN_USER.SUCCESS,
-      accessToken,
-      expiresAt
+      payload: {
+        user,
+        expiresAt
+      }
     }
   }
 

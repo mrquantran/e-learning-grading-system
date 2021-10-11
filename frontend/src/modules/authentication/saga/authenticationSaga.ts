@@ -21,17 +21,16 @@ function setAccessToken(authResult) {
 }
 
 function removeAccessToken() {
-  localStorage.removeItem("access_token")
+  localStorage.removeItem("accessToken")
   localStorage.removeItem("expires_at")
-  localStorage.removeItem("refresh_token")
-  sessionStorage.removeItem("access_token")
-  sessionStorage.removeItem("refresh_token")
+  localStorage.removeItem("refreshToken")
+  sessionStorage.removeItem("accessToken")
+  sessionStorage.removeItem("refreshToken")
 }
 
 export function getAccessToken() {
   const accessToken =
-    localStorage.getItem("access_token") ||
-    sessionStorage.getItem("access_token")
+    localStorage.getItem("accessToken") || sessionStorage.getItem("accessToken")
   return accessToken
 }
 
@@ -39,13 +38,17 @@ export function getExpiration() {
   return localStorage.getItem("expires_at")
 }
 
+interface decodedToken {
+  data: string
+}
+
 export function getUserEmail() {
   const token = getAccessToken()
   if (token) {
     try {
-      const decodedToken: any = jwtDecode(token)
-      if (decodedToken && decodedToken.sub) {
-        return decodedToken.sub
+      const decodedToken: decodedToken = jwtDecode(token)
+      if (decodedToken && decodedToken.data) {
+        return decodedToken.data
       }
     } catch (error) {
       removeAccessToken()
@@ -53,6 +56,22 @@ export function getUserEmail() {
     }
   }
   return ""
+}
+
+export function getUserInfo() {
+  const token = getAccessToken()
+  if (token) {
+    try {
+      const decodedToken: decodedToken = jwtDecode(token)
+      if (decodedToken && decodedToken.data) {
+        return decodedToken.data
+      }
+    } catch (error) {
+      removeAccessToken()
+      return {}
+    }
+  }
+  return {}
 }
 
 export function checkAuthenticate() {
@@ -70,7 +89,8 @@ function* loginUser(payload) {
     const { data } = yield call(API.Account.loginUser, user)
     if (data) {
       setAccessToken(data)
-      yield put(LoginAction.receiveLogin(data.accessToken, data.expiration))
+      const decodedToken: decodedToken = jwtDecode(data.accessToken)
+      yield put(LoginAction.receiveLogin(decodedToken.data, data.expiration))
     } else {
       yield put(LoginAction.loginError(""))
     }

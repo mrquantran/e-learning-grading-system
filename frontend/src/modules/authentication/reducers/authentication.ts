@@ -1,10 +1,10 @@
 import actions from "../action/login"
-import { checkAuthenticate } from "../saga/authenticationSaga"
+import { checkAuthenticate, getUserInfo } from "../saga/authenticationSaga"
 
 const initialState = {
   isAuthenticated: checkAuthenticate(),
   isFetching: false,
-  user: {}
+  user: getUserInfo()
 }
 
 function authentication(state = initialState, { type, payload }) {
@@ -22,6 +22,7 @@ function authentication(state = initialState, { type, payload }) {
         ...state,
         isFetching: false,
         isAuthenticated: true,
+        user: payload.user,
         error: ""
       }
     case actions.LOGIN_USER.ERROR:
