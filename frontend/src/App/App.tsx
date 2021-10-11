@@ -17,7 +17,7 @@ import HomeTemplate from "@/template/HomeTemplate"
 import { routesHome, routesAuth } from "@/routes/routes"
 import AuthTemplate from "@/template/AuthTemplate"
 
-const history: History = createBrowserHistory()
+export const history: History = createBrowserHistory()
 
 const renderPublicRoute = routes => {
   if (routes && routes.length > 0) {

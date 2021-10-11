@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik"
 import { ErrorMessageStyled } from "./LoginForm.styled"
 import { useDispatch } from "react-redux"
 import { LOGIN_USER } from "../../action/login"
+import { history } from "@/App/App"
 
 interface MyFormValues {
   email: string
@@ -20,15 +21,12 @@ export default function LoginForm() {
       <Formik
         initialValues={initialValues}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            setSubmitting(false)
-            dispatch({
-              type: LOGIN_USER,
-              payload: {
-                user: values
-              }
-            })
-          }, 400)
+          setSubmitting(false)
+          dispatch({
+            type: LOGIN_USER,
+            user: values,
+            changeRoute: () => history.push("/")
+          })
         }}
         validate={values => {
           const errors: any = {}
