@@ -127,6 +127,7 @@ module.exports = (env, agrv) => {
       static: {
         directory: path.join(__dirname, "public")
       },
+      historyApiFallback: true,
       compress: true,
       port: 8080
     },

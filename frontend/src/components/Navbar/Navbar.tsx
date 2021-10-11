@@ -1,8 +1,9 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react"
 import { Layout } from "antd"
 import { Col } from "antd"
 import { Input, AutoComplete } from "antd"
-import { Menu, Dropdown, message } from "antd"
+import { Menu, Dropdown } from "antd"
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -17,6 +18,9 @@ import { useDispatch, useSelector } from "react-redux"
 import { CLOSE_SIDE_NAV } from "@/App/actions/App.actions"
 import { RootState } from "@/redux/reducer/rootReducer"
 import { HeaderContent, IconHeader } from "./Navbar.styled"
+
+import { Link } from "react-router-dom"
+import { LOGOUT_USER } from "@/modules/authentication/action/logout"
 
 const { Header } = Layout
 
@@ -42,39 +46,54 @@ const menu = (
   </Menu>
 )
 
-const menuProfile = (
-  <Menu>
-    <Menu.Item key="0">
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.antgroup.com"
-      >
-        1st menu item
-      </a>
-    </Menu.Item>
-    <Menu.Item key="1">
-      <a
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://www.aliyun.com"
-      >
-        2nd menu item
-      </a>
-    </Menu.Item>
-    <Menu.Divider />
-    <Menu.Item key="3" disabled>
-      3rd menu item（disabled）
-    </Menu.Item>
-  </Menu>
-)
-
 export default function Navbar() {
   const dispatch = useDispatch()
   const collapsed = useSelector((state: RootState) => state.app.closeSideNav)
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth)
 
   const closeSideNav = () => {
     dispatch({ type: CLOSE_SIDE_NAV })
+  }
+
+  const logoutUser = () => {
+    dispatch({ type: LOGOUT_USER })
+  }
+
+  const menuProfile = (
+    <Menu>
+      <Menu.Item key="0">
+        <a target="_blank" rel="noopener noreferrer" href="#">
+          Profile
+        </a>
+      </Menu.Item>
+      <Menu.Item key="1">
+        <a target="_blank" rel="noopener noreferrer" href="#">
+          My Learning
+        </a>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item onClick={logoutUser} key="3">
+        Logout
+      </Menu.Item>
+    </Menu>
+  )
+
+  const renderDropDownUser = isAuth => {
+    return isAuth ? (
+      <Dropdown overlay={menuProfile} placement="bottomCenter">
+        <Link to="/login">
+          <IconHeader>
+            <UserOutlined style={styledIcon} />
+          </IconHeader>
+        </Link>
+      </Dropdown>
+    ) : (
+      <Link to="/login">
+        <IconHeader>
+          <UserOutlined style={styledIcon} />
+        </IconHeader>
+      </Link>
+    )
   }
 
   const renderIconCollapse = (collapsed: boolean) => {
@@ -128,11 +147,7 @@ export default function Navbar() {
               <NotificationFilled style={styledIcon} />
             </IconHeader>
           </Dropdown>
-          <Dropdown overlay={menuProfile} placement="bottomCenter">
-            <IconHeader>
-              <UserOutlined style={styledIcon} />
-            </IconHeader>
-          </Dropdown>
+          {renderDropDownUser(isAuthenticated)}
           <Dropdown overlay={menu}>
             <IconHeader>
               <SettingOutlined style={styledIcon} />

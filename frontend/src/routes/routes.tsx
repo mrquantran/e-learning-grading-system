@@ -1,4 +1,5 @@
 import DashboardPage from "@/pages/Dashboard/DashboardPage"
+import LoginPage from "@/pages/Login/LoginPage"
 
 const routesHome = [
   {
@@ -8,4 +9,12 @@ const routesHome = [
   }
 ]
 
-export { routesHome }
+const routesAuth = [
+  {
+    path: "/login",
+    exact: true,
+    component: LoginPage
+  }
+]
+
+export { routesHome, routesAuth }

@@ -11,11 +11,13 @@ import "./App.styled.scss"
 
 // import route
 import { Router, Switch } from "react-router-dom"
+
 import { createBrowserHistory, History } from "history"
 import HomeTemplate from "@/template/HomeTemplate"
-import { routesHome } from "@/routes/routes"
+import { routesHome, routesAuth } from "@/routes/routes"
+import AuthTemplate from "@/template/AuthTemplate"
 
-const history: History = createBrowserHistory()
+export const history: History = createBrowserHistory()
 
 const renderPublicRoute = routes => {
   if (routes && routes.length > 0) {
@@ -32,10 +34,29 @@ const renderPublicRoute = routes => {
   }
 }
 
+const renderAuthRoute = routes => {
+  if (routes && routes.length > 0) {
+    return routes.map((item, index) => {
+      return (
+        <AuthTemplate
+          key={index}
+          exact={item.exact}
+          path={item.path}
+          Component={item.component}
+        ></AuthTemplate>
+      )
+    })
+  }
+}
+
 function App() {
   return (
     <Router history={history}>
-      <Switch>{renderPublicRoute(routesHome)}</Switch>
+      {/* public Route */}
+      <Switch>
+        {renderPublicRoute(routesHome)}
+        {renderAuthRoute(routesAuth)}
+      </Switch>
     </Router>
   )
 }

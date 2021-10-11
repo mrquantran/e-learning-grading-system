@@ -2,6 +2,7 @@ import { fetchCourses } from "./courses/courses.api"
 import axios, { AxiosRequestConfig } from "axios"
 import { isObject, map, flatten } from "underscore"
 import { BASE_URL } from "./const"
+import Account from "./account/account"
 
 // axios.defaults.params = axios.defaults.params || { culture: "en" }
 axios.defaults.headers.common["Content-Type"] = "application/json"
@@ -51,5 +52,6 @@ export function getErrorMessage(error) {
 
 export const API = {
   //courses
-  fetchCourses
+  fetchCourses,
+  Account
 }
