@@ -1,4 +1,5 @@
-import actions from "../action/login"
+import actionLogin from "../action/login"
+import actionLogout from "../action/logout"
 import { checkAuthenticate, getUserInfo } from "../saga/authenticationSaga"
 
 const initialState = {
@@ -9,7 +10,7 @@ const initialState = {
 
 function authentication(state = initialState, { type, payload }) {
   switch (type) {
-    case actions.LOGIN_USER.REQUEST:
+    case actionLogin.LOGIN_USER.REQUEST:
       return {
         ...state,
         isFetching: true,
@@ -17,7 +18,7 @@ function authentication(state = initialState, { type, payload }) {
         user: payload,
         error: ""
       }
-    case actions.LOGIN_USER.SUCCESS:
+    case actionLogin.LOGIN_USER.SUCCESS:
       return {
         ...state,
         isFetching: false,
@@ -25,12 +26,19 @@ function authentication(state = initialState, { type, payload }) {
         user: payload.user,
         error: ""
       }
-    case actions.LOGIN_USER.ERROR:
+    case actionLogin.LOGIN_USER.ERROR:
       return {
         ...state,
         error: payload,
         isFetching: false,
         isAuthenticated: false
+      }
+    case actionLogout.LOGOUT_USER.SUCCESS:
+    case actionLogout.LOGOUT_USER.ERROR:
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: {}
       }
     default:
       return state

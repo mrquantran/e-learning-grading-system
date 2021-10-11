@@ -5,6 +5,7 @@ import { all, call, put, takeLatest } from "@redux-saga/core/effects"
 import { errorNotification, getError } from "@/utils/notification"
 
 import jwtDecode from "jwt-decode"
+import LogoutAction, { LOGOUT_USER } from "../action/logout"
 
 function setAccessToken(authResult) {
   //   const expiresAt = moment(authResult.expiration).valueOf()
@@ -26,6 +27,10 @@ function removeAccessToken() {
   localStorage.removeItem("refreshToken")
   sessionStorage.removeItem("accessToken")
   sessionStorage.removeItem("refreshToken")
+
+  const loggedIn: string = "false"
+  localStorage.setItem("logged-in", loggedIn)
+  sessionStorage.setItem("logged-in", loggedIn)
 }
 
 export function getAccessToken() {
@@ -106,6 +111,20 @@ function* watchLoginUser() {
   yield takeLatest(LOGIN_USER, loginUser)
 }
 
+function* logoutUser(gotoDashboard) {
+  try {
+    removeAccessToken()
+    yield put(LogoutAction.receiveLogout())
+    gotoDashboard()
+  } catch (error) {
+    yield put(LogoutAction.logoutError(getError(error)))
+  }
+}
+
+function* watchLogout() {
+  yield takeLatest(LOGOUT_USER, logoutUser)
+}
+
 export default function* authSaga() {
-  yield all([watchLoginUser()])
+  yield all([watchLoginUser(), watchLogout()])
 }
