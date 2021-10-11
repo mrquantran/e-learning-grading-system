@@ -208,6 +208,6 @@ export default function GoodStudent() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   )
 }

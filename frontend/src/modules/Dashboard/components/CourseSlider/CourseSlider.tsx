@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux"
 
 import actions from "../../action/index"
 import CourseItem from "../CourseItem/CourseItem"
+import { NextArrowStyle } from "./NextArrow.styled"
 
 import "@@/node_modules/slick-carousel/slick/slick.css"
 import "@@/node_modules/slick-carousel/slick/slick-theme.css"
@@ -18,7 +19,18 @@ function NextArrow(props) {
   return (
     <div
       className={className}
-      style={{ ...style, display: "block", background: "green" }}
+      style={{
+        ...style,
+        display: "block",
+        background: "black",
+        borderRadius: "50%",
+        top: "40%",
+        right: "-1.6rem",
+        height: "40px",
+        width: "40px",
+        border: "1px solid #6a6f73",
+        boxshadow: "0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%)"
+      }}
       onClick={onClick}
     />
   )
