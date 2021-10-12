@@ -81,11 +81,9 @@ export default function Navbar() {
   const renderDropDownUser = isAuth => {
     return isAuth ? (
       <Dropdown overlay={menuProfile} placement="bottomCenter">
-        <Link to="/login">
-          <IconHeader>
-            <UserOutlined style={styledIcon} />
-          </IconHeader>
-        </Link>
+        <IconHeader>
+          <UserOutlined style={styledIcon} />
+        </IconHeader>
       </Dropdown>
     ) : (
       <Link to="/login">
