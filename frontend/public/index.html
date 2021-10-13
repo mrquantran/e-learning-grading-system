@@ -23,6 +23,36 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div
+      id="loader"
+      style="background: #fff url('/loader.gif') no-repeat center center"
+    ></div>
     <div id="root"></div>
+
+    <script>
+      // loader
+
+      var loader
+
+      function loadNow(opacity) {
+        if (opacity <= 0) {
+          displayContent()
+        } else {
+          loader.style.opacity = opacity
+          window.setTimeout(function () {
+            loadNow(opacity - 0.05)
+          }, 50)
+        }
+      }
+
+      function displayContent() {
+        loader.style.display = "none"
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        loader = document.getElementById("loader")
+        loadNow(1)
+      })
+    </script>
   </body>
 </html>

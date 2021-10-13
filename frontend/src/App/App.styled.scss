@@ -335,3 +335,22 @@ h6 {
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
+
+/*-----Preloader---*/
+
+#loader {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  z-index: 999999;
+  overflow: visible;
+  background: #fff url("../assets/images/preloaders/1.gif") no-repeat center
+    center;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
