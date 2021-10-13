@@ -18,7 +18,7 @@ export const sendGridEmailKey = process.env.SEND_GRID_EMAIL_KEY || 'SG.BLRUJFtsS
 export const corsUrl = process.env.CORS_URL || '*';
 
 export const tokenInfo = {
-  accessTokenLife: process.env.ACCESS_TOKEN_LIFE || 60, // 60 minutes
+  accessTokenLife: process.env.ACCESS_TOKEN_LIFE || '20d', // 60 minutes
   refreshTokenLife: process.env.REFRESH_TOKEN_LIFE || '3650d',
   emailTokenLife: process.env.EMAIL_TOKEN_EXPIRATION_MINUTES || 10,
 };

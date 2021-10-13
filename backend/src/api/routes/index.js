@@ -4,13 +4,13 @@ import express from 'express';
 // import signup from './courses/signup.js';
 import coursesList from './courses/coursesList.js';
 import testResults from './test-result/testResult.js';
-
+import coursesEnrollment from './enrollment/enrollmentCourse.js';
 import test from './test/test.js';
-
 import login from './account/login.js';
 import email from './account/email.js';
 import auth from './account/auth.js';
 import signup from './account/register.js';
+import enrollCourse from './enrollment/enrollCourse.js';
 
 const router = express.Router();
 
@@ -18,6 +18,10 @@ const router = express.Router();
 // Below all APIs are public APIs protected by api-key
 // router.use('/', apikey);
 /*-------------------------------------------------------------------------*/
+
+// enrollment
+router.use('/users', coursesEnrollment);
+router.use('/', enrollCourse);
 
 // courses
 router.use('/courses', coursesList);

@@ -12,7 +12,9 @@ import { JWT_ALGORITHM } from '../constant/auth.js';
 // eslint-disable-next-line max-len
 export const generateToken = (user, secretSignature, tokenLife) => new Promise((resolve, reject) => {
   // Định nghĩa những thông tin của user mà bạn muốn lưu vào token ở đây
-  const { email, firstName, lastName } = user;
+  const {
+    email, firstName, lastName, id,
+  } = user;
   // Thực hiện ký và tạo token
   jwt.sign(
     {
@@ -20,6 +22,7 @@ export const generateToken = (user, secretSignature, tokenLife) => new Promise((
         email,
         firstName,
         lastName,
+        id,
       },
     },
     secretSignature,

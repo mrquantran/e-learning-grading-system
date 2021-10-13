@@ -1,6 +1,13 @@
 /* eslint-disable no-useless-escape */
 const components = {
   components: {
+    securitySchemes: {
+      bearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
     schemas: {
       id: {
         type: 'number',

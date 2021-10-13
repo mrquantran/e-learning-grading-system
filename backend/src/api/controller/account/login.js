@@ -56,11 +56,12 @@ const login = async (req, res) => {
         firstName: true,
         lastName: true,
         password: true,
+        id: true,
       },
     });
 
     const {
-      email, firstName, lastName, password,
+      email, firstName, lastName, password, id,
     } = emailUser;
 
     if (!email) {
@@ -76,14 +77,16 @@ const login = async (req, res) => {
 
     // 👇 create a date object for the email token expiration
     const tokenExpiration = add(new Date(), {
-      minutes: accessTokenLife,
+      minutes: 60,
     });
 
     if (!bcrypt.compareSync(passwordReq, password)) {
       return res.status(402).json({ message: 'password not correct' });
     }
 
-    const user = { email, firstName, lastName };
+    const user = {
+      email, firstName, lastName, id,
+    };
 
     const accessToken = await jwtHelper.generateToken(user, accessTokenSecret, accessTokenLife);
 
