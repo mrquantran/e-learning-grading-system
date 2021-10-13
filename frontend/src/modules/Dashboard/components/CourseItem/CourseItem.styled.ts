@@ -30,6 +30,7 @@ export const CourseItemStyled = styled.div`
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
     border-radius: 10px;
+    color: #172b4c;
   }
 
   .theme-primary .bg-primary {
