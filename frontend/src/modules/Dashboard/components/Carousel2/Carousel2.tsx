@@ -41,6 +41,7 @@ const renderTitle = (isAuth: boolean, user: User) => {
         <ButtonStyled
           class="waves-effect waves-light btn-block btn btn-primary"
           primary
+          onClick={changeToLogin}
           style={{ whiteSpace: "nowrap", width: "50%", marginTop: "10px" }}
         >
           Start Now
