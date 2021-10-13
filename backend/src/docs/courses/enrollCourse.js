@@ -26,7 +26,6 @@ const enrollCourse = {
           schema: {
             type: 'object',
             properties: {
-
               role: {
                 type: 'string',
                 description: 'Type of user',
@@ -39,11 +38,18 @@ const enrollCourse = {
     },
     responses: {
       200: {
-        description: 'Courses were updated',
+        description: 'User was enrolled',
         content: {
           'application/json': {
             schema: {
-              $ref: '#/components/schemas/Courses',
+              type: 'object',
+              properties: {
+                message: {
+                  type: 'string',
+                  description: 'message',
+                  example: 'User was enrolled',
+                },
+              },
             },
           },
         },
