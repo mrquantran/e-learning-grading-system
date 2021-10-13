@@ -9,10 +9,12 @@ import {
   StarOutlined
 } from "@ant-design/icons"
 
-export default function InfoCourse() {
+export default function InfoCourse({ detail }) {
+  const { name, courseDetails } = detail
+
   return (
     <div className="col-md-8 col-sm-6">
-      <h2 className="box-title mt-0">Typescript basic</h2>
+      <h2 className="box-title mt-0">{name}</h2>
       <div className="list-inline">
         <IconStyled star>
           <StarOutlined />
@@ -36,12 +38,7 @@ export default function InfoCourse() {
         <span className="text-danger">50% off</span>
       </h1> */}
       <hr />
-      <p>
-        Lorem Ipsum available, but the majority have suffered alteration in some
-        form, by injected humour, or randomised words which don't look even
-        slightly believable. but the majority have suffered alteration in some
-        form, by injected humour
-      </p>
+      <p>{courseDetails}</p>
       <hr />
       <div className="gap-items">
         <ButtonStyled success>

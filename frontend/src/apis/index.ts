@@ -1,4 +1,4 @@
-import { fetchCourses } from "./courses/courses.api"
+import courseAPI from "./courses/courses.api"
 import axios, { AxiosRequestConfig } from "axios"
 import { isObject, map, flatten } from "underscore"
 import { BASE_URL } from "./const"
@@ -52,6 +52,6 @@ export function getErrorMessage(error) {
 
 export const API = {
   //courses
-  fetchCourses,
+  courseAPI,
   Account
 }
