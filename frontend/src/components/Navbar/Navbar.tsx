@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react"
-import { Layout } from "antd"
+import { Layout, Row } from "antd"
 import { Col } from "antd"
 import { Input, AutoComplete } from "antd"
 import { Menu, Dropdown } from "antd"
@@ -17,7 +17,7 @@ import {
 import { useDispatch, useSelector } from "react-redux"
 import { CLOSE_SIDE_NAV } from "@/App/actions/App.actions"
 import { RootState } from "@/redux/reducer/rootReducer"
-import { HeaderContent, IconHeader } from "./Navbar.styled"
+import { HeaderContent, IconHeader, SearchingStyle } from "./Navbar.styled"
 
 import { Link } from "react-router-dom"
 import { LOGOUT_USER } from "@/modules/authentication/action/logout"
@@ -34,6 +34,7 @@ const headerStyled = {
   padding: 0,
   height: "80px",
   display: "flex",
+  width: "100%",
   alignItems: "center",
   background: "#f0f2f5"
 }
@@ -111,49 +112,57 @@ export default function Navbar() {
 
   return (
     <Header className="site-layout-background" style={headerStyled}>
-      {/* <Row> */}
-      <Col span={16}>
-        <HeaderContent>
-          {renderIconCollapse(collapsed)}
-          <IconHeader>
-            <FolderAddFilled style={styledIcon} />
-          </IconHeader>
-          <IconHeader>
-            <BookOutlined style={styledIcon} />
-          </IconHeader>
-        </HeaderContent>
-      </Col>
-      <Col span={8}>
-        <HeaderContent>
-          {/* {renderIconCollapse(collapsed)} */}
-          <IconHeader>
-            <ExpandAltOutlined style={styledIcon} />
-          </IconHeader>
-          <AutoComplete
-            dropdownClassName="certain-category-search-dropdown"
-            dropdownMatchSelectWidth={500}
-            style={{
-              width: 250,
-              margin: "0 20px"
-            }}
-            // options={options}
-          >
-            <Input.Search size="large" placeholder="input here" />
-          </AutoComplete>
-          <Dropdown overlay={menu}>
+      <Row style={{ width: "100%", justifyContent: "space-between" }}>
+        <Col span={8}>
+          <HeaderContent>
+            {renderIconCollapse(collapsed)}
             <IconHeader>
-              <NotificationFilled style={styledIcon} />
+              <FolderAddFilled style={styledIcon} />
             </IconHeader>
-          </Dropdown>
-          {renderDropDownUser(isAuthenticated)}
-          <Dropdown overlay={menu}>
             <IconHeader>
-              <SettingOutlined style={styledIcon} />
+              <BookOutlined style={styledIcon} />
             </IconHeader>
-          </Dropdown>
-        </HeaderContent>
-      </Col>
-      {/* </Row> */}
+          </HeaderContent>
+        </Col>
+        <Col span={16} style={{ flexBasis: "auto" }}>
+          <HeaderContent>
+            {/* {renderIconCollapse(collapsed)} */}
+            <IconHeader>
+              <ExpandAltOutlined style={styledIcon} />
+            </IconHeader>
+
+            <AutoComplete
+              dropdownClassName="certain-category-search-dropdown"
+              dropdownMatchSelectWidth={500}
+              style={{
+                width: 250,
+                margin: "0 20px",
+                // padding: "0 10px"
+              }}
+              // options={options}
+            >
+              <SearchingStyle>
+                <Input.Search
+                  placeholder="input search text"
+                  allowClear
+                  style={{ width: 200 }}
+                />
+              </SearchingStyle>
+            </AutoComplete>
+            <Dropdown overlay={menu}>
+              <IconHeader>
+                <NotificationFilled style={styledIcon} />
+              </IconHeader>
+            </Dropdown>
+            {renderDropDownUser(isAuthenticated)}
+            <Dropdown overlay={menu}>
+              <IconHeader>
+                <SettingOutlined style={styledIcon} />
+              </IconHeader>
+            </Dropdown>
+          </HeaderContent>
+        </Col>
+      </Row>
     </Header>
   )
 }
