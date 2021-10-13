@@ -5,8 +5,8 @@ import { Link } from "react-router-dom"
 
 export default function CourseItem({ name, firstName, lastName, id }) {
   return (
-    <Link to={`/detail/s${id}`}>
-      <CourseItemStyled>
+    <CourseItemStyled>
+      <Link to={`/detail/c${id}`}>
         <div className="box pull-up">
           <div className="box-body">
             <div className="bg-primary rounded">
@@ -35,7 +35,7 @@ export default function CourseItem({ name, firstName, lastName, id }) {
             </div>
           </div>
         </div>
-      </CourseItemStyled>
-    </Link>
+      </Link>
+    </CourseItemStyled>
   )
 }

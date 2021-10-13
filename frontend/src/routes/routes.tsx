@@ -9,7 +9,7 @@ const routesHome = [
     component: DashboardPage
   },
   {
-    path: "/detail/:id",
+    path: "/detail/c:id",
     exact: true,
     component: DetailPage
   }
