@@ -5,6 +5,8 @@ import express from 'express';
 import coursesList from './courses/coursesList.js';
 import testResults from './test-result/testResult.js';
 import coursesEnrollment from './enrollment/enrollmentCourse.js';
+import users from './user/user.js';
+
 import test from './test/test.js';
 import login from './account/login.js';
 import email from './account/email.js';
@@ -28,6 +30,7 @@ router.use('/courses', coursesList);
 
 // test result
 router.use('/courses/tests', testResults);
+router.use('/users', users);
 
 // test
 router.use('/courses', test);
