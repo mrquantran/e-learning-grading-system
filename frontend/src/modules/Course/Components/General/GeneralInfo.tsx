@@ -1,6 +1,12 @@
 import React from "react"
 
-export default function GeneralInfo() {
+export default function GeneralInfo({ detail }) {
+  const renderAuthor = author =>
+    author?.reduce(
+      (text, field) => (text += `${field.firstName} ${field.lastName}  `),
+      ""
+    )
+
   return (
     <div className="col-lg-12 col-md-12 col-sm-12">
       <h4 className="box-title mt-40">General Info</h4>
@@ -9,7 +15,7 @@ export default function GeneralInfo() {
           <tbody>
             <tr>
               <td width={390}>Created by</td>
-              <td> Brand Name </td>
+              <td>{renderAuthor(detail.author)}</td>
             </tr>
             <tr>
               <td>Last updated</td>
@@ -17,7 +23,7 @@ export default function GeneralInfo() {
             </tr>
             <tr>
               <td>Number of students</td>
-              <td> 0 students </td>
+              <td> {detail.totalStudents} students </td>
             </tr>
             <tr>
               <td>Categories</td>

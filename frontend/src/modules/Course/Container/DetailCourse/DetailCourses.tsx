@@ -28,7 +28,7 @@ export default function DetailCourses() {
           <div className="row">
             <CourseImage />
             <InfoCourse detail={course} />
-            <GeneralInfo />
+            <GeneralInfo detail={course} />
           </div>
         </div>
       </div>
