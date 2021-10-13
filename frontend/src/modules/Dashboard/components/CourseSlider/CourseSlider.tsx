@@ -49,6 +49,7 @@ export default function CourseSlider() {
           name={item.name}
           firstName={item.firstName}
           lastName={item.lastName}
+          id={item.id}
         />
       </div>
     ))
