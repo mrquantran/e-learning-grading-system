@@ -1,8 +1,12 @@
+/* eslint-disable import/prefer-default-export */
+/* eslint-disable no-tabs */
 /* eslint-disable no-mixed-spaces-and-tabs */
 /* eslint-disable max-len */
 /* eslint-disable import/extensions */
-import * as jwtHelper from '../helpers/jwt.helper.js';
-import accessTokenSecret from '../../config.js';
+// import * as jwtHelper from '../helpers/jwt.helper.js';
+// import accessTokenSecret from '../../config.js';
+
+import pkg from '@prisma/client';
 
 /**
  * Middleware: Authorization user by Token
@@ -11,19 +15,39 @@ import accessTokenSecret from '../../config.js';
  * @param {*} next
  */
 
+const { PrismaClient } = pkg;
+const prisma = new PrismaClient();
+
 // eslint-disable-next-line consistent-return
-const isAuth = async (req, res, next) => {
+export const isAuth = async (req, res, next) => {
   // Lấy token được gửi lên từ phía client, thông thường tốt nhất là các bạn nên truyền token vào header
-  const tokenFromClient = req.body.token || req.query.token || req.headers['x-access-token'];
+ 	const authHeader = req.header('Authorization');
+  const tokenFromClient = authHeader && authHeader.split(' ')[1];
 
   if (tokenFromClient) {
     // Nếu tồn tại token
     try {
-      // Thực hiện giải mã token xem có hợp lệ hay không?
-      const decoded = await jwtHelper.verifyToken(tokenFromClient, accessTokenSecret);
+      const token = await prisma.token.findUnique({
+        where: {
+          accessToken: tokenFromClient,
+        },
+        select: {
+          valid: true,
+          expiration: true,
+        },
+      });
 
-      // Nếu token hợp lệ, lưu thông tin giải mã được vào đối tượng req, dùng cho các xử lý ở phía sau.
-      req.jwtDecoded = decoded;
+      if (!token) {
+        return res.status(403).json({
+          message: 'No token provided.',
+        });
+      }
+
+      if (!token.valid) {
+        return res.status(403).json({
+          message: 'Token is invalid.',
+        });
+      }
 
       // Cho phép req đi tiếp sang controller.
       next();
@@ -40,5 +64,3 @@ const isAuth = async (req, res, next) => {
     });
   }
 };
-
-export default isAuth;
