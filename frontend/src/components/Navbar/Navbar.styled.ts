@@ -18,3 +18,13 @@ export const IconHeader = styled.div`
   display: flex;
   align-items: center;
 `
+export const SearchingStyle = styled.div`
+  .ant-input-affix-wrapper {
+    height: 45px;
+    width: 220px;
+  }
+
+  button.ant-btn.ant-btn-icon-only.ant-input-search-button {
+    height: 45px;
+  }
+`
