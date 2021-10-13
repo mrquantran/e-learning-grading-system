@@ -16,6 +16,8 @@ import { Container } from "./LeftMenu.styled"
 import { RootState } from "@/redux/reducer/rootReducer"
 import { useSelector } from "react-redux"
 
+import { Link } from "react-router-dom"
+
 const { Sider } = Layout
 const { SubMenu } = Menu
 
@@ -35,9 +37,11 @@ export default function LeftMenu() {
         className="site-layout-background sider"
         collapsed={collapsed}
       >
-        <div className="logo">
-          <img src={logo} alt="" />
-        </div>
+        <Link to="/">
+          <div className="logo">
+            <img src={logo} alt="" />
+          </div>
+        </Link>
         <Menu
           defaultSelectedKeys={["1"]}
           defaultOpenKeys={["sub1"]}
