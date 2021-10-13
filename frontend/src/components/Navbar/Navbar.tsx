@@ -136,7 +136,7 @@ export default function Navbar() {
               dropdownMatchSelectWidth={500}
               style={{
                 width: 250,
-                margin: "0 20px",
+                margin: "0 20px"
                 // padding: "0 10px"
               }}
               // options={options}
