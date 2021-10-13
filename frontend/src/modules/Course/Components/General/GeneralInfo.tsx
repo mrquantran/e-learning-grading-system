@@ -8,24 +8,24 @@ export default function GeneralInfo() {
         <table className="table">
           <tbody>
             <tr>
-              <td width={390}>Brand</td>
+              <td width={390}>Created by</td>
               <td> Brand Name </td>
             </tr>
             <tr>
-              <td>Delivery Condition</td>
-              <td> Lorem Ipsum </td>
+              <td>Last updated</td>
+              <td> 10/2021 </td>
             </tr>
             <tr>
-              <td>Type</td>
-              <td> Party Wear </td>
+              <td>Number of students</td>
+              <td> 0 students </td>
             </tr>
             <tr>
-              <td>Style</td>
-              <td> Modern </td>
+              <td>Categories</td>
+              <td> Development </td>
             </tr>
             <tr>
-              <td>Product Number</td>
-              <td> FG1548952 </td>
+              <td>Language</td>
+              <td> English </td>
             </tr>
           </tbody>
         </table>
