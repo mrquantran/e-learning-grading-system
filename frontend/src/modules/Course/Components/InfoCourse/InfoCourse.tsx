@@ -1,31 +1,40 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { IconStyled } from "@/stylesheets/Icon/Icon.styled"
+import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import React from "react"
+
+import {
+  HeartOutlined,
+  AppstoreAddOutlined,
+  StarOutlined
+} from "@ant-design/icons"
 
 export default function InfoCourse() {
   return (
     <div className="col-md-8 col-sm-6">
       <h2 className="box-title mt-0">Typescript basic</h2>
       <div className="list-inline">
-        <a className="text-warning">
-          <i className="mdi mdi-star" />
-        </a>
-        <a className="text-warning">
-          <i className="mdi mdi-star" />
-        </a>
-        <a className="text-warning">
-          <i className="mdi mdi-star" />
-        </a>
-        <a className="text-warning">
-          <i className="mdi mdi-star" />
-        </a>
-        <a className="text-warning">
-          <i className="mdi mdi-star" />
-        </a>
+        <IconStyled star>
+          <StarOutlined />
+        </IconStyled>
+        <IconStyled star>
+          <StarOutlined />
+        </IconStyled>
+        <IconStyled star>
+          <StarOutlined />
+        </IconStyled>
+        <IconStyled star>
+          <StarOutlined />
+        </IconStyled>
+        <IconStyled star>
+          <StarOutlined />
+        </IconStyled>
       </div>
-      <h1 className="pro-price mb-0 mt-20">
+      {/* <h1 className="pro-price mb-0 mt-20">
         $270
         <span className="old-price">$540</span>
         <span className="text-danger">50% off</span>
-      </h1>
+      </h1> */}
       <hr />
       <p>
         Lorem Ipsum available, but the majority have suffered alteration in some
@@ -35,18 +44,18 @@ export default function InfoCourse() {
       </p>
       <hr />
       <div className="gap-items">
-        <button className="btn btn-success">
-          <i className="mdi mdi-shopping" /> Buy Now!
-        </button>
-        <button className="btn btn-primary">
-          <i className="mdi mdi-cart-plus" /> Add To Cart
-        </button>
-        <button className="btn btn-infomr">
-          <i className="mdi mdi-compare" /> Compare
-        </button>
-        <button className="btn btn-danger">
-          <i className="mdi mdi-heart" /> Wishlist
-        </button>
+        <ButtonStyled success>
+          <IconStyled>
+            <AppstoreAddOutlined />
+          </IconStyled>
+          Enroll Course
+        </ButtonStyled>
+        <ButtonStyled danger>
+          <IconStyled>
+            <HeartOutlined />
+          </IconStyled>
+          Wishlist
+        </ButtonStyled>
       </div>
       <h4 className="box-title mt-20">Key Highlights</h4>
       <ul className="list-icons">
