@@ -23,9 +23,32 @@ async function getCourseById(id) {
     where: {
       id: Number(id),
     },
+    include: {
+      members: {
+        select: {
+          user: {
+            select: {
+              firstName: true,
+              lastName: true,
+              email: true,
+              social: true,
+            },
+          },
+        },
+        // include: {
+        //   // role: true,
+        //   user: true,
+        // },
+        where: {
+          role: 'TEACHER',
+        },
+      },
+    },
   });
 
-  return courseById;
+  const author = courseById.members.map((item) => ({ ...item.user }));
+  const { members, ...data } = courseById;
+  return { ...data, author };
 }
 
 async function createCourse(name, courseDetails, userId) {
