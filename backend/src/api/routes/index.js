@@ -4,7 +4,7 @@ import express from 'express';
 // import signup from './courses/signup.js';
 import coursesList from './courses/coursesList.js';
 import testResults from './test-result/testResult.js';
-import coursesEnrollment from './enrollment/enrollment-course';
+import coursesEnrollment from './enrollment/enrollment-course.js';
 import test from './test/test.js';
 import login from './account/login.js';
 import email from './account/email.js';

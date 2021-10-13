@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import enrollment from './enrollment.js';
-import deleteEnrollment from './delenrollment';
+import deleteEnrollment from './delenrollment.js';
 
 const pathCourses = {
   '/users/{userId}/courses': {

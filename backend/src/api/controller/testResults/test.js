@@ -6,7 +6,7 @@ import {
   body, param,
 } from 'express-validator';
 // eslint-disable-next-line import/extensions
-import { validate } from '../../../validation/validate.js';
+import { validate } from '../../validation/validate.js';
 
 const router = express.Router();
 const { PrismaClient } = pkg;
