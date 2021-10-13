@@ -1,3 +1,5 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 /* eslint-disable promise/no-callback-in-promise */
@@ -23,9 +25,35 @@ async function getCourseById(id) {
     where: {
       id: Number(id),
     },
+    include: {
+      members: {
+        select: {
+          role: true,
+          user: {
+            select: {
+              firstName: true,
+              lastName: true,
+              email: true,
+              social: true,
+            },
+          },
+        },
+        // include: {
+        //   // role: true,
+        //   user: true,
+        // },
+        // where: {
+        //   role: 'TEACHER',
+        // },
+      },
+    },
   });
 
-  return courseById;
+  const author = courseById.members.filter((item) => { if (item.role === 'TEACHER') return true; }).map((item) => ({ ...item.user }));
+  const totalStudents = courseById.members.filter((item) => { if (item.role === 'STUDENT') return true; }).reduce((acc) => acc + 1, 0);
+
+  const { members, ...data } = courseById;
+  return { ...data, author, totalStudents };
 }
 
 async function createCourse(name, courseDetails, userId) {

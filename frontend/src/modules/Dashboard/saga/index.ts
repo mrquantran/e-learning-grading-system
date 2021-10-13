@@ -7,7 +7,7 @@ import actions from "../action/index"
 
 function* fetchCoursesData() {
   try {
-    const { data: courses } = yield call(API.fetchCourses)
+    const { data: courses } = yield call(API.courseAPI.fetchCourses)
 
     yield put({ type: actions.FETCH_COURSES_DATA.SUCCESS, payload: courses })
   } catch (error: any) {

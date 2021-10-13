@@ -4,6 +4,7 @@ import custom1 from "@/assets/images/custom-1.svg"
 import { useSelector } from "react-redux"
 import { RootState } from "@/redux/reducer/rootReducer"
 import { history } from "@/App/App"
+import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 
 const changeToLogin = () => {
   history.push("/login")
@@ -37,14 +38,13 @@ const renderTitle = (isAuth: boolean, user: User) => {
       </h2>
 
       <div>
-        <button
-          type="button"
-          className="waves-effect waves-light btn-block btn btn-primary"
+        <ButtonStyled
+          class="waves-effect waves-light btn-block btn btn-primary"
+          primary
           style={{ whiteSpace: "nowrap", width: "50%", marginTop: "10px" }}
-          onClick={changeToLogin}
         >
-          Start Now!
-        </button>
+          Start Now
+        </ButtonStyled>
       </div>
     </Fragment>
   )

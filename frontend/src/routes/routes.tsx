@@ -1,4 +1,5 @@
 import DashboardPage from "@/pages/Dashboard/DashboardPage"
+import DetailPage from "@/pages/Detail/DetailPage"
 import LoginPage from "@/pages/Login/LoginPage"
 
 const routesHome = [
@@ -6,6 +7,11 @@ const routesHome = [
     path: "/",
     exact: true,
     component: DashboardPage
+  },
+  {
+    path: "/detail/c:id",
+    exact: true,
+    component: DetailPage
   }
 ]
 
