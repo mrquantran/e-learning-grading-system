@@ -3,3 +3,8 @@ export const REGEX_EMAIL =
 
 export const REGEX_PASSWORD =
   "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
+
+export const TYPE_USER = {
+  student: "STUDENT",
+  teacher: " TEACHER"
+}

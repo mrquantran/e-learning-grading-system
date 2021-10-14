@@ -3,6 +3,7 @@ import axios, { AxiosRequestConfig } from "axios"
 import { isObject, map, flatten } from "underscore"
 import { BASE_URL } from "./const"
 import Account from "./account/account"
+import { getAccessToken } from "@/modules/authentication/saga/authenticationSaga"
 
 // axios.defaults.params = axios.defaults.params || { culture: "en" }
 axios.defaults.headers.common["Content-Type"] = "application/json"
@@ -13,9 +14,9 @@ axios.interceptors.request.use((_config: AxiosRequestConfig): Promise<any> => {
   //   }
 
   const config: any = { ..._config }
-  //   const accessToken = getAccessToken() || null
+  const accessToken = getAccessToken() || null
 
-  //   config.headers.Authorization = `Bearer ${accessToken}`
+  config.headers.Authorization = `Bearer ${accessToken}`
 
   const endPoint = BASE_URL
 

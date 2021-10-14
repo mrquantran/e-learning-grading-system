@@ -8,9 +8,20 @@ import {
   AppstoreAddOutlined,
   StarOutlined
 } from "@ant-design/icons"
+import { useDispatch } from "react-redux"
+import { ENROLL_COURSE } from "../../action/enrollAction"
 
-export default function InfoCourse({ detail }) {
+export default function InfoCourse({ detail, courseId }) {
   const { name, courseDetails } = detail
+
+  const dispatch = useDispatch()
+
+  const handleEnrollCourse = () => {
+    dispatch({
+      type: ENROLL_COURSE,
+      payload: Number(courseId)
+    })
+  }
 
   return (
     <div className="col-md-8 col-sm-6">
@@ -41,7 +52,7 @@ export default function InfoCourse({ detail }) {
       <p>{courseDetails}</p>
       <hr />
       <div className="gap-items">
-        <ButtonStyled success>
+        <ButtonStyled success onClick={handleEnrollCourse}>
           <IconStyled>
             <AppstoreAddOutlined />
           </IconStyled>

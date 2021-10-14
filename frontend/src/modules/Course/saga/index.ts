@@ -1,24 +1,56 @@
 import { API } from "@/apis"
 import { all, call, put, takeLatest } from "@redux-saga/core/effects"
 import { FETCH_COURSE_DETAIL } from "../action/courseAction"
-import actions from "../action/courseAction"
+import actionsCourseDetail from "../action/courseAction"
+import actionsEnroll from "../action/enrollAction"
 import { errorNotification, getError } from "@/utils/notification"
+import { ENROLL_COURSE } from "../action/enrollAction"
+import { TYPE_USER } from "@/utils/ENUM"
 
 function* fetchDetailCourse(id) {
   const { params } = id
 
   try {
-    yield put({ type: actions.FETCH_COURSE_DETAIL.REQUEST })
+    yield put({ type: actionsCourseDetail.FETCH_COURSE_DETAIL.REQUEST })
 
     const { data: course } = yield call(API.courseAPI.fetchDetailCourse, params)
-    yield put({ type: actions.FETCH_COURSE_DETAIL.SUCCESS, payload: course })
+    yield put({
+      type: actionsCourseDetail.FETCH_COURSE_DETAIL.SUCCESS,
+      payload: course
+    })
   } catch (error: any) {
     errorNotification(getError(error))
     yield put({
-      type: actions.FETCH_COURSE_DETAIL.ERROR,
+      type: actionsCourseDetail.FETCH_COURSE_DETAIL.ERROR,
       payload: error.message
     })
   }
+}
+
+function* enrollCourseAsStudent({ payload: courseId }: any) {
+  const type = TYPE_USER.student
+
+  try {
+    yield put({ type: actionsEnroll.ENROLL_COURSE.REQUEST })
+
+    const { data: message } = yield call(
+      API.courseAPI.enrollCourse,
+      courseId,
+      type
+    )
+
+    yield put({ type: actionsEnroll.ENROLL_COURSE.SUCCESS, payload: message })
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionsEnroll.ENROLL_COURSE.ERROR,
+      payload: error.message
+    })
+  }
+}
+
+function* watchEnrollCourse() {
+  yield takeLatest(ENROLL_COURSE, enrollCourseAsStudent)
 }
 
 function* watchFetchDetailCourse() {
@@ -26,5 +58,5 @@ function* watchFetchDetailCourse() {
 }
 
 export default function* courseSaga() {
-  yield all([watchFetchDetailCourse()])
+  yield all([watchFetchDetailCourse(), watchEnrollCourse()])
 }

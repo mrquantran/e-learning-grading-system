@@ -27,7 +27,7 @@ export default function DetailCourses() {
         <div className="box-body">
           <div className="row">
             <CourseImage />
-            <InfoCourse detail={course} />
+            <InfoCourse detail={course} courseId={params} />
             <GeneralInfo detail={course} />
           </div>
         </div>
