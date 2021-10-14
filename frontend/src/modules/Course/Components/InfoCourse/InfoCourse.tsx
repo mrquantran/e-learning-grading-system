@@ -6,15 +6,39 @@ import React from "react"
 import {
   HeartOutlined,
   AppstoreAddOutlined,
+  AppstoreOutlined,
   StarOutlined
 } from "@ant-design/icons"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { ENROLL_COURSE } from "../../action/enrollAction"
+import { RootState } from "@/redux/reducer/rootReducer"
 
 export default function InfoCourse({ detail, courseId }) {
   const { name, courseDetails } = detail
 
   const dispatch = useDispatch()
+
+  const { isFavorite, isEnroll } = useSelector(
+    (state: RootState) => state.course.statusCourse
+  )
+
+  const renderButtonEnroll = () => {
+    return isEnroll ? (
+      <ButtonStyled secondary>
+        <IconStyled>
+          <AppstoreOutlined />
+        </IconStyled>
+        Enroll Course
+      </ButtonStyled>
+    ) : (
+      <ButtonStyled success onClick={handleEnrollCourse}>
+        <IconStyled>
+          <AppstoreAddOutlined />
+        </IconStyled>
+        Enroll Course
+      </ButtonStyled>
+    )
+  }
 
   const handleEnrollCourse = () => {
     dispatch({
@@ -52,12 +76,7 @@ export default function InfoCourse({ detail, courseId }) {
       <p>{courseDetails}</p>
       <hr />
       <div className="gap-items">
-        <ButtonStyled success onClick={handleEnrollCourse}>
-          <IconStyled>
-            <AppstoreAddOutlined />
-          </IconStyled>
-          Enroll Course
-        </ButtonStyled>
+        {renderButtonEnroll()}
         <ButtonStyled danger>
           <IconStyled>
             <HeartOutlined />

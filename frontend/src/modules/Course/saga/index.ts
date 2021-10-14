@@ -1,7 +1,7 @@
 import { successNotification } from "./../../../utils/notification"
 import { FETCH_COURSE_STATUS } from "./../action/courseAction"
 import { API } from "@/apis"
-import { all, call, put, takeLatest } from "@redux-saga/core/effects"
+import { all, call, fork, put, takeLatest } from "@redux-saga/core/effects"
 import { FETCH_COURSE_DETAIL } from "../action/courseAction"
 import actionsCourseDetail from "../action/courseAction"
 import actionsEnroll from "../action/enrollAction"
@@ -42,6 +42,8 @@ function* enrollCourseAsStudent({ payload: courseId }: any) {
       type: actionsEnroll.ENROLL_COURSE.SUCCESS,
       payload: data.message
     })
+
+    yield fork(fetchAndUpdateStatus, courseId)
   } catch (error: any) {
     errorNotification(getError(error))
     yield put({
@@ -51,7 +53,7 @@ function* enrollCourseAsStudent({ payload: courseId }: any) {
   }
 }
 
-function* fetchCourseStatus({ params: courseId }: any) {
+function* fetchCourseStatus({ payload: courseId }: any) {
   try {
     yield put({ type: actionsCourseDetail.FETCH_COURSE_STATUS.REQUEST })
 
@@ -68,6 +70,10 @@ function* fetchCourseStatus({ params: courseId }: any) {
       payload: error.message
     })
   }
+}
+
+function* fetchAndUpdateStatus(courseId) {
+  yield fork(fetchCourseStatus, { payload: courseId })
 }
 
 function* watchEnrollCourse() {

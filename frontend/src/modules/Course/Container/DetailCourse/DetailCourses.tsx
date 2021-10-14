@@ -24,7 +24,7 @@ export default function DetailCourses() {
     dispatch({ type: FETCH_COURSE_DETAIL, params })
 
     if (isLogin) {
-      dispatch({ type: FETCH_COURSE_STATUS, params })
+      dispatch({ type: FETCH_COURSE_STATUS, payload: params })
     }
   }, [dispatch, params])
 
