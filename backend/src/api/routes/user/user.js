@@ -11,7 +11,7 @@ import { validate } from '../../validation/validate.js';
 // import controller from '../../controller/user/userController.js';
 
 import {
-  createUser, getUsers, getUser, updateUser, deleteUser,
+  createUser, getUsers, getUser, updateUser, deleteUser, getTopScore,
 } from '../../controller/user/userController.js';
 
 const router = express.Router();
@@ -24,6 +24,8 @@ router.post('/', validate([
 ]), createUser);
 
 router.get('/', getUsers);
+
+router.get('/top', getTopScore);
 
 router.get('/:id', validate([
   param('id').notEmpty().isNumeric().withMessage('userId is empty'),
