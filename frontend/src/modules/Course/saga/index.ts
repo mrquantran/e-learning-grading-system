@@ -1,3 +1,5 @@
+import { successNotification } from "./../../../utils/notification"
+import { FETCH_COURSE_STATUS } from "./../action/courseAction"
 import { API } from "@/apis"
 import { all, call, put, takeLatest } from "@redux-saga/core/effects"
 import { FETCH_COURSE_DETAIL } from "../action/courseAction"
@@ -33,13 +35,32 @@ function* enrollCourseAsStudent({ payload: courseId }: any) {
   try {
     yield put({ type: actionsEnroll.ENROLL_COURSE.REQUEST })
 
-    const { data: message } = yield call(
-      API.courseAPI.enrollCourse,
-      courseId,
-      type
-    )
+    const { data } = yield call(API.courseAPI.enrollCourse, courseId, type)
 
-    yield put({ type: actionsEnroll.ENROLL_COURSE.SUCCESS, payload: message })
+    successNotification(data.message)
+    yield put({
+      type: actionsEnroll.ENROLL_COURSE.SUCCESS,
+      payload: data.message
+    })
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionsEnroll.ENROLL_COURSE.ERROR,
+      payload: error.message
+    })
+  }
+}
+
+function* fetchCourseStatus({ params: courseId }: any) {
+  try {
+    yield put({ type: actionsCourseDetail.FETCH_COURSE_STATUS.REQUEST })
+
+    const { data } = yield call(API.courseAPI.fetchDetailCourseStatus, courseId)
+
+    yield put({
+      type: actionsCourseDetail.FETCH_COURSE_STATUS.SUCCESS,
+      payload: data
+    })
   } catch (error: any) {
     errorNotification(getError(error))
     yield put({
@@ -57,6 +78,14 @@ function* watchFetchDetailCourse() {
   yield takeLatest(FETCH_COURSE_DETAIL, fetchDetailCourse)
 }
 
+function* watchFetchCourseStatus() {
+  yield takeLatest(FETCH_COURSE_STATUS, fetchCourseStatus)
+}
+
 export default function* courseSaga() {
-  yield all([watchFetchDetailCourse(), watchEnrollCourse()])
+  yield all([
+    watchFetchDetailCourse(),
+    watchEnrollCourse(),
+    watchFetchCourseStatus()
+  ])
 }

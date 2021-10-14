@@ -3,7 +3,10 @@ import { useRouter } from "@/hooks/useRouter"
 import { RootState } from "@/redux/reducer/rootReducer"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { FETCH_COURSE_DETAIL } from "../../action/courseAction"
+import {
+  FETCH_COURSE_DETAIL,
+  FETCH_COURSE_STATUS
+} from "../../action/courseAction"
 import CourseImage from "../../Components/CourseImage/CourseImage"
 import GeneralInfo from "../../Components/General/GeneralInfo"
 import InfoCourse from "../../Components/InfoCourse/InfoCourse"
@@ -15,8 +18,14 @@ export default function DetailCourses() {
 
   const params = router.query.id
 
+  const isLogin = useSelector((state: RootState) => state.auth.isAuthenticated)
+
   useEffect(() => {
     dispatch({ type: FETCH_COURSE_DETAIL, params })
+
+    if (isLogin) {
+      dispatch({ type: FETCH_COURSE_STATUS, params })
+    }
   }, [dispatch, params])
 
   const { course } = useSelector((state: RootState) => state.course)
