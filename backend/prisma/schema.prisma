@@ -8,18 +8,29 @@ generator client {
 }
 
 model User {
-  id          Int                @id @default(autoincrement())
-  email       String             @unique
-  password    String?
-  firstName   String?
-  lastName    String?
-  social      Json?
-  active      Boolean?
+  id             Int                @id @default(autoincrement())
+  email          String             @unique
+  password       String?
+  firstName      String?
+  lastName       String?
+  social         Json?
+  active         Boolean?
   // Relation fields
-  courses     CourseEnrollment[]
-  testResults TestResult[]       @relation(name: "results")
-  testsGraded TestResult[]       @relation(name: "graded")
-  tokens      Token[]
+  courses        CourseEnrollment[]
+  testResults    TestResult[]       @relation(name: "results")
+  testsGraded    TestResult[]       @relation(name: "graded")
+  tokens         Token[]
+  favoriteCourse FavoriteCourse[]
+}
+
+model FavoriteCourse {
+  // Relation Fields
+  userId   Int
+  courseId Int
+  user     User    @relation(fields: [userId], references: [id])
+  course   Course? @relation(fields: [courseId], references: [id])
+
+  @@id([userId, courseId])
 }
 
 model Token {
@@ -49,8 +60,9 @@ model Course {
   courseDetails String?
 
   // Relation fields
-  members CourseEnrollment[]
-  tests   Test[]
+  members        CourseEnrollment[]
+  tests          Test[]
+  favoriteCourse FavoriteCourse[]
 }
 
 model CourseEnrollment {

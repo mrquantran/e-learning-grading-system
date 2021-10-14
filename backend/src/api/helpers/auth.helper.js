@@ -1,3 +1,19 @@
+/* eslint-disable import/extensions */
+import { accessTokenSecret } from '../../config.js';
+import * as jwtHelper from './jwt.helper.js';
+
+export function getAccessToken(req) {
+  const authHeader = req.header('Authorization');
+  const tokenFromClient = authHeader && authHeader.split(' ')[1];
+  return tokenFromClient;
+}
+
+export async function getDecodedToken(req) {
+  const token = getAccessToken(req);
+  const { data } = await jwtHelper.verifyToken(token, accessTokenSecret);
+  return data;
+}
+
 /* eslint-disable no-shadow */
 // Pre function to check if user is the teacher of a course and can modify it
 export async function isTeacherOfCourseOrAdmin(req, res) {

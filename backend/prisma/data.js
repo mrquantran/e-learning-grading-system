@@ -243,6 +243,7 @@ const courses = [
   {
     name: 'Typescript course',
     courseDetails: '1232456',
+    favoriteCourse: ['waston@hey.com', 'quantran2381@gmail.com', 'alex@hey.com'],
     testing: [
       {
         name: 'Test1',
@@ -319,10 +320,12 @@ const courses = [
       { role: 'STUDENT', email: 'jessica@hey.com' },
       { role: 'STUDENT', email: 'alex@hey.com' },
       { role: 'STUDENT', email: 'tim@hey.com' },
+      { role: 'STUDENT', email: 'quantran2381@gmail.com' },
     ],
   },
   {
     name: 'Javascript Basic 6',
+    favoriteCourse: ['tim@hey.com', 'quantran2381@gmail.com', 'gate@hey.com'],
     courseDetails: 'c43214',
     testing: [
       {
@@ -353,6 +356,7 @@ const courses = [
   {
     name: 'Javascript Basic 7',
     courseDetails: 'c43214',
+    favoriteCourse: [],
     testing: [
       {
         name: 'Test12',
@@ -404,6 +408,7 @@ const courses = [
   {
     name: 'Javascript Basic 8',
     courseDetails: 'c43214',
+    favoriteCourse: [],
     testing: [
       {
         name: 'Test6',
@@ -422,11 +427,12 @@ const courses = [
     member: [
       { role: 'TEACHER', email: 'gate@hey.com' },
       { role: 'STUDENT', email: 'alex@hey.com' },
-
+      { role: 'STUDENT', email: 'quantran2381@gmail.com' },
     ],
   },
   {
     name: 'Javascript Basic ',
+    favoriteCourse: ['gate@hey.com', 'quantran2381@gmail.com'],
     courseDetails: 'c43214',
     testing: [
       {
@@ -453,6 +459,7 @@ const courses = [
       { role: 'TEACHER', email: 'jessica@hey.com' },
       { role: 'STUDENT', email: 'jackson@hey.com' },
       { role: 'STUDENT', email: 'gate@hey.com' },
+      { role: 'STUDENT', email: 'quantran2381@gmail.com' },
     ],
   },
 ];

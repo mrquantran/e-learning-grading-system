@@ -21,6 +21,7 @@ async function main() {
   await prisma.courseEnrollment.deleteMany({});
   await prisma.test.deleteMany({});
   await prisma.token.deleteMany({});
+  await prisma.favoriteCourse.deleteMany({});
   await prisma.user.deleteMany({});
   await prisma.course.deleteMany({});
 
@@ -57,6 +58,13 @@ async function main() {
       data: {
         name: course.name,
         courseDetails: course.courseDetails,
+        favoriteCourse: {
+          create: course.favoriteCourse.map((item) => ({
+            user: {
+              connect: { email: item },
+            },
+          })),
+        },
         members: {
           create:
             course.member.map((item) => ({
