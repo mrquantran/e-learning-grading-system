@@ -34,7 +34,7 @@ export default function InfoCourse({ detail, courseId }) {
     description: "You need to login to enroll course",
     buttonModalConfirm: {
       okButton: {
-        function: () => changeToLogin()
+        function: changeToLogin
       }
     }
   }
