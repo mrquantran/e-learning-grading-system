@@ -12,15 +12,32 @@ import {
 import { useDispatch, useSelector } from "react-redux"
 import { ENROLL_COURSE } from "../../action/enrollAction"
 import { RootState } from "@/redux/reducer/rootReducer"
+import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
+import { history } from "@/App/App"
+
+const changeToLogin = () => {
+  history.push("/login")
+}
 
 export default function InfoCourse({ detail, courseId }) {
   const { name, courseDetails } = detail
 
   const dispatch = useDispatch()
+  const isLogin = useSelector((state: RootState) => state.auth.isAuthenticated)
 
   const { isFavorite, isEnroll } = useSelector(
     (state: RootState) => state.course.statusCourse
   )
+
+  const modal = {
+    title: "Enroll",
+    description: "You need to login to enroll course",
+    buttonModalConfirm: {
+      okButton: {
+        function: () => changeToLogin()
+      }
+    }
+  }
 
   const renderButtonEnroll = () => {
     return isEnroll ? (
@@ -41,10 +58,14 @@ export default function InfoCourse({ detail, courseId }) {
   }
 
   const handleEnrollCourse = () => {
-    dispatch({
-      type: ENROLL_COURSE,
-      payload: Number(courseId)
-    })
+    if (isLogin) {
+      dispatch({
+        type: ENROLL_COURSE,
+        payload: Number(courseId)
+      })
+    } else {
+      showConfirm(modal.title, modal.description, modal.buttonModalConfirm)
+    }
   }
 
   return (
