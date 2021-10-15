@@ -36,4 +36,12 @@ export const ButtonStyled = styled.button`
       border-color: #0052cc;
       color: #ffffff;
     `};
+
+  ${props =>
+    props.secondary &&
+    css`
+      background-color: #b7c1d1;
+      border-color: #b7c1d1;
+      color: #172b4c;
+    `};
 `

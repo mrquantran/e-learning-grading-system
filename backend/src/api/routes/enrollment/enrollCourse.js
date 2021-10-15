@@ -49,7 +49,7 @@ router.post('/courses/:id/enroll', isAuth, validate([
   const { role } = req.body;
 
   postEnrollment(req.params.id, role, tokenFromClient)
-    .then(() => res.json({ message: 'CourseEnrollment created successfully' }))
+    .then(() => res.json({ message: 'You have successfully enrolled for the course' }))
     .catch((error) => {
       const httpError = createHttpError(500, error);
       // eslint-disable-next-line promise/no-callback-in-promise

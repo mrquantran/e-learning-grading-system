@@ -10,6 +10,8 @@ import {
   body, oneOf, param, validationResult,
 } from 'express-validator';
 import { validate } from '../../validation/validate.js';
+import { isAuth } from '../../middleware/auth.js';
+import { getDecodedToken } from '../../helpers/auth.helper.js';
 
 const router = express.Router();
 const { PrismaClient } = pkg;
@@ -109,6 +111,53 @@ async function updateCourse(name, courseDetails, id) {
   return updatedCourse;
 }
 
+async function getCourseStatus(req) {
+  const { id } = req.params;
+  const token = await getDecodedToken(req);
+
+  const courseById = await prisma.course.findUnique({
+    where: {
+      id: Number(id),
+    },
+    include: {
+      favoriteCourse: {
+        select: {
+          user: {
+            select: {
+              email: true,
+            },
+          },
+        },
+      },
+      members: {
+        select: {
+          role: true,
+          user: {
+            select: {
+              firstName: true,
+              lastName: true,
+              email: true,
+              social: true,
+            },
+          },
+        },
+        // include: {
+        //   // role: true,
+        //   user: true,
+        // },
+        // where: {
+        //   role: 'TEACHER',
+        // },
+      },
+    },
+  });
+
+  const members = courseById.members.map((user) => user.user);
+  const userEnroll = members.some((user) => user.email === token.email);
+  const favorite = courseById.favoriteCourse.some((user) => user.user.email === token.email);
+  return { userEnroll, favorite };
+}
+
 // GET courses
 router.get('/', (req, res, next) => getCourses().then((courses) => res.json(courses)).catch((error) => {
   // 500 (Internal Server Error) - Something has gone wrong in your application.
@@ -123,6 +172,18 @@ router.get('/:id', validate([
     .withMessage('Id is not a number'),
 ]), (req, res, next) => getCourseById(req.params.id)
   .then((courseById) => res.json(courseById))
+  .catch((error) => {
+  // 500 (Internal Server Error) - Something has gone wrong in your application.
+    const httpError = createHttpError(500, error);
+    next(httpError);
+  }));
+
+router.get('/:id/status', isAuth, validate([
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number'),
+]), (req, res, next) => getCourseStatus(req)
+  .then((data) => res.json(data))
   .catch((error) => {
   // 500 (Internal Server Error) - Something has gone wrong in your application.
     const httpError = createHttpError(500, error);

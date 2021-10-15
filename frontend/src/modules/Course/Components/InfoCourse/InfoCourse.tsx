@@ -6,21 +6,66 @@ import React from "react"
 import {
   HeartOutlined,
   AppstoreAddOutlined,
+  AppstoreOutlined,
   StarOutlined
 } from "@ant-design/icons"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { ENROLL_COURSE } from "../../action/enrollAction"
+import { RootState } from "@/redux/reducer/rootReducer"
+import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
+import { history } from "@/App/App"
+
+const changeToLogin = () => {
+  history.push("/login")
+}
 
 export default function InfoCourse({ detail, courseId }) {
   const { name, courseDetails } = detail
 
   const dispatch = useDispatch()
+  const isLogin = useSelector((state: RootState) => state.auth.isAuthenticated)
+
+  const { isFavorite, isEnroll } = useSelector(
+    (state: RootState) => state.course.statusCourse
+  )
+
+  const modal = {
+    title: "Enroll",
+    description: "You need to login to enroll course",
+    buttonModalConfirm: {
+      okButton: {
+        function: () => changeToLogin()
+      }
+    }
+  }
+
+  const renderButtonEnroll = () => {
+    return isEnroll ? (
+      <ButtonStyled secondary>
+        <IconStyled>
+          <AppstoreOutlined />
+        </IconStyled>
+        Enroll Course
+      </ButtonStyled>
+    ) : (
+      <ButtonStyled success onClick={handleEnrollCourse}>
+        <IconStyled>
+          <AppstoreAddOutlined />
+        </IconStyled>
+        Enroll Course
+      </ButtonStyled>
+    )
+  }
 
   const handleEnrollCourse = () => {
-    dispatch({
-      type: ENROLL_COURSE,
-      payload: Number(courseId)
-    })
+    if (isLogin) {
+      dispatch({
+        type: ENROLL_COURSE,
+        payload: Number(courseId)
+      })
+    } else {
+      showConfirm(modal.title, modal.description, modal.buttonModalConfirm)
+    }
   }
 
   return (
@@ -52,12 +97,7 @@ export default function InfoCourse({ detail, courseId }) {
       <p>{courseDetails}</p>
       <hr />
       <div className="gap-items">
-        <ButtonStyled success onClick={handleEnrollCourse}>
-          <IconStyled>
-            <AppstoreAddOutlined />
-          </IconStyled>
-          Enroll Course
-        </ButtonStyled>
+        {renderButtonEnroll()}
         <ButtonStyled danger>
           <IconStyled>
             <HeartOutlined />
