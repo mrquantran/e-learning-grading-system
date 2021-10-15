@@ -60,14 +60,15 @@ export default function LeftMenu() {
           <Menu.Item key="3" icon={<ContainerOutlined />}>
             Favorite
           </Menu.Item>
-          <SubMenu key="sub1" icon={<MailOutlined />} title="Tests">
-            <Menu.Item key="9">Test 9</Menu.Item>
+          <Menu.Item key="sub1" icon={<MailOutlined />} title="Tests">
+            Tests
+            {/* <Menu.Item key="9">Test 9</Menu.Item>
             <Menu.Item key="10">Test 10</Menu.Item>
             <SubMenu key="sub3" title="Test 11">
               <Menu.Item key="11">Test Math</Menu.Item>
               <Menu.Item key="12">Test Physics</Menu.Item>
-            </SubMenu>
-          </SubMenu>
+            </SubMenu> */}
+          </Menu.Item>
           <Menu.Item key="sub2" icon={<AppstoreOutlined />}>
             Achievements
           </Menu.Item>

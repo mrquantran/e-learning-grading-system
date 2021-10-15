@@ -1,3 +1,4 @@
+import { LOGOUT_USER } from "@/modules/authentication/action/logout"
 import actions from "../action/courseAction"
 
 const initialState = {
@@ -12,6 +13,8 @@ const initialState = {
 
 const courseReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case LOGOUT_USER:
+      return { ...state, statusCourse: initialState.statusCourse }
     case actions.FETCH_COURSE_DETAIL.REQUEST:
       return { ...state, isFetching: true }
     case actions.FETCH_COURSE_DETAIL.SUCCESS:
