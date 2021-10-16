@@ -24,7 +24,8 @@ const { Sider } = Layout
 
 const pageMenuPath = {
   home: "/",
-  myCoursesEnroll: "/my-courses"
+  myCoursesEnroll: "/my-courses/learning",
+  myFavorite: "/my-courses/favorite"
 }
 
 export default function LeftMenu() {
@@ -64,10 +65,10 @@ export default function LeftMenu() {
             key={pageMenuPath.myCoursesEnroll}
             icon={<DesktopOutlined />}
           >
-            <NavLink to="/my-courses/learning">My Courses</NavLink>
+            <NavLink to={pageMenuPath.myCoursesEnroll}>My Courses</NavLink>
           </Menu.Item>
-          <Menu.Item key="3" icon={<ContainerOutlined />}>
-            Favorite
+          <Menu.Item key={pageMenuPath.myFavorite} icon={<ContainerOutlined />}>
+            <NavLink to={pageMenuPath.myFavorite}>My Favorite</NavLink>
           </Menu.Item>
           <Menu.Item key="sub1" icon={<MailOutlined />} title="Tests">
             Tests

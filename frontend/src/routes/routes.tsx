@@ -16,7 +16,7 @@ const routesHome = [
   },
   {
     path: "/my-courses",
-    exact: true,
+    exact: false,
     component: MyCoursesPage
   }
 ]
