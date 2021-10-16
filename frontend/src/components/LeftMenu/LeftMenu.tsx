@@ -16,17 +16,22 @@ import { Container } from "./LeftMenu.styled"
 import { RootState } from "@/redux/reducer/rootReducer"
 import { useSelector } from "react-redux"
 
-import { Link } from "react-router-dom"
+import { Link, NavLink } from "react-router-dom"
+import { useRouter } from "@/hooks/useRouter"
 
 const { Sider } = Layout
-const { SubMenu } = Menu
+// const { SubMenu } = Menu
+
+const pageMenuPath = {
+  home: "/",
+  myCoursesEnroll: "/my-courses"
+}
 
 export default function LeftMenu() {
   const collapsed = useSelector((state: RootState) => state.app.closeSideNav)
 
-  useEffect(() => {
-    console.log(collapsed)
-  }, [collapsed])
+  const router = useRouter()
+  const { pathname: pathName } = router.location
 
   return (
     <Container>
@@ -47,15 +52,19 @@ export default function LeftMenu() {
           defaultOpenKeys={["sub1"]}
           mode="inline"
           className="menu-style"
+          selectedKeys={pathName}
           // style={{ height: "100%" }}
           // theme="dark"
           // inlineCollapsed={this.state.collapsed}
         >
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
-            Home
+          <Menu.Item key={pageMenuPath.home} icon={<PieChartOutlined />}>
+            <NavLink to="/">Home</NavLink>
           </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            My Courses
+          <Menu.Item
+            key={pageMenuPath.myCoursesEnroll}
+            icon={<DesktopOutlined />}
+          >
+            <NavLink to="/my-courses/learning">My Courses</NavLink>
           </Menu.Item>
           <Menu.Item key="3" icon={<ContainerOutlined />}>
             Favorite

@@ -15,7 +15,7 @@ const routesHome = [
     component: DetailPage
   },
   {
-    path: "/my-courses/learning",
+    path: "/my-courses",
     exact: true,
     component: MyCoursesPage
   }
