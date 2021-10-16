@@ -28,7 +28,7 @@ export default function MyCoursesPage() {
     <MyCoursesPageStyled>
       <Tabs
         centered
-        defaultActiveKey={router.pathname}
+        activeKey={router.pathname}
         onChange={key => {
           history.push(key)
         }}
