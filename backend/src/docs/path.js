@@ -4,6 +4,7 @@ import courses from './courses/index.js';
 import testResult from './testResult/index.js';
 import account from './account/index.js';
 import enrollCourse from './enrollment/index.js';
+import users from './user/index.js';
 
 const path = {
   paths: {
@@ -12,6 +13,7 @@ const path = {
     ...enrollCourse,
     ...tests,
     ...testResult,
+    ...users,
   },
 };
 
