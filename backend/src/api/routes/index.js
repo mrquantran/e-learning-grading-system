@@ -32,7 +32,7 @@ router.use('/courses', coursesList);
 // test result
 router.use('/courses/tests', testResults);
 
-router.use('/user/top', testResultTopScore);
+// router.use('/user/top', testResultTopScore);
 
 router.use('/users', users);
 

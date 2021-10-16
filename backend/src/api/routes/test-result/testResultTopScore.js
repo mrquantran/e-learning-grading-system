@@ -11,10 +11,10 @@ import {
 import { validate } from '../../validation/validate.js';
 // import controller from '../../controller/user/userController.js';
 
-import getTopScore from '../../controller/test-result/testResultController.js';
+// import getTopScore from '../../controller/test-result/testResultController.js';
 
 const router = express.Router();
 
-router.get('/', getTopScore);
+// router.get('/', getTopScore);
 
 export default router;
