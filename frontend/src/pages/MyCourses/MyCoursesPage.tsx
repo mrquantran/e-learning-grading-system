@@ -1,11 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Tabs } from "antd"
 import { MyCoursesPageStyled } from "./MyCoursesPageStyled.styled"
 import MyCourses from "@/modules/Course/Container/MyCourses/MyCourses"
 import MyFavorite from "@/modules/Course/Container/MyFavorite/MyFavorite"
 import MyTeachCourses from "@/modules/Course/Container/MyTeachCourses/MyTeachCourses"
 
-import { Switch, Route } from "react-router-dom"
 import { history } from "@/App/App"
 import { useRouter } from "@/hooks/useRouter"
 
@@ -19,10 +18,6 @@ const coursePagePathName = {
 
 export default function MyCoursesPage() {
   const router = useRouter()
-
-  useEffect(() => {
-    console.log(router.pathname)
-  }, [router.pathname])
 
   return (
     <MyCoursesPageStyled>
