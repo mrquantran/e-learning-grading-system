@@ -3,6 +3,7 @@ import courses from './courses.js';
 import courseId from './courseId.js';
 import enrollCourse from './enrollCourse.js';
 import courseIdStatus from './courseIdStatus.js';
+import getCourseEnroll from './getCourseEnroll.js';
 
 const pathCourses = {
   '/courses': {
@@ -10,6 +11,9 @@ const pathCourses = {
   },
   '/courses/{id}/status': {
     ...courseIdStatus,
+  },
+  '/courses/enroll': {
+    ...getCourseEnroll,
   },
   '/courses/{id}/enroll': {
     ...enrollCourse,
