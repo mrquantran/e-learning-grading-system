@@ -111,7 +111,8 @@ function* watchLoginUser() {
   yield takeLatest(LOGIN_USER, loginUser)
 }
 
-function* logoutUser(gotoDashboard) {
+function* logoutUser(payload) {
+  const { payload: gotoDashboard } = payload
   try {
     removeAccessToken()
     yield put(LogoutAction.receiveLogout())

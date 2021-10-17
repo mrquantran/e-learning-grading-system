@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React, { useEffect } from "react"
+import React from "react"
 import { Menu } from "antd"
 import { Layout } from "antd"
 import logo from "@/assets/images/logo.svg"
@@ -18,6 +18,8 @@ import { useSelector } from "react-redux"
 
 import { Link, NavLink } from "react-router-dom"
 import { useRouter } from "@/hooks/useRouter"
+import { history } from "@/App/App"
+import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
 
 const { Sider } = Layout
 // const { SubMenu } = Menu
@@ -28,8 +30,36 @@ const pageMenuPath = {
   myFavorite: "/my-courses/favorite"
 }
 
+const changeToPath = path => {
+  history.push(path)
+}
+
+const confirmModalLeftMenu = path => {
+  return {
+    title: "Go to your courses",
+    description: "You need to login to watch your courses !"
+  }
+}
+
 export default function LeftMenu() {
   const collapsed = useSelector((state: RootState) => state.app.closeSideNav)
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth)
+
+  const handleUserLogin = (path: string) => {
+    if (isAuthenticated) {
+      changeToPath(path)
+    } else {
+      const { title, description } = confirmModalLeftMenu(path)
+
+      const button = {
+        okButton: {
+          function: () => changeToPath(path)
+        }
+      }
+
+      showConfirm(title, description, button)
+    }
+  }
 
   const router = useRouter()
   const { pathname: pathName } = router.location
@@ -64,11 +94,17 @@ export default function LeftMenu() {
           <Menu.Item
             key={pageMenuPath.myCoursesEnroll}
             icon={<DesktopOutlined />}
+            onClick={() => handleUserLogin(pageMenuPath.myCoursesEnroll)}
           >
-            <NavLink to={pageMenuPath.myCoursesEnroll}>My Courses</NavLink>
+            My Courses
+            {/* <NavLink to={pageMenuPath.myCoursesEnroll}>My Courses</NavLink> */}
           </Menu.Item>
-          <Menu.Item key={pageMenuPath.myFavorite} icon={<ContainerOutlined />}>
-            <NavLink to={pageMenuPath.myFavorite}>My Favorite</NavLink>
+          <Menu.Item
+            onClick={() => handleUserLogin(pageMenuPath.myFavorite)}
+            key={pageMenuPath.myFavorite}
+            icon={<ContainerOutlined />}
+          >
+            My favorite
           </Menu.Item>
           <Menu.Item key="sub1" icon={<MailOutlined />} title="Tests">
             Tests

@@ -21,6 +21,7 @@ import { HeaderContent, IconHeader, SearchingStyle } from "./Navbar.styled"
 
 import { Link } from "react-router-dom"
 import { LOGOUT_USER } from "@/modules/authentication/action/logout"
+import { history } from "@/App/App"
 
 const { Header } = Layout
 
@@ -56,8 +57,12 @@ export default function Navbar() {
     dispatch({ type: CLOSE_SIDE_NAV })
   }
 
+  const goToDashboard = () => {
+    history.push("/")
+  }
+
   const logoutUser = () => {
-    dispatch({ type: LOGOUT_USER })
+    dispatch({ type: LOGOUT_USER, payload: goToDashboard })
   }
 
   const menuProfile = (

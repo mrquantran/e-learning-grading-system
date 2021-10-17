@@ -14,8 +14,9 @@ import { Router, Switch } from "react-router-dom"
 
 import { createBrowserHistory, History } from "history"
 import HomeTemplate from "@/template/HomeTemplate"
-import { routesHome, routesAuth } from "@/routes/routes"
+import { routesHome, routesAuth, routesPrivate } from "@/routes/routes"
 import AuthTemplate from "@/template/AuthTemplate"
+import PrivateGuard from "@/guards/PrivateGuard"
 
 export const history: History = createBrowserHistory()
 
@@ -49,6 +50,21 @@ const renderAuthRoute = routes => {
   }
 }
 
+const renderPrivateRoute = routes => {
+  if (routes && routes.length > 0) {
+    return routes.map((item, index) => {
+      return (
+        <PrivateGuard
+          key={index}
+          exact={item.exact}
+          path={item.path}
+          Component={item.component}
+        ></PrivateGuard>
+      )
+    })
+  }
+}
+
 function App() {
   return (
     <Router history={history}>
@@ -56,6 +72,7 @@ function App() {
       <Switch>
         {renderPublicRoute(routesHome)}
         {renderAuthRoute(routesAuth)}
+        {renderPrivateRoute(routesPrivate)}
       </Switch>
     </Router>
   )
