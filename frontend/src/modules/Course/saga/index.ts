@@ -1,5 +1,8 @@
 import { successNotification } from "./../../../utils/notification"
-import { FETCH_COURSE_STATUS } from "./../action/courseAction"
+import {
+  FETCH_COURSES_ENROLL,
+  FETCH_COURSE_STATUS
+} from "./../action/courseAction"
 import { API } from "@/apis"
 import { all, call, fork, put, takeLatest } from "@redux-saga/core/effects"
 import { FETCH_COURSE_DETAIL } from "../action/courseAction"
@@ -66,7 +69,26 @@ function* fetchCourseStatus({ payload: courseId }: any) {
   } catch (error: any) {
     errorNotification(getError(error))
     yield put({
-      type: actionsEnroll.ENROLL_COURSE.ERROR,
+      type: actionsCourseDetail.FETCH_COURSE_STATUS.ERROR,
+      payload: error.message
+    })
+  }
+}
+
+function* fetchCoursesEnroll() {
+  try {
+    yield put({ type: actionsCourseDetail.FETCH_COURSES_ENROLL.REQUEST })
+
+    const { data } = yield call(API.courseAPI.fetchCoursesEnroll)
+
+    yield put({
+      type: actionsCourseDetail.FETCH_COURSES_ENROLL.SUCCESS,
+      payload: data
+    })
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionsCourseDetail.FETCH_COURSES_ENROLL.ERROR,
       payload: error.message
     })
   }
@@ -88,10 +110,15 @@ function* watchFetchCourseStatus() {
   yield takeLatest(FETCH_COURSE_STATUS, fetchCourseStatus)
 }
 
+function* watchFetchCoursesEnroll() {
+  yield takeLatest(FETCH_COURSES_ENROLL, fetchCoursesEnroll)
+}
+
 export default function* courseSaga() {
   yield all([
     watchFetchDetailCourse(),
     watchEnrollCourse(),
-    watchFetchCourseStatus()
+    watchFetchCourseStatus(),
+    watchFetchCoursesEnroll()
   ])
 }

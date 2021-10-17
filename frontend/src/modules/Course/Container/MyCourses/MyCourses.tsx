@@ -1,7 +1,17 @@
-import React from "react"
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useEffect } from "react"
 import { Row, Col } from "antd"
+import { useDispatch } from "react-redux"
+import { FETCH_COURSES_ENROLL } from "../../action/courseAction"
+import MyCourseList from "../../Components/MyCourseList/MyCourseList"
 
 export default function MyCourses() {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch({ type: FETCH_COURSES_ENROLL })
+  }, [dispatch])
+
   return (
     <div>
       <Row>
@@ -43,60 +53,7 @@ export default function MyCourses() {
           </div>
         </Col>
       </Row>
-      <Row>
-        <Col span={6} style={{ padding: "0px 8px" }}>
-          <div className="box">
-            <div className="box-header with-border">
-              <h4 className="box-title">Box progress</h4>
-              <div className="box-controls pull-right">
-                <div className="progress progress-xs w-100 mb-0 mt-10">
-                  <div
-                    className="progress-bar bg-warning"
-                    role="progressbar"
-                    style={{ width: "40%" }}
-                    aria-valuenow={40}
-                    aria-valuemin={0}
-                    aria-valuemax={100}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="box-body">
-              <p>
-                Fusce commodo eros a vulputate accumsan. Nulla et mollis nibh.
-                Donec sodales convallis urna luctus pulvinar. Ut vestibulum enim
-                vitae elit luctus, id tincidunt metus suscipit.
-              </p>
-            </div>
-          </div>
-        </Col>
-        <Col span={6} style={{ padding: "0px 8px" }}>
-          <div className="box">
-            <div className="box-header with-border">
-              <h4 className="box-title">Box progress</h4>
-              <div className="box-controls pull-right">
-                <div className="progress progress-xs w-100 mb-0 mt-10">
-                  <div
-                    className="progress-bar bg-warning"
-                    role="progressbar"
-                    style={{ width: "40%" }}
-                    aria-valuenow={40}
-                    aria-valuemin={0}
-                    aria-valuemax={100}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="box-body">
-              <p>
-                Fusce commodo eros a vulputate accumsan. Nulla et mollis nibh.
-                Donec sodales convallis urna luctus pulvinar. Ut vestibulum enim
-                vitae elit luctus, id tincidunt metus suscipit.
-              </p>
-            </div>
-          </div>
-        </Col>
-      </Row>
+      <MyCourseList />
     </div>
   )
 }

@@ -2,6 +2,7 @@ const store = "course"
 
 export const FETCH_COURSE_DETAIL = `${store}/FETCH_COURSE_DETAIL`
 export const FETCH_COURSE_STATUS = `${store}/FETCH_COURSE_STATUS`
+export const FETCH_COURSES_ENROLL = `${store}/FETCH_COURSES_ENROLL`
 
 export const noop = () => {}
 
@@ -32,6 +33,12 @@ export default class CourseDetailAction {
     REQUEST: `${store}/FETCH_COURSE_DETAIL_STATUS_REQUEST`,
     SUCCESS: `${store}/FETCH_COURSE_DETAIL_STATUS_SUCCESS`,
     ERROR: `${store}/FETCH_COURSE_DETAIL_STATUS_ERROR`
+  }
+
+  static FETCH_COURSES_ENROLL = {
+    REQUEST: `${store}/FETCH_COURSES_ENROLL_REQUEST`,
+    SUCCESS: `${store}/FETCH_COURSES_ENROLL_SUCCESS`,
+    ERROR: `${store}/FETCH_COURSES_ENROLL_ERROR`
   }
 
   static fetchCoursesData(payload) {

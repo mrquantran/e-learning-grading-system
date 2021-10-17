@@ -2,12 +2,15 @@ import { LOGOUT_USER } from "@/modules/authentication/action/logout"
 import actions from "../action/courseAction"
 
 const initialState = {
-  isFetching: false,
   course: {},
   statusCourse: {
     isFetching: false,
     isEnroll: null,
     isFavorite: null
+  },
+  myCourse: {
+    data: [],
+    isFetching: false
   }
 }
 
@@ -41,6 +44,32 @@ const courseReducer = (state = initialState, { type, payload }) => {
         ...state,
         statusCourse: {
           ...state.statusCourse,
+          isFetching: false,
+          error: payload
+        }
+      }
+    case actions.FETCH_COURSES_ENROLL.REQUEST:
+      return {
+        ...state,
+        myCourse: {
+          ...state.myCourse,
+          isFetching: true
+        }
+      }
+    case actions.FETCH_COURSES_ENROLL.SUCCESS:
+      return {
+        ...state,
+        myCourse: {
+          ...state.myCourse,
+          isFetching: false,
+          data: payload
+        }
+      }
+    case actions.FETCH_COURSES_ENROLL.ERROR:
+      return {
+        ...state,
+        myCourse: {
+          ...state.myCourse,
           isFetching: false,
           error: payload
         }
