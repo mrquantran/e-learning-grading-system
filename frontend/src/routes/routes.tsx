@@ -13,11 +13,6 @@ const routesHome = [
     path: "/detail/c:id",
     exact: true,
     component: DetailPage
-  },
-  {
-    path: "/my-courses/learning",
-    exact: true,
-    component: MyCoursesPage
   }
 ]
 
@@ -29,4 +24,12 @@ const routesAuth = [
   }
 ]
 
-export { routesHome, routesAuth }
+const routesPrivate = [
+  {
+    path: "/my-courses",
+    exact: false,
+    component: MyCoursesPage
+  }
+]
+
+export { routesHome, routesAuth, routesPrivate }

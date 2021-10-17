@@ -12,6 +12,7 @@ import {
 import { validate } from '../../validation/validate.js';
 import { isAuth } from '../../middleware/auth.js';
 import { getDecodedToken } from '../../helpers/auth.helper.js';
+import { coursesController } from '../../controller/course/course.js';
 
 const router = express.Router();
 const { PrismaClient } = pkg;
@@ -164,6 +165,8 @@ router.get('/', (req, res, next) => getCourses().then((courses) => res.json(cour
   const httpError = createHttpError(500, error);
   next(httpError);
 }));
+
+router.get('/enroll', isAuth, (req, res) => coursesController.getEnrollCourses(req, res));
 
 // GET courses by id
 router.get('/:id', validate([

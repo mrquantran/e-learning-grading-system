@@ -1,40 +1,37 @@
+import LeftMenu from "@/components/LeftMenu/LeftMenu"
+import Navbar from "@/components/Navbar/Navbar"
+import { RootState } from "@/redux/reducer/rootReducer"
+import { LayoutStyled } from "@/template/HomeTemplate.styled"
 import React from "react"
-import {
-  Route,
-  RouteProps,
-  Redirect,
-  RouteComponentProps
-} from "react-router-dom"
+import { useSelector } from "react-redux"
+import { Route, Redirect } from "react-router-dom"
 // import { connect } from "react-redux"
 
 import configureStore from "../redux/saga/rootSaga"
 
-interface ReduxProps {
-  isAuthenticated: boolean
-}
-interface Props extends ReduxProps, RouteProps {
-  component: React.ComponentType<RouteComponentProps>
-}
-
 export const store = configureStore()
 
-// export function loggedIn() {
-//   // const state = store.getState()
+function PrivateGuard(props) {
+  const { Component, ...restRoute } = props
 
-//   return state.authentication.isAuthenticated
-// }
-
-function PrivateGuard(props: Props) {
-  const { isAuthenticated, component: Component, ...rest } = props
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth)
 
   return (
     <Route
-      {...rest}
-      render={props => {
-        if (true) {
-          return <Redirect to="/login" />
-        }
-        return <Component {...props} />
+      {...restRoute}
+      render={propsRoute => {
+        return isAuthenticated ? (
+          <LayoutStyled className="site-layout">
+            {/* LeftMenu */}
+            <LeftMenu />
+            <LayoutStyled className="site-layout">
+              <Navbar />
+              <Component {...propsRoute} />
+            </LayoutStyled>
+          </LayoutStyled>
+        ) : (
+          <Redirect to="/login" />
+        )
       }}
     />
   )
