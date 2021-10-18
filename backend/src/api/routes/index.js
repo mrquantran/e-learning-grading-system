@@ -5,7 +5,6 @@ import express from 'express';
 import coursesList from './courses/coursesList.js';
 import testResults from './test-result/testResult.js';
 import coursesEnrollment from './enrollment/enrollmentCourse.js';
-import testResultTopScore from './test-result/testResultTopScore.js';
 import users from './user/user.js';
 
 import test from './test/test.js';

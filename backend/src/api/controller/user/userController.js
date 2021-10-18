@@ -178,7 +178,7 @@ const deleteUser = async function (req, res, next) {
 };
 
 const getTopScore = async (req, res, next) => {
-  const listStudentsTopScore = [];
+  let listStudentsTopScore = [];
   try {
     const studentsTopScore = await prisma.user.findMany({
       select: {
@@ -208,7 +208,7 @@ const getTopScore = async (req, res, next) => {
     listStudentsTopScore.sort((a, b) => b.totalScore - a.totalScore);
 
     let i = 1;
-    listStudentsTopScore.map((student) => ({ rank: i++, ...student}));
+    listStudentsTopScore = listStudentsTopScore.map((student) => ({ rank: i++, ...student}));
 
     return res.status(200).json(listStudentsTopScore);
   } catch (err) {
