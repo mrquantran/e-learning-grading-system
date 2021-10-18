@@ -23,6 +23,21 @@ model User {
   favoriteCourse FavoriteCourse[]
 }
 
+model Lectures {
+  id        Int          @id @default(autoincrement())
+  title     String
+  class     LecturesType
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+  courseId  Int
+  course    Course?      @relation(fields: [courseId], references: [id])
+}
+
+enum LecturesType {
+  LECTURE
+  CHAPTER
+}
+
 model FavoriteCourse {
   // Relation Fields
   userId   Int
@@ -31,6 +46,18 @@ model FavoriteCourse {
   course   Course? @relation(fields: [courseId], references: [id])
 
   @@id([userId, courseId])
+}
+
+model Course {
+  id            Int     @id @default(autoincrement())
+  name          String
+  courseDetails String?
+
+  // Relation fields
+  members        CourseEnrollment[]
+  tests          Test[]
+  favoriteCourse FavoriteCourse[]
+  lectures       Lectures[]
 }
 
 model Token {
@@ -52,17 +79,6 @@ model Token {
 enum TokenType {
   EMAIL // used as a short-lived token sent to the user's email
   API
-}
-
-model Course {
-  id            Int     @id @default(autoincrement())
-  name          String
-  courseDetails String?
-
-  // Relation fields
-  members        CourseEnrollment[]
-  tests          Test[]
-  favoriteCourse FavoriteCourse[]
 }
 
 model CourseEnrollment {

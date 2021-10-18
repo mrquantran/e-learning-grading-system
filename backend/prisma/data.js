@@ -83,167 +83,25 @@ const users = [
   },
 ];
 
-// const testresultss = [
-//   {
-//     testId: 'Test1',
-//     results: [
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'waston@hey.com',
-//         student: 'jessica@hey.com',
-//       },
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'waston@hey.com',
-//         student: 'alex@hey.com',
-//       },
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'waston@hey.com',
-//         student: 'tim@hey.com',
-//       },
-//     ],
-//   },
-//   {
-//     testId: 'Test2',
-//     results: [
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'waston@hey.com',
-//         student: 'jessica@hey.com',
-//       },
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'waston@hey.com',
-//         student: 'alex@hey.com',
-//       },
-//     ],
-//   },
-//   {
-//     testId: 'Test3',
-//     results: [
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'waston@hey.com',
-//         student: 'jessica@hey.com',
-//       },
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'waston@hey.com',
-//         student: 'alex@hey.com',
-//       },
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'waston@hey.com',
-//         student: 'tim@hey.com',
-//       },
-//     ],
-//   },
-//   {
-//     testId: 'Test4',
-//     results: [
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'tim@hey.com',
-//         student: 'gate@hey.com',
-//       },
-//     ],
-//   },
-//   {
-//     testId: 'Test6',
-//     results: [
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'gate@hey.com',
-//         student: 'alex@hey.com',
-//       },
-//     ],
-//   },
-//   {
-//     testId: 'Test7',
-//     results: [
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'alex@hey.com',
-//         student: 'jessica@hey.com',
-//       },
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'alex@hey.com',
-//         student: 'tim@hey.com',
-//       },
-//     ],
-//   },
-//   {
-//     testId: 'Test8',
-//     results: [
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'tim@hey.com',
-//         student: 'gate@hey.com',
-//       },
-//     ],
-//   },
-//   {
-//     testId: 'Test9',
-//     results: [
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'jessica@hey.com',
-//         student: 'jackson@hey.com',
-//       },
-//       {
-//         createdAt: new Date(),
-//         results: 50,
-//         gradedBy: 'jessica@hey.com',
-//         student: 'gate@hey.com',
-//       },
-//     ],
-//   },
-//   {
-//     testId: 'Test12',
-//     results: [
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'alex@hey.com',
-//         student: 'jessica@hey.com',
-//       },
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'alex@hey.com',
-//         student: 'tim@hey.com',
-//       },
-//       {
-//         createdAt: new Date(),
-//         result: 100,
-//         gradedBy: 'alex@hey.com',
-//         student: 'gate@hey.com',
-//       },
-//     ],
-//   },
-// ];
-
 const courses = [
   {
     name: 'Typescript course',
     courseDetails: '1232456',
     favoriteCourse: ['waston@hey.com', 'quantran2381@gmail.com', 'alex@hey.com'],
+    lectures: [
+      {
+        title: 'Introduction',
+        class: 'CHAPTER',
+      },
+      {
+        title: 'What is TypeScript?',
+        class: 'LECTURE',
+      },
+      {
+        title: 'Typescript Basic',
+        class: 'LECTURE',
+      },
+    ],
     testing: [
       {
         name: 'Test1',
@@ -327,6 +185,20 @@ const courses = [
     name: 'Javascript Basic 6',
     favoriteCourse: ['tim@hey.com', 'quantran2381@gmail.com', 'gate@hey.com'],
     courseDetails: 'c43214',
+    lectures: [
+      {
+        title: 'Introduction',
+        class: 'CHAPTER',
+      },
+      {
+        title: 'What is Javascript?',
+        class: 'LECTURE',
+      },
+      {
+        title: 'Javascript Basic',
+        class: 'LECTURE',
+      },
+    ],
     testing: [
       {
         name: 'Test4',
@@ -357,6 +229,7 @@ const courses = [
     name: 'Javascript Basic 7',
     courseDetails: 'c43214',
     favoriteCourse: [],
+    lectures: [],
     testing: [
       {
         name: 'Test12',
@@ -409,6 +282,7 @@ const courses = [
     name: 'Javascript Basic 8',
     courseDetails: 'c43214',
     favoriteCourse: [],
+    lectures: [],
     testing: [
       {
         name: 'Test6',
@@ -434,6 +308,7 @@ const courses = [
     name: 'Javascript Basic ',
     favoriteCourse: ['gate@hey.com', 'quantran2381@gmail.com'],
     courseDetails: 'c43214',
+    lectures: [],
     testing: [
       {
         name: 'Test9',

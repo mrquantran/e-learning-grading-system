@@ -25,7 +25,7 @@ export default function InfoCourse({ detail, courseId }) {
   const dispatch = useDispatch()
   const isLogin = useSelector((state: RootState) => state.auth.isAuthenticated)
 
-  const { isFavorite, isEnroll } = useSelector(
+  const { isEnroll } = useSelector(
     (state: RootState) => state.course.statusCourse
   )
 
