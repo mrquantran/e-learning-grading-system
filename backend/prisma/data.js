@@ -91,15 +91,51 @@ const courses = [
     lectures: [
       {
         title: 'Introduction',
-        class: 'CHAPTER',
+        lecturesMaterial: [
+          {
+            title: 'What is TypeScript?',
+          },
+          {
+            title: 'Typescript Basic',
+          },
+        ],
       },
       {
-        title: 'What is TypeScript?',
-        class: 'LECTURE',
+        title: 'Terminal',
+        lecturesMaterial: [
+          {
+            title: 'Update about terminal section',
+          },
+          {
+            title: 'Section Introduction',
+          },
+          {
+            title: 'Moving between directories',
+          },
+          {
+            title: 'Working with files & direstories',
+          },
+        ],
       },
       {
-        title: 'Typescript Basic',
-        class: 'LECTURE',
+        title: 'Github',
+        lecturesMaterial: [
+          {
+            title: 'Section Introduction',
+          },
+          {
+            title: 'What is github?',
+          },
+          {
+            title: 'Creating a git hub account',
+          },
+          {
+            title: 'Creating your first repo',
+          },
+          {
+            title: 'Viewing other repo',
+          },
+        ],
       },
     ],
     testing: [
@@ -185,20 +221,7 @@ const courses = [
     name: 'Javascript Basic 6',
     favoriteCourse: ['tim@hey.com', 'quantran2381@gmail.com', 'gate@hey.com'],
     courseDetails: 'c43214',
-    lectures: [
-      {
-        title: 'Introduction',
-        class: 'CHAPTER',
-      },
-      {
-        title: 'What is Javascript?',
-        class: 'LECTURE',
-      },
-      {
-        title: 'Javascript Basic',
-        class: 'LECTURE',
-      },
-    ],
+    lectures: [],
     testing: [
       {
         name: 'Test4',

@@ -9,13 +9,13 @@ const appPersistConfig = {
 const dashboardPersistConfig = {
   key: "dashboard",
   storage: storage,
-  whitelist: ["courses"]
+  whitelist: [""]
 }
 
 const coursePersistConfig = {
   key: "course",
   storage: storage,
-  whitelist: ["course"]
+  whitelist: [""]
 }
 
 export const persistConfig = {

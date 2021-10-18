@@ -24,18 +24,20 @@ model User {
 }
 
 model Lectures {
-  id        Int          @id @default(autoincrement())
-  title     String
-  class     LecturesType
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  courseId  Int
-  course    Course?      @relation(fields: [courseId], references: [id])
+  id               Int                @id @default(autoincrement())
+  title            String
+  createdAt        DateTime           @default(now())
+  courseId         Int
+  course           Course?            @relation(fields: [courseId], references: [id])
+  lecturesMaterial LecutresMaterial[]
 }
 
-enum LecturesType {
-  LECTURE
-  CHAPTER
+model LecutresMaterial {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  title     String
+  lectureId Int
+  lecture   Lectures @relation(fields: [lectureId], references: [id])
 }
 
 model FavoriteCourse {

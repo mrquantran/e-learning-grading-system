@@ -80,14 +80,14 @@ async function main() {
             })),
         },
         lectures: {
-          create: course.lectures.map((item) => {
-            if (item) {
-              return {
-                title: item.title,
-                class: item.class,
-              };
-            }
-          }),
+          create: course.lectures.map((item) => ({
+            title: item.title,
+            lecturesMaterial: {
+              create: item.lecturesMaterial.map((lecture) => ({
+                title: lecture.title,
+              })),
+            },
+          })),
         },
         tests: {
           create: course.testing.map((test) => ({
