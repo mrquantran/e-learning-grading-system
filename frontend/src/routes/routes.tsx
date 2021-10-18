@@ -11,7 +11,7 @@ const routesHome = [
     component: DashboardPage
   },
   {
-    path: "/detail/c:id",
+    path: "/course/c:id",
     exact: true,
     component: DetailPage
   }

@@ -19,7 +19,7 @@ export default function MyCourseList() {
     return coursesList.map((course: Course, index: number) => {
       return (
         <Col span={6} style={{ padding: "0px 8px" }}>
-          <Link to={`/detail/c${course.id}`}>
+          <Link to={`/course/c${course.id}`}>
             <div className="box pull-up">
               <div className="box-header with-border">
                 <h4 className="box-title">{course.name}</h4>
