@@ -15,6 +15,8 @@ import auth from './account/auth.js';
 import signup from './account/register.js';
 import enrollCourse from './enrollment/enrollCourse.js';
 
+import lectures from './lectures/lectures.js';
+
 const router = express.Router();
 
 /*-------------------------------------------------------------------------*/
@@ -31,6 +33,9 @@ router.use('/courses', coursesList);
 
 // test result
 router.use('/courses/tests', testResults);
+
+// lectures
+router.use('/courses', lectures);
 
 // router.use('/user/top', testResultTopScore);
 
