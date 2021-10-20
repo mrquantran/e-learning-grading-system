@@ -164,7 +164,27 @@ const components = {
           },
         },
       },
-
+      Lectures: {
+        type: 'object',
+        properties: {
+          id: {
+            type: 'number',
+            description: 'Lectures identification number',
+            example: '1',
+          },
+          title: {
+            type: 'string',
+            description: "Lectures's title",
+            example: 'Coding in JavaScript',
+          },
+          createdAt: {
+            type: 'date',
+            description: 'Date created',
+            pattern: /([0-9]{4})-(?:[0-9]{2})-([0-9]{2})/,
+            example: '2019-05-17',
+          },
+        },
+      },
       Courses: {
         type: 'object',
         properties: {
