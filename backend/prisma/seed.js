@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 /* eslint-disable no-return-await */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
@@ -23,6 +25,7 @@ async function main() {
   await prisma.token.deleteMany({});
   await prisma.favoriteCourse.deleteMany({});
   await prisma.user.deleteMany({});
+  await prisma.lectures.deleteMany({});
   await prisma.course.deleteMany({});
 
   // users
@@ -75,6 +78,16 @@ async function main() {
                 },
               },
             })),
+        },
+        lectures: {
+          create: course.lectures.map((item) => ({
+            title: item.title,
+            lecturesMaterial: {
+              create: item.lecturesMaterial.map((lecture) => ({
+                title: lecture.title,
+              })),
+            },
+          })),
         },
         tests: {
           create: course.testing.map((test) => ({

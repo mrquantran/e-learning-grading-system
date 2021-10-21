@@ -8,3 +8,8 @@ export const TYPE_USER = {
   student: "STUDENT",
   teacher: " TEACHER"
 }
+
+export const TYPE_LECTURES = {
+  CHAPTER: "chapter",
+  SECTION: "section"
+}

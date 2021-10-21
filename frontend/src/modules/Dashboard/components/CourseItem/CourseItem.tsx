@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 export default function CourseItem({ name, firstName, lastName, id }) {
   return (
     <CourseItemStyled>
-      <Link to={`/detail/c${id}`}>
+      <Link to={`/course/c${id}`}>
         <div className="box pull-up">
           <div className="box-body">
             <div className="bg-primary rounded">

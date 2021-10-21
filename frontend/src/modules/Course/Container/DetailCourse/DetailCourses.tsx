@@ -26,7 +26,7 @@ export default function DetailCourses() {
     if (isLogin) {
       dispatch({ type: FETCH_COURSE_STATUS, payload: params })
     }
-  }, [dispatch, params])
+  }, [dispatch, isLogin, params])
 
   const { course } = useSelector((state: RootState) => state.course)
 

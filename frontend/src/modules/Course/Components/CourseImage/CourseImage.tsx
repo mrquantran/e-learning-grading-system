@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react"
 import course from "@/assets/images/course/c1.png"
 

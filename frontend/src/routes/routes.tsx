@@ -1,5 +1,6 @@
 import DashboardPage from "@/pages/Dashboard/DashboardPage"
 import DetailPage from "@/pages/Detail/DetailPage"
+import LecturePage from "@/pages/Lectures/LecturePage"
 import LoginPage from "@/pages/Login/LoginPage"
 import MyCoursesPage from "@/pages/MyCourses/MyCoursesPage"
 
@@ -10,7 +11,7 @@ const routesHome = [
     component: DashboardPage
   },
   {
-    path: "/detail/c:id",
+    path: "/course/c:id",
     exact: true,
     component: DetailPage
   }
@@ -29,6 +30,11 @@ const routesPrivate = [
     path: "/my-courses",
     exact: false,
     component: MyCoursesPage
+  },
+  {
+    path: "/course/c:id/learn",
+    exact: false,
+    component: LecturePage
   }
 ]
 
