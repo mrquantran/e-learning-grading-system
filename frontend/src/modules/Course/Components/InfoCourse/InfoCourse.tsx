@@ -39,16 +39,20 @@ export default function InfoCourse({ detail, courseId }) {
     }
   }
 
+  const goToLearn = () => {
+    history.push(`/course/c${courseId}/learn`)
+  }
+
   const renderButtonEnroll = () => {
     return isEnroll ? (
-      <ButtonStyled secondary>
+      <ButtonStyled success onClick={goToLearn}>
         <IconStyled>
           <AppstoreOutlined />
         </IconStyled>
-        Enroll Course
+        Go To Course
       </ButtonStyled>
     ) : (
-      <ButtonStyled success onClick={handleEnrollCourse}>
+      <ButtonStyled info onClick={handleEnrollCourse}>
         <IconStyled>
           <AppstoreAddOutlined />
         </IconStyled>

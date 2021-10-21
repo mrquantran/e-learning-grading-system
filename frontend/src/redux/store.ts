@@ -11,7 +11,8 @@ import rootReducer from "./reducer/rootReducer"
 
 const persistConfig = {
   key: "root",
-  storage
+  storage,
+  whitelist: ["app"]
 }
 
 const composeEnhancers =
