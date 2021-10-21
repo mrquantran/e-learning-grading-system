@@ -1,3 +1,7 @@
+/* eslint-disable max-len */
+/* eslint-disable no-shadow */
+/* eslint-disable no-console */
+/* eslint-disable no-undef */
 /* eslint-disable array-callback-return */
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
@@ -81,6 +85,24 @@ async function createCourse(name, courseDetails, userId) {
   return createdCourse;
 }
 
+async function addFavoriteCourse(req) {
+  const { id } = req.params;
+  const token = await getDecodedToken(req);
+
+  const favoriteCourse = await prisma.favoriteCourse.create({
+    data: {
+      user: {
+        connect: { id: token.id },
+      },
+      course: {
+        connect: { id: Number(id) },
+      },
+    },
+  });
+
+  return favoriteCourse;
+}
+
 async function deleteCourse(id) {
   // Delete all enrollments
   const deletedCourse = await prisma.$transaction([
@@ -97,6 +119,25 @@ async function deleteCourse(id) {
   ]);
 
   return deletedCourse;
+}
+
+async function deleteFavoriteCourse(req) {
+  const { id } = req.params;
+  const token = await getDecodedToken(req);
+
+  console.log(token.id);
+  console.log(id);
+
+  const deleteCourse = await prisma.favoriteCourse.delete({
+    where: {
+      userId_courseId: {
+        userId: token.id,
+        courseId: Number(id),
+      },
+    },
+  });
+
+  return deleteCourse;
 }
 
 async function updateCourse(name, courseDetails, id) {
@@ -168,6 +209,9 @@ router.get('/', (req, res, next) => getCourses().then((courses) => res.json(cour
 
 router.get('/enroll', isAuth, (req, res) => coursesController.getEnrollCourses(req, res));
 
+// Get favorite courses
+router.get('/favorite', isAuth, (req, res) => coursesController.getFavoriteCourses(req, res));
+
 // GET courses by id
 router.get('/:id', validate([
   param('id')
@@ -209,6 +253,20 @@ router.post('/', validate([
 
   createCourse(name, courseDetails)
     .then((createdCourse) => res.json(createdCourse))
+    .catch((error) => {
+      // 500 (Internal Server Error) - Something has gone wrong in your application.
+      const httpError = createHttpError(500, error);
+      next(httpError);
+    });
+});
+
+// POST favorite course
+router.post('/:id/favorite', isAuth, validate([
+  param('id')
+    .isNumeric()
+    .withMessage('courseId is not a number'),
+]), (req, res) => {
+  addFavoriteCourse(req).then((addedFavoriteCourse) => res.json({ addedFavoriteCourse }))
     .catch((error) => {
       // 500 (Internal Server Error) - Something has gone wrong in your application.
       const httpError = createHttpError(500, error);
@@ -259,6 +317,19 @@ router.delete('/:id', validate([
 
   // delete course
   deleteCourse(id).then((deletedCourse) => res.json({ message: 'delete succesfully' }))
+    .catch((error) => {
+    // 500 (Internal Server Error) - Something has gone wrong in your application.
+      const httpError = createHttpError(500, error);
+      next(httpError);
+    });
+});
+
+// DELETE favorite course
+router.delete('/:id/favorite', isAuth, validate([
+  param('id')
+    .isNumeric()
+    .withMessage('courseId is not a number')]), (req, res, next) => {
+  deleteFavoriteCourse(req).then((deletedFavoriteCourse) => res.json({ deletedFavoriteCourse }))
     .catch((error) => {
     // 500 (Internal Server Error) - Something has gone wrong in your application.
       const httpError = createHttpError(500, error);
