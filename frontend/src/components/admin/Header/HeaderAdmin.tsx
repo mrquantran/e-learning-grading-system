@@ -3,6 +3,8 @@ import React from "react"
 import logo from "@/assets/images/logo.svg"
 import { Layout } from "antd"
 import { LogoHeaderStyled } from "@/stylesheets/Logo/LogoHeader.styled"
+import { history } from "@/App/App"
+import pathRoute from "@/routes/routePath"
 
 const { Header } = Layout
 
@@ -16,10 +18,13 @@ const headerStyled = {
 }
 
 export default function HeaderAdmin() {
+  const goToHome = () => {
+    history.push(pathRoute.instructorCourse)
+  }
   return (
     <React.Fragment>
       <Header className="site-layout-background" style={headerStyled}>
-        <LogoHeaderStyled>
+        <LogoHeaderStyled onClick={goToHome}>
           <img src={logo} />
         </LogoHeaderStyled>
       </Header>
