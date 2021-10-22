@@ -3,7 +3,7 @@ import StepHeader from "@/components/admin/StepHeader/StepHeader"
 import { useRouter } from "@/hooks/useRouter"
 import { GO_TO_STEP } from "@/modules/Course/action/createCourseAction"
 import { RootState } from "@/redux/reducer/rootReducer"
-import { TitleCourseStyled } from "@/stylesheets/Title/Title.styled"
+import pathRoute from "@/routes/routePath"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { ContentCreateCourseStyled } from "./CreateCourse.styled"
@@ -18,7 +18,7 @@ export default function CreateCoursePage() {
 
   useEffect(() => {
     if (!acceptableParams.includes(Number(step))) {
-      history.push("/")
+      history.push(pathRoute.instructor)
     }
 
     dispatch({ type: GO_TO_STEP, payload: step })
