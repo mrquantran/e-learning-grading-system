@@ -54,6 +54,8 @@ model Course {
   id            Int     @id @default(autoincrement())
   name          String
   courseDetails String?
+  isPublic      Boolean
+  isDraft       Boolean
 
   // Relation fields
   members        CourseEnrollment[]
