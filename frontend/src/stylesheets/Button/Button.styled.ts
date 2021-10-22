@@ -8,6 +8,8 @@ export const ButtonStyled = styled.button`
   line-height: inherit;
   padding: 8px 16px;
   font-size: 1.1rem;
+  height: 50px;
+  white-space: nowrap;
   transition: all 0.5s ease-in-out;
   display: inline-flex;
   text-align: center;

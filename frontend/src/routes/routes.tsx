@@ -1,8 +1,17 @@
+import DashboardPageAdmin from "@/pages/admin/Dashboard/DashboardPageAdmin"
 import DashboardPage from "@/pages/Dashboard/DashboardPage"
 import DetailPage from "@/pages/Detail/DetailPage"
 import LecturePage from "@/pages/Lectures/LecturePage"
 import LoginPage from "@/pages/Login/LoginPage"
 import MyCoursesPage from "@/pages/MyCourses/MyCoursesPage"
+
+const routesAdmin = [
+  {
+    path: "/instructor/courses",
+    exact: true,
+    component: DashboardPageAdmin
+  }
+]
 
 const routesHome = [
   {
@@ -38,4 +47,4 @@ const routesPrivate = [
   }
 ]
 
-export { routesHome, routesAuth, routesPrivate }
+export { routesHome, routesAuth, routesPrivate, routesAdmin }

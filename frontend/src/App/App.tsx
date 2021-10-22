@@ -14,65 +14,60 @@ import { Router, Switch } from "react-router-dom"
 
 import { createBrowserHistory, History } from "history"
 import HomeTemplate from "@/template/HomeTemplate"
-import { routesHome, routesAuth, routesPrivate } from "@/routes/routes"
+import {
+  routesHome,
+  routesAuth,
+  routesPrivate,
+  routesAdmin
+} from "@/routes/routes"
 import AuthTemplate from "@/template/AuthTemplate"
 import PrivateGuard from "@/guards/PrivateGuard"
+import AdminTemplate from "@/template/AdminTemplate"
 
 export const history: History = createBrowserHistory()
 
-const renderPublicRoute = routes => {
+const renderRoute = (Component, routes) => {
   if (routes && routes.length > 0) {
     return routes.map((item, index) => {
       return (
-        <HomeTemplate
+        <Component
           key={index}
           exact={item.exact}
           path={item.path}
           Component={item.component}
-        ></HomeTemplate>
+        ></Component>
       )
     })
   }
 }
 
-const renderAuthRoute = routes => {
-  if (routes && routes.length > 0) {
-    return routes.map((item, index) => {
-      return (
-        <AuthTemplate
-          key={index}
-          exact={item.exact}
-          path={item.path}
-          Component={item.component}
-        ></AuthTemplate>
-      )
-    })
+const Components = [
+  {
+    Component: HomeTemplate,
+    routes: routesHome
+  },
+  {
+    Component: AuthTemplate,
+    routes: routesAuth
+  },
+  {
+    Component: AdminTemplate,
+    routes: routesAdmin
+  },
+  {
+    Component: PrivateGuard,
+    routes: routesPrivate
   }
-}
-
-const renderPrivateRoute = routes => {
-  if (routes && routes.length > 0) {
-    return routes.map((item, index) => {
-      return (
-        <PrivateGuard
-          key={index}
-          exact={item.exact}
-          path={item.path}
-          Component={item.component}
-        ></PrivateGuard>
-      )
-    })
-  }
-}
+]
 
 function App() {
   return (
     <Router history={history}>
       {/* public Route */}
       <Switch>
-        {renderPublicRoute(routesHome)}
-        {renderAuthRoute(routesAuth)}
-        {renderPrivateRoute(routesPrivate)}
+        {Components.map(item => {
+          return renderRoute(item.Component, item.routes)
+        })}
       </Switch>
     </Router>
   )
