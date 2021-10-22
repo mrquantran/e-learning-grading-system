@@ -16,6 +16,7 @@ import {
   SmileOutlined,
   ToolOutlined
 } from "@ant-design/icons"
+import pathRoute from "@/routes/routePath"
 
 const pageMenuPath = {
   home: "/instructor",
@@ -65,7 +66,10 @@ export default function LeftMenuAdmin() {
           // theme="dark"
           // inlineCollapsed={this.state.collapsed}
         >
-          <Menu.Item key={pageMenuPath.home} icon={<PlaySquareOutlined />}>
+          <Menu.Item
+            key={pathRoute.instructorCourse}
+            icon={<PlaySquareOutlined />}
+          >
             Courses
           </Menu.Item>
           <Menu.Item
