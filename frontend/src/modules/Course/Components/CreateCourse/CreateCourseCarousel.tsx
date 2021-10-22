@@ -2,8 +2,14 @@ import React from "react"
 import bg5 from "@/assets/images/bg/bg-5.png"
 import custom14 from "@/assets/images/custom-14.svg"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
+import pathRoute from "@/routes/routePath"
+import { history } from "@/App/App"
 
 export default function CreateCourseCarousel() {
+  const goToCreateCourse = () => {
+    history.push(`${pathRoute.createCourse}/1`)
+  }
+
   return (
     <div className="box pull-up">
       <div
@@ -25,7 +31,9 @@ export default function CreateCourseCarousel() {
             </div>
           </div>
           <div>
-            <ButtonStyled primary>New course</ButtonStyled>
+            <ButtonStyled primary onClick={goToCreateCourse}>
+              New course
+            </ButtonStyled>
           </div>
         </div>
       </div>

@@ -11,3 +11,6 @@ export const IconStyled = styled.div`
       color: #ff9920 !important;
     `}
 `
+export const IconCardStyled = styled.div`
+  font-size: 32px;
+`
