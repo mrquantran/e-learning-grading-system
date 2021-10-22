@@ -8,7 +8,7 @@ import MyCoursesPage from "@/pages/MyCourses/MyCoursesPage"
 
 const routesCreate = [
   {
-    path: "/course/create/:id",
+    path: "/course/create/:step",
     exact: true,
     component: CreateCoursePage
   }
@@ -16,8 +16,8 @@ const routesCreate = [
 
 const routesAdmin = [
   {
-    path: "/instructor/courses",
-    exact: true,
+    path: "/instructor",
+    exact: false,
     component: DashboardPageAdmin
   }
 ]

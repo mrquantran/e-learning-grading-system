@@ -2,9 +2,7 @@
 import React from "react"
 import logo from "@/assets/images/logo.svg"
 import { Layout } from "antd"
-import { StepHeaderStyled } from "./HeaderAdmin.styled"
 import { LogoHeaderStyled } from "@/stylesheets/Logo/LogoHeader.styled"
-import StepHeader from "../StepHeader/StepHeader"
 
 const { Header } = Layout
 
@@ -25,7 +23,6 @@ export default function HeaderAdmin() {
           <img src={logo} />
         </LogoHeaderStyled>
       </Header>
-      <StepHeader />
     </React.Fragment>
   )
 }

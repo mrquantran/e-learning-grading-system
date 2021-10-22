@@ -1,3 +1,4 @@
+import FooterAdmin from "@/components/admin/Footer/FooterAdmin"
 import HeaderAdmin from "@/components/admin/Header/HeaderAdmin"
 import { RootState } from "@/redux/reducer/rootReducer"
 import React from "react"
@@ -20,6 +21,7 @@ export default function CreateTemplate(props) {
           <LayoutStyled className="site-layout">
             <HeaderAdmin />
             <Component {...propsRoute} />
+            <FooterAdmin />
           </LayoutStyled>
         ) : (
           // </LayoutStyled>
