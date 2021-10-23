@@ -16,7 +16,11 @@ const type = {
   test: "test"
 }
 
-export default function TypeCourse() {
+export const validateSchemaTypeCourse = yup.object().shape({
+  type: yup.string().required("type is required")
+})
+
+export default function TypeCourse({ validationSchema }) {
   const [isCourseChecked, setIsCourseChecked] = useState<any>(-1)
 
   const handleChecked = e => {
@@ -30,12 +34,7 @@ export default function TypeCourse() {
   }
 
   return (
-    <FormikStep
-      label="Type Course"
-      validationSchema={yup.object().shape({
-        type: yup.string().required("type is required")
-      })}
-    >
+    <FormikStep label="Type Course" validationSchema={validationSchema}>
       <TypeCourseStyled>
         <TitleCourseStyled marginBottom>
           First, let's find out what type of course you're making.

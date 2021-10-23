@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-pascal-case */
 import { history } from "@/App/App"
 import HeaderAdmin from "@/components/admin/Header/HeaderAdmin"
 import StepHeader from "@/components/admin/StepHeader/StepHeader"
@@ -10,6 +11,8 @@ import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 const acceptableParams = [1, 2]
+
+const sleep = time => new Promise(acc => setTimeout(acc, time))
 
 export default function CreateCoursePage() {
   const router = useRouter()
@@ -37,7 +40,10 @@ export default function CreateCoursePage() {
   const stepCurrent = Number(step) / acceptableParams.length
 
   const renderContentCreate = () => {
-    return tabs.map(child => <child.component />)
+    // eslint-disable-next-line react/jsx-pascal-case
+    return tabs.map(Child => (
+      <Child.component validationSchema={Child.validate} />
+    ))
   }
 
   return (
@@ -46,11 +52,12 @@ export default function CreateCoursePage() {
       <StepHeader stepCurrent={stepCurrent} />
       <FormikStepper
         initialValues={{
-          type: "",
+          type: null,
           title: "",
           category: ""
         }}
-        onSubmit={(values, { resetForm }) => {
+        onSubmit={async (values, { resetForm }) => {
+          await sleep(1000)
           // eslint-disable-next-line no-console
           console.log("values", values)
           resetForm()

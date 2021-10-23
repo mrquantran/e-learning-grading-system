@@ -6,7 +6,13 @@ import { Field } from "formik"
 import { InputTitleStyled } from "./TitleCourse.styled"
 import { Input } from "antd"
 
-export default function TitleCourse() {
+import * as yup from "yup"
+
+export const validateSchemaTitleCourse = yup.object().shape({
+  title: yup.string().required("type is required").min(10)
+})
+
+export default function TitleCourse({ validationSchema }) {
   return (
     <FormikStep label="title course">
       <TitleCourseStyled marginBottom>

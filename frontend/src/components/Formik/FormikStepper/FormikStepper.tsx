@@ -29,7 +29,6 @@ export default function FormikStepper({
   const { step: stepCurrently } = router.query
 
   const currentChild = childrenArray[step]
-
   function isLastStep() {
     return step === childrenArray.length - 1
   }
@@ -59,69 +58,63 @@ export default function FormikStepper({
         }
       }}
     >
-      {({ isSubmitting, dirty }) => {
-        return (
-          <Form
-            autoComplete="off"
-            style={{ height: "100%", position: "relative" }}
-          >
-            <ContentCreateCourseStyled>
-              {currentChild}
-            </ContentCreateCourseStyled>
-            <FooterStyled>
-              <Footer
-                style={{
-                  background: "#fff"
-                }}
-              >
-                <div className="footer-button">
-                  {step > 0 ? (
-                    <ButtonStyled
-                      primary
-                      // onClick={goToPrevious}
-                      disabled={isSubmitting}
-                      variant="contained"
-                      onClick={() => {
-                        history.push(
+      {({ isSubmitting, dirty, errors, isValid }): JSX.Element => (
+        <Form
+          autoComplete="off"
+          style={{ height: "100%", position: "relative" }}
+        >
+          <ContentCreateCourseStyled>{currentChild}</ContentCreateCourseStyled>
+          <FooterStyled>
+            <Footer
+              style={{
+                background: "#fff"
+              }}
+            >
+              <div className="footer-button">
+                {step > 0 ? (
+                  <ButtonStyled
+                    primary
+                    // onClick={goToPrevious}
+                    disabled={isSubmitting}
+                    variant="contained"
+                    onClick={() => {
+                      history.push(
+                        `${pathRoute.createCourse}/${Number(stepCurrently) - 1}`
+                      )
+                      setStep(s => s - 1)
+                    }}
+                  >
+                    Previous
+                  </ButtonStyled>
+                ) : null}
+                <div style={{ flex: "1 1 0%" }} />
+                <ButtonStyled
+                  danger
+                  startIcon={isSubmitting ? <LoadingOutlined /> : null}
+                  disabled={!dirty || !isValid || isSubmitting}
+                  onClick={() =>
+                    !isLastStep()
+                      ? history.push(
                           `${pathRoute.createCourse}/${
-                            Number(stepCurrently) - 1
+                            Number(stepCurrently) + 1
                           }`
                         )
-                        setStep(s => s - 1)
-                      }}
-                    >
-                      Previous
-                    </ButtonStyled>
-                  ) : null}
-                  <div style={{ flex: "1 1 0%" }} />
-                  <ButtonStyled
-                    danger
-                    startIcon={isSubmitting ? <LoadingOutlined /> : null}
-                    disabled={!dirty}
-                    onClick={() =>
-                      !isLastStep()
-                        ? history.push(
-                            `${pathRoute.createCourse}/${
-                              Number(stepCurrently) + 1
-                            }`
-                          )
-                        : null
-                    }
-                    variant="contained"
-                    type="submit"
-                  >
-                    {isSubmitting
-                      ? "Submitting"
-                      : isLastStep()
-                      ? "Submit"
-                      : "Continue"}
-                  </ButtonStyled>
-                </div>
-              </Footer>
-            </FooterStyled>
-          </Form>
-        )
-      }}
+                      : null
+                  }
+                  variant="contained"
+                  type="submit"
+                >
+                  {isSubmitting
+                    ? "Submitting"
+                    : isLastStep()
+                    ? "Submit"
+                    : "Continue"}
+                </ButtonStyled>
+              </div>
+            </Footer>
+          </FooterStyled>
+        </Form>
+      )}
     </Formik>
   )
 }

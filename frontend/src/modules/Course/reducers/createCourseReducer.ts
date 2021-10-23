@@ -1,8 +1,12 @@
 import { GO_TO_STEP } from "../action/createCourseAction"
 import CategoryCourse from "../Components/Step/CategoryCourse/CategoryCourse"
 import Finish from "../Components/Step/Finish/Finish"
-import TitleCourse from "../Components/Step/TitleCourse/TitleCourse"
-import TypeCourse from "../Components/Step/TypeCourse/TypeCourse"
+import TitleCourse, {
+  validateSchemaTitleCourse
+} from "../Components/Step/TitleCourse/TitleCourse"
+import TypeCourse, {
+  validateSchemaTypeCourse
+} from "../Components/Step/TypeCourse/TypeCourse"
 
 const initialState = {
   isFetching: false,
@@ -14,12 +18,14 @@ const initialState = {
       {
         step: 1,
         component: TypeCourse,
-        title: "Type Course"
+        title: "Type Course",
+        validate: validateSchemaTypeCourse
       },
       {
         step: 2,
         component: TitleCourse,
-        title: "Title Course"
+        title: "Title Course",
+        validate: validateSchemaTitleCourse
       }
       // {
       //   step: 3,

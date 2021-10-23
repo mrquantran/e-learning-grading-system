@@ -48,6 +48,14 @@ export const ButtonStyled = styled.button`
     `};
 
   ${props =>
+    props.disabled &&
+    css`
+      background-color: #b7c1d1 !important;
+      border-color: #b7c1d1 !important;
+      color: #172b4c !important;
+    `};
+
+  ${props =>
     props.info &&
     css`
       background-color: #00baff;
