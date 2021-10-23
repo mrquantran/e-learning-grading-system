@@ -1,5 +1,12 @@
 import React, { useState } from "react"
 import { Field, Form, Formik, FormikConfig, FormikValues } from "formik"
+import { FooterStyled } from "@/components/admin/Footer/Footer.styled"
+import { Layout } from "antd"
+import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
+import { LoadingOutlined } from "@ant-design/icons"
+import { ContentCreateCourseStyled } from "@/pages/admin/CreateCourse/CreateCourse.styled"
+
+const { Footer } = Layout
 
 export interface FormikStepProps
   extends Pick<FormikConfig<FormikValues>, "children" | "validationSchema"> {
@@ -13,6 +20,7 @@ export default function FormikStepper({
   const childrenArray = React.Children.toArray(
     children
   ) as React.ReactElement<FormikStepProps>[]
+
   const [step, setStep] = useState(0)
   const currentChild = childrenArray[step]
   const [completed, setCompleted] = useState(false)
@@ -48,47 +56,44 @@ export default function FormikStepper({
       }}
     >
       {({ isSubmitting }) => (
-        <Form autoComplete="off">
-          {/* <Stepper alternativeLabel activeStep={step}>
-            {childrenArray.map((child, index) => (
-              <Step
-                key={child.props.label}
-                completed={step > index || completed}
-              >
-                <StepLabel>{child.props.label}</StepLabel>
-              </Step>
-            ))
-          </Stepper>
-
-          {currentChild}
-
-          <Grid container spacing={2}>
-            {step > 0 ? (
-              <Grid item>
-                <Button
+        <Form autoComplete="off" style={{ height: "100%" }}>
+          <ContentCreateCourseStyled>{currentChild}</ContentCreateCourseStyled>
+          <FooterStyled>
+            <Footer
+              style={{
+                background: "#fff"
+              }}
+            >
+              <div className="footer-button">
+                <div style={{ flex: "1 1 0%" }} />
+                {step > 0 ? (
+                  <ButtonStyled
+                    primary
+                    // onClick={goToPrevious}
+                    disabled={isSubmitting}
+                    variant="contained"
+                    onClick={() => setStep(s => s - 1)}
+                  >
+                    Previous
+                  </ButtonStyled>
+                ) : null}
+                <ButtonStyled
+                  danger
+                  startIcon={isSubmitting ? <LoadingOutlined /> : null}
                   disabled={isSubmitting}
+                  // onClick={goToStep}
                   variant="contained"
-                  color="primary"
-                  onClick={() => setStep(s => s - 1)}
+                  type="submit"
                 >
-                  Back
-                </Button>
-              </Grid>
-            ) : null}
-            <Grid item>
-              <Button
-                startIcon={
-                  isSubmitting ? <CircularProgress size="1rem" /> : null
-                }
-                disabled={isSubmitting}
-                variant="contained"
-                color="primary"
-                type="submit"
-              >
-                {isSubmitting ? "Submitting" : isLastStep() ? "Submit" : "Next"}
-              </Button>
-            </Grid>
-          </Grid> */}
+                  {isSubmitting
+                    ? "Submitting"
+                    : isLastStep()
+                    ? "Submit"
+                    : "Continue"}
+                </ButtonStyled>
+              </div>
+            </Footer>
+          </FooterStyled>
         </Form>
       )}
     </Formik>

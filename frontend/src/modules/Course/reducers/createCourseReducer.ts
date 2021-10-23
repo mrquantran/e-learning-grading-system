@@ -20,17 +20,17 @@ const initialState = {
         step: 2,
         component: TitleCourse,
         title: "Title Course"
-      },
-      {
-        step: 3,
-        component: CategoryCourse,
-        title: "Category Course"
-      },
-      {
-        step: 4,
-        component: Finish,
-        title: "Finish Course"
       }
+      // {
+      //   step: 3,
+      //   component: CategoryCourse,
+      //   title: "Category Course"
+      // },
+      // {
+      //   step: 4,
+      //   component: Finish,
+      //   title: "Finish Course"
+      // }
     ]
   }
 }

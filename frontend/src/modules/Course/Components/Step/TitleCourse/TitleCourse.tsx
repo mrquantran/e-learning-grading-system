@@ -1,10 +1,14 @@
+import { FormikStep } from "@/components/Formik/FormikStep/FormikStep"
 import { TitleCourseStyled } from "@/stylesheets/Title/Title.styled"
 import React from "react"
+import { Field } from "formik"
+import { Input } from "antd"
 
 export default function TitleCourse() {
   return (
-    <div>
+    <FormikStep label="title course">
       <TitleCourseStyled>How about a working title?</TitleCourseStyled>
-    </div>
+      <Field name="title" component={Input} />
+    </FormikStep>
   )
 }

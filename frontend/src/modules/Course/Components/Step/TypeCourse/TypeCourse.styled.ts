@@ -21,10 +21,16 @@ export const ContentCardStyled = styled.div`
   }
 `
 
-export const CardStyled = styled.div`
+export const LabelStyled = styled.label`
   margin: 0 2.4rem;
   width: 22.5rem;
   min-height: 27rem;
+  text-align: center;
+  // outline: 4px solid #1c1d1f;
+`
+
+export const CardStyled = styled.div`
+  height: 100%;
 
   .ant-card {
     width: 100%;
