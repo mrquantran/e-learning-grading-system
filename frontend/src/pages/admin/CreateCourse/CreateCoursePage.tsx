@@ -1,5 +1,4 @@
 import { history } from "@/App/App"
-import FooterAdmin from "@/components/admin/Footer/FooterAdmin"
 import HeaderAdmin from "@/components/admin/Header/HeaderAdmin"
 import StepHeader from "@/components/admin/StepHeader/StepHeader"
 import FormikStepper from "@/components/Formik/FormikStepper/FormikStepper"
@@ -9,11 +8,8 @@ import { RootState } from "@/redux/reducer/rootReducer"
 import pathRoute from "@/routes/routePath"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { ContentCreateCourseStyled } from "./CreateCourse.styled"
 
 const acceptableParams = [1, 2, 3, 4]
-
-const sleep = time => new Promise(acc => setTimeout(acc, time))
 
 export default function CreateCoursePage() {
   const router = useRouter()
@@ -32,8 +28,7 @@ export default function CreateCoursePage() {
   const stepCurrent = Number(step) / acceptableParams.length
 
   const {
-    tabs: { course: tabs },
-    step: stepCurrently
+    tabs: { course: tabs }
   } = useSelector((state: RootState) => state.create)
 
   const renderContentCreate = () => {
@@ -51,10 +46,11 @@ export default function CreateCoursePage() {
           category: ""
         }}
         onSubmit={values => {
+          // eslint-disable-next-line no-console
           console.log("values", values)
         }}
       >
-        {/* {renderContentCreate()} */}
+        {renderContentCreate()}
       </FormikStepper>
     </React.Fragment>
   )

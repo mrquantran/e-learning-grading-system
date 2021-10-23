@@ -27,6 +27,14 @@ export const LabelStyled = styled.label`
   min-height: 27rem;
   text-align: center;
   // outline: 4px solid #1c1d1f;
+
+  .input-radio {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+  }
 `
 
 export const CardStyled = styled.div`

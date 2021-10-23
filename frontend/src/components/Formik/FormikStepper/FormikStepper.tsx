@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Field, Form, Formik, FormikConfig, FormikValues } from "formik"
+import { Form, Formik, FormikConfig, FormikValues } from "formik"
 import { FooterStyled } from "@/components/admin/Footer/Footer.styled"
 import { Layout } from "antd"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
@@ -23,7 +23,6 @@ export default function FormikStepper({
 
   const [step, setStep] = useState(0)
   const currentChild = childrenArray[step]
-  const [completed, setCompleted] = useState(false)
 
   function isLastStep() {
     return step === childrenArray.length - 1
@@ -36,7 +35,6 @@ export default function FormikStepper({
       onSubmit={async (values, helpers) => {
         if (isLastStep()) {
           await props.onSubmit(values, helpers)
-          setCompleted(true)
         } else {
           setStep(s => s + 1)
 
@@ -56,7 +54,10 @@ export default function FormikStepper({
       }}
     >
       {({ isSubmitting }) => (
-        <Form autoComplete="off" style={{ height: "100%" }}>
+        <Form
+          autoComplete="off"
+          style={{ height: "100%", position: "relative" }}
+        >
           <ContentCreateCourseStyled>{currentChild}</ContentCreateCourseStyled>
           <FooterStyled>
             <Footer
