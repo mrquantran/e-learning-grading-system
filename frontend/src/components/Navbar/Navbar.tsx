@@ -122,7 +122,10 @@ export default function Navbar() {
           <HeaderContent>
             {renderIconCollapse(collapsed)}
             <IconHeader>
-              <FolderAddFilled style={styledIcon} />
+              <FolderAddFilled
+                onClick={() => history.push("/instructor/courses")}
+                style={styledIcon}
+              />
             </IconHeader>
             <IconHeader>
               <BookOutlined style={styledIcon} />

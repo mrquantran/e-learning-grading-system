@@ -19,16 +19,26 @@ const courses = {
   },
   post: {
     tags: ['Courses'],
-    description: 'Create courses',
-    operationId: 'createCourse',
+    description: 'Create draft courses',
+    operationId: 'createDraftCourse',
     parameters: [],
+    security: [
+      { bearerAuth: [] },
+    ],
     requestBody: {
       // expected request body
       content: {
         // content-type
         'application/json': {
           schema: {
-            $ref: '#/components/schemas/CoursesInput', // course input data model
+            type: 'object',
+            properties: {
+              name: {
+                type: 'string',
+                description: 'title of course',
+                example: 'javascript',
+              },
+            },
           },
         },
       },

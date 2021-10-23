@@ -8,6 +8,8 @@ export const ButtonStyled = styled.button`
   line-height: inherit;
   padding: 8px 16px;
   font-size: 1.1rem;
+  height: 50px;
+  white-space: nowrap;
   transition: all 0.5s ease-in-out;
   display: inline-flex;
   text-align: center;
@@ -43,6 +45,14 @@ export const ButtonStyled = styled.button`
       background-color: #b7c1d1;
       border-color: #b7c1d1;
       color: #172b4c;
+    `};
+
+  ${props =>
+    props.disabled &&
+    css`
+      background-color: #b7c1d1 !important;
+      border-color: #b7c1d1 !important;
+      color: #172b4c !important;
     `};
 
   ${props =>

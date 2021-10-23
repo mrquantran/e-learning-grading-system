@@ -61,6 +61,8 @@ async function main() {
       data: {
         name: course.name,
         courseDetails: course.courseDetails,
+        isPublic: true,
+        isDraft: false,
         favoriteCourse: {
           create: course.favoriteCourse.map((item) => ({
             user: {

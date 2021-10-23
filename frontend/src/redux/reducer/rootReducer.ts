@@ -9,6 +9,7 @@ import lectureReducer from "@/modules/Lectures/reducer"
 
 import { persistReducer } from "redux-persist"
 import { persistConfig } from "./persistConfig"
+import createCourseReducer from "@/modules/Course/reducers/createCourseReducer"
 
 const appReducer = combineReducers({
   /* your app’s top-level reducers */
@@ -16,7 +17,8 @@ const appReducer = combineReducers({
   dashboard: dashboardReducer,
   auth: AuthReducer,
   course: courseReducer,
-  lecture: lectureReducer
+  lecture: lectureReducer,
+  create: createCourseReducer
 })
 
 const rootReducer = (state, action) => {

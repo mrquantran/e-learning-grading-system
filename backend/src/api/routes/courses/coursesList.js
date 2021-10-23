@@ -160,13 +160,16 @@ async function getCourseStatus(req) {
 }
 
 // GET courses
-router.get('/', (req, res, next) => getCourses().then((courses) => res.json(courses)).catch((error) => {
-  // 500 (Internal Server Error) - Something has gone wrong in your application.
-  const httpError = createHttpError(500, error);
-  next(httpError);
-}));
+router.get('/', (req, res, next) => coursesController.getCoursePublic(req, res));
 
 router.get('/enroll', isAuth, (req, res) => coursesController.getEnrollCourses(req, res));
+
+// create post course
+router.post('/', isAuth, validate([
+  body('name')
+    .notEmpty()
+    .withMessage('name can not be empty'),
+]), isAuth, (req, res) => coursesController.createDraftCourse(req, res));
 
 // GET courses by id
 router.get('/:id', validate([
@@ -193,28 +196,28 @@ router.get('/:id/status', isAuth, validate([
     next(httpError);
   }));
 
-// POST courses
-router.post('/', validate([
-  body('name')
-    .notEmpty()
-    .withMessage('name can not be empty'),
-  body('courseDetails')
-    .notEmpty()
-    .withMessage('course detail can not be empty')
-    .bail()
-    .isLength({ min: 20 })
-    .withMessage('course detail must be at least 20 characters'),
-]), (req, res, next) => {
-  const { name, courseDetails } = req.body;
+// // POST courses
+// router.post('/', validate([
+//   body('name')
+//     .notEmpty()
+//     .withMessage('name can not be empty'),
+//   body('courseDetails')
+//     .notEmpty()
+//     .withMessage('course detail can not be empty')
+//     .bail()
+//     .isLength({ min: 20 })
+//     .withMessage('course detail must be at least 20 characters'),
+// ]), (req, res, next) => {
+//   const { name, courseDetails } = req.body;
 
-  createCourse(name, courseDetails)
-    .then((createdCourse) => res.json(createdCourse))
-    .catch((error) => {
-      // 500 (Internal Server Error) - Something has gone wrong in your application.
-      const httpError = createHttpError(500, error);
-      next(httpError);
-    });
-});
+//   createCourse(name, courseDetails)
+//     .then((createdCourse) => res.json(createdCourse))
+//     .catch((error) => {
+//       // 500 (Internal Server Error) - Something has gone wrong in your application.
+//       const httpError = createHttpError(500, error);
+//       next(httpError);
+//     });
+// });
 
 // PUT course
 router.put('/:id', validate([
