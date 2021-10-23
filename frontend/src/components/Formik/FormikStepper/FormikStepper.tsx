@@ -75,7 +75,6 @@ export default function FormikStepper({
                 }}
               >
                 <div className="footer-button">
-                  <div style={{ flex: "1 1 0%" }} />
                   {step > 0 ? (
                     <ButtonStyled
                       primary
@@ -94,6 +93,7 @@ export default function FormikStepper({
                       Previous
                     </ButtonStyled>
                   ) : null}
+                  <div style={{ flex: "1 1 0%" }} />
                   <ButtonStyled
                     danger
                     startIcon={isSubmitting ? <LoadingOutlined /> : null}

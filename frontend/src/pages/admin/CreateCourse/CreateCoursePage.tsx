@@ -17,19 +17,24 @@ export default function CreateCoursePage() {
 
   const dispatch = useDispatch()
 
+  const {
+    tabs: { course: tabs },
+    step: stepReducer
+  } = useSelector((state: RootState) => state.create)
+
   useEffect(() => {
     if (!acceptableParams.includes(Number(step))) {
       history.push(pathRoute.instructor)
     }
 
+    if (stepReducer === null) {
+      history.push(`${pathRoute.createCourse}/1`)
+    }
+
     dispatch({ type: GO_TO_STEP, payload: step })
-  }, [dispatch, step])
+  }, [dispatch, step, stepReducer])
 
   const stepCurrent = Number(step) / acceptableParams.length
-
-  const {
-    tabs: { course: tabs }
-  } = useSelector((state: RootState) => state.create)
 
   const renderContentCreate = () => {
     return tabs.map(child => <child.component />)
@@ -45,9 +50,10 @@ export default function CreateCoursePage() {
           title: "",
           category: ""
         }}
-        onSubmit={values => {
+        onSubmit={(values, { resetForm }) => {
           // eslint-disable-next-line no-console
           console.log("values", values)
+          resetForm()
         }}
       >
         {renderContentCreate()}

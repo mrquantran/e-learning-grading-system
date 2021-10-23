@@ -6,6 +6,12 @@ export const TitleCourseStyled = styled.h1`
   text-align: center;
   line-height: 1.25;
   letter-spacing: -0.05rem;
+
+  ${props =>
+    props.marginBottom &&
+    css`
+      margin-bottom: 64px;
+    `}
 `
 
 export const TitleCardStyled = styled.span`

@@ -14,7 +14,6 @@ export const ContentCardStyled = styled.div`
   justify-content: center;
   //   width: 22.5rem;
   //   min-height: 27rem;
-  margin-top: 64px;
 
   .ant-card-body {
     text-align: center;

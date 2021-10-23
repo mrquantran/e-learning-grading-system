@@ -37,7 +37,7 @@ export default function TypeCourse() {
       })}
     >
       <TypeCourseStyled>
-        <TitleCourseStyled>
+        <TitleCourseStyled marginBottom>
           First, let's find out what type of course you're making.
         </TitleCourseStyled>
 

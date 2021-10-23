@@ -43,13 +43,8 @@ const CreateAntField =
             onBlur={onBlur}
             onChange={type ? onInputChange : onChange}
           >
-            {selectOptions?.map(child => {
-              return (
-                <Option key={child.name} value={child.value}>
-                  {child.name}
-                </Option>
-              )
-            })}
+            {/* {selectOptions &&
+              selectOptions.map(name => <Option key={name}>{name}</Option>)} */}
           </AntComponent>
         </FormItem>
       </div>
