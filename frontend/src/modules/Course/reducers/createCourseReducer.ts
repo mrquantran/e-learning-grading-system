@@ -1,10 +1,10 @@
 import { GO_TO_STEP } from "../action/createCourseAction"
 import TitleCourse, {
   validateSchemaTitleCourse
-} from "../Components/Step/TitleCourse/TitleCourse"
+} from "../Components/Admin/Step/TitleCourse/TitleCourse"
 import TypeCourse, {
   validateSchemaTypeCourse
-} from "../Components/Step/TypeCourse/TypeCourse"
+} from "../Components/Admin/Step/TypeCourse/TypeCourse"
 import actionsCreateCourse from "../action/createCourseAction"
 
 const initialState = {

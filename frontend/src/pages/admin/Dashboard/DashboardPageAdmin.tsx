@@ -1,6 +1,6 @@
 import { history } from "@/App/App"
 import { useRouter } from "@/hooks/useRouter"
-import CreateCourseCarousel from "@/modules/Course/Components/CreateCourse/CreateCourseCarousel"
+import CreateCourseCarousel from "@/modules/Course/Components/Admin/CreateCourse/CreateCourseCarousel"
 import pathRoute from "@/routes/routePath"
 import { PageContentStyled } from "@/stylesheets/Page/Page.styled"
 import React, { useEffect } from "react"
