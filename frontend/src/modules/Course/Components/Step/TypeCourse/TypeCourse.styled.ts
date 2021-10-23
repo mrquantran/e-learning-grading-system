@@ -26,6 +26,15 @@ export const CardStyled = styled.div`
   width: 22.5rem;
   min-height: 27rem;
 
+  .ant-card {
+    width: 100%;
+  }
+
+  .ant-card:hover {
+    background-color: rgba(209, 215, 220, 0.25);
+    transition: background-color 150ms linear;
+  }
+
   .ant-card-bordered {
     border: 1px solid #d1d7dc;
   }

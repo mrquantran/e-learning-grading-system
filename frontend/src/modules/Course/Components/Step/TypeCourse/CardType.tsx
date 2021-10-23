@@ -8,9 +8,23 @@ import {
 } from "./TypeCourse.styled"
 import { IconCardStyled } from "@/stylesheets/Icon/Icon.styled"
 
-export default function CardType({ title, content, active, icon }) {
+export default function CardType({
+  title,
+  content,
+  active,
+  icon,
+  onClick,
+  disableClick
+}) {
   return (
-    <CardStyled active={active}>
+    <CardStyled
+      active={active}
+      onClick={() => {
+        if (disableClick) {
+          onClick()
+        }
+      }}
+    >
       <Card style={{ width: "100%", height: "100%" }}>
         <CardBodyStyled>
           <IconCardStyled>{icon}</IconCardStyled>

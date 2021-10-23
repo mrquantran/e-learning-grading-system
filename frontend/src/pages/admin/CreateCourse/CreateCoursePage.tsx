@@ -1,4 +1,6 @@
 import { history } from "@/App/App"
+import FooterAdmin from "@/components/admin/Footer/FooterAdmin"
+import HeaderAdmin from "@/components/admin/Header/HeaderAdmin"
 import StepHeader from "@/components/admin/StepHeader/StepHeader"
 import { useRouter } from "@/hooks/useRouter"
 import { GO_TO_STEP } from "@/modules/Course/action/createCourseAction"
@@ -39,11 +41,15 @@ export default function CreateCoursePage() {
   }
 
   return (
-    <div style={{ width: "100%", height: "100%" }}>
-      <StepHeader stepCurrent={stepCurrent} />
-      <ContentCreateCourseStyled>
-        {renderContentCreate()}
-      </ContentCreateCourseStyled>
-    </div>
+    <React.Fragment>
+      <HeaderAdmin />
+      <div style={{ width: "100%", height: "100%" }}>
+        <StepHeader stepCurrent={stepCurrent} />
+        <ContentCreateCourseStyled>
+          {renderContentCreate()}
+        </ContentCreateCourseStyled>
+      </div>
+      <FooterAdmin />
+    </React.Fragment>
   )
 }
