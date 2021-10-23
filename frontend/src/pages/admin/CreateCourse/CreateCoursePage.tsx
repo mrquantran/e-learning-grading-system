@@ -9,7 +9,7 @@ import pathRoute from "@/routes/routePath"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-const acceptableParams = [1, 2, 3, 4]
+const acceptableParams = [1, 2]
 
 export default function CreateCoursePage() {
   const router = useRouter()

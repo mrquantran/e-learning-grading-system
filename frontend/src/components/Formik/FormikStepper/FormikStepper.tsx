@@ -5,6 +5,9 @@ import { Layout } from "antd"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import { LoadingOutlined } from "@ant-design/icons"
 import { ContentCreateCourseStyled } from "@/pages/admin/CreateCourse/CreateCourse.styled"
+import { useRouter } from "@/hooks/useRouter"
+import pathRoute from "@/routes/routePath"
+import { history } from "@/App/App"
 
 const { Footer } = Layout
 
@@ -22,6 +25,9 @@ export default function FormikStepper({
   ) as React.ReactElement<FormikStepProps>[]
 
   const [step, setStep] = useState(0)
+  const router = useRouter()
+  const { step: stepCurrently } = router.query
+
   const currentChild = childrenArray[step]
 
   function isLastStep() {
@@ -53,50 +59,69 @@ export default function FormikStepper({
         }
       }}
     >
-      {({ isSubmitting }) => (
-        <Form
-          autoComplete="off"
-          style={{ height: "100%", position: "relative" }}
-        >
-          <ContentCreateCourseStyled>{currentChild}</ContentCreateCourseStyled>
-          <FooterStyled>
-            <Footer
-              style={{
-                background: "#fff"
-              }}
-            >
-              <div className="footer-button">
-                <div style={{ flex: "1 1 0%" }} />
-                {step > 0 ? (
+      {({ isSubmitting, dirty }) => {
+        return (
+          <Form
+            autoComplete="off"
+            style={{ height: "100%", position: "relative" }}
+          >
+            <ContentCreateCourseStyled>
+              {currentChild}
+            </ContentCreateCourseStyled>
+            <FooterStyled>
+              <Footer
+                style={{
+                  background: "#fff"
+                }}
+              >
+                <div className="footer-button">
+                  <div style={{ flex: "1 1 0%" }} />
+                  {step > 0 ? (
+                    <ButtonStyled
+                      primary
+                      // onClick={goToPrevious}
+                      disabled={isSubmitting}
+                      variant="contained"
+                      onClick={() => {
+                        history.push(
+                          `${pathRoute.createCourse}/${
+                            Number(stepCurrently) - 1
+                          }`
+                        )
+                        setStep(s => s - 1)
+                      }}
+                    >
+                      Previous
+                    </ButtonStyled>
+                  ) : null}
                   <ButtonStyled
-                    primary
-                    // onClick={goToPrevious}
-                    disabled={isSubmitting}
+                    danger
+                    startIcon={isSubmitting ? <LoadingOutlined /> : null}
+                    disabled={!dirty}
+                    onClick={() =>
+                      !isLastStep()
+                        ? history.push(
+                            `${pathRoute.createCourse}/${
+                              Number(stepCurrently) + 1
+                            }`
+                          )
+                        : null
+                    }
                     variant="contained"
-                    onClick={() => setStep(s => s - 1)}
+                    type="submit"
                   >
-                    Previous
+                    {isSubmitting
+                      ? "Submitting"
+                      : isLastStep()
+                      ? "Submit"
+                      : "Continue"}
                   </ButtonStyled>
-                ) : null}
-                <ButtonStyled
-                  danger
-                  startIcon={isSubmitting ? <LoadingOutlined /> : null}
-                  disabled={isSubmitting}
-                  // onClick={goToStep}
-                  variant="contained"
-                  type="submit"
-                >
-                  {isSubmitting
-                    ? "Submitting"
-                    : isLastStep()
-                    ? "Submit"
-                    : "Continue"}
-                </ButtonStyled>
-              </div>
-            </Footer>
-          </FooterStyled>
-        </Form>
-      )}
+                </div>
+              </Footer>
+            </FooterStyled>
+          </Form>
+        )
+      }}
     </Formik>
   )
 }

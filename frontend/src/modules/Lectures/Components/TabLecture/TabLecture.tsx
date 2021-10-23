@@ -6,6 +6,7 @@ import { TabLectureStyled } from "./TabLecture.styled"
 const { TabPane } = Tabs
 
 function callback(key) {
+  // eslint-disable-next-line no-console
   console.log(key)
 }
 

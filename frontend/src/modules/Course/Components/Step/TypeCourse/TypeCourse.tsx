@@ -9,6 +9,7 @@ import {
 import { DesktopOutlined, FileTextOutlined } from "@ant-design/icons"
 import { FormikStep } from "@/components/Formik/FormikStep/FormikStep"
 import { Field } from "formik"
+import * as yup from "yup"
 
 const type = {
   course: "course",
@@ -29,7 +30,12 @@ export default function TypeCourse() {
   }
 
   return (
-    <FormikStep label="Type Course">
+    <FormikStep
+      label="Type Course"
+      validationSchema={yup.object().shape({
+        type: yup.string().required("type is required")
+      })}
+    >
       <TypeCourseStyled>
         <TitleCourseStyled>
           First, let's find out what type of course you're making.

@@ -1,7 +1,7 @@
 import { Container } from "@/components/admin/LeftMenu/LeftMenuAdmin.styled"
 import React, { useState } from "react"
 import { Menu } from "antd"
-import { Link, NavLink } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { Layout } from "antd"
 import logo from "@/assets/images/logo.svg"
 import { useRouter } from "@/hooks/useRouter"
