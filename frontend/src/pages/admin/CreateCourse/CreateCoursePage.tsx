@@ -4,7 +4,10 @@ import HeaderAdmin from "@/components/admin/Header/HeaderAdmin"
 import StepHeader from "@/components/admin/StepHeader/StepHeader"
 import FormikStepper from "@/components/Formik/FormikStepper/FormikStepper"
 import { useRouter } from "@/hooks/useRouter"
-import { GO_TO_STEP } from "@/modules/Course/action/createCourseAction"
+import {
+  CREATE_DRAFT_COURSE,
+  GO_TO_STEP
+} from "@/modules/Course/action/createCourseAction"
 import { RootState } from "@/redux/reducer/rootReducer"
 import pathRoute from "@/routes/routePath"
 import React, { useEffect } from "react"
@@ -60,6 +63,7 @@ export default function CreateCoursePage() {
           await sleep(1000)
           // eslint-disable-next-line no-console
           console.log("values", values)
+          dispatch({ type: CREATE_DRAFT_COURSE, payload: values })
           resetForm()
         }}
       >
