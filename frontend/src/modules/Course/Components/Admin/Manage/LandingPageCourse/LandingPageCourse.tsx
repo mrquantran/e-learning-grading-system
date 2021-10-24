@@ -6,7 +6,7 @@ export default function LandingPageCourse() {
   return (
     <>
       <LabelAntdStyled>Course Title</LabelAntdStyled>
-      <InputAntd />
+      <InputAntd placeholder="Insert your course title" />
     </>
   )
 }
