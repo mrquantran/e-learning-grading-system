@@ -19,12 +19,14 @@ import {
   routesAuth,
   routesPrivate,
   routesAdmin,
-  routesCreate
+  routesCreate,
+  routesManage
 } from "@/routes/routes"
 import AuthTemplate from "@/template/AuthTemplate"
 import PrivateGuard from "@/guards/PrivateGuard"
 import AdminTemplate from "@/template/AdminTemplate"
 import CreateTemplate from "@/template/CreateTemplate/CreateTemplate"
+import ManageTemplate from "@/template/ManageTemplate/ManageTemplate"
 
 export const history: History = createBrowserHistory()
 
@@ -48,6 +50,7 @@ const Components = [
     Component: HomeTemplate,
     routes: routesHome
   },
+
   {
     Component: CreateTemplate,
     routes: routesCreate
@@ -63,6 +66,10 @@ const Components = [
   {
     Component: PrivateGuard,
     routes: routesPrivate
+  },
+  {
+    Component: ManageTemplate,
+    routes: routesManage
   }
 ]
 

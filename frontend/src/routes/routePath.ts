@@ -9,7 +9,8 @@ const pathRoute = {
   instructor: "/instructor",
   instructorCourse: "/instructor/courses",
 
-  createCourse: "/course/create"
+  createCourse: "/course/create",
+  manageCourse: "/course/:id/manage"
 }
 
 export default pathRoute

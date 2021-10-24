@@ -1,5 +1,6 @@
 import CreateCoursePage from "@/pages/admin/CreateCourse/CreateCoursePage"
 import DashboardPageAdmin from "@/pages/admin/Dashboard/DashboardPageAdmin"
+import MangeCoursePage from "@/pages/admin/MangeCourse/MangeCoursePage"
 import DashboardPage from "@/pages/Dashboard/DashboardPage"
 import DetailPage from "@/pages/Detail/DetailPage"
 import LecturePage from "@/pages/Lectures/LecturePage"
@@ -11,6 +12,14 @@ const routesCreate = [
     path: "/course/create/:step",
     exact: true,
     component: CreateCoursePage
+  }
+]
+
+const routesManage = [
+  {
+    path: "/course/:courseId/manage",
+    exact: false,
+    component: MangeCoursePage
   }
 ]
 
@@ -56,4 +65,11 @@ const routesPrivate = [
   }
 ]
 
-export { routesHome, routesAuth, routesPrivate, routesAdmin, routesCreate }
+export {
+  routesHome,
+  routesAuth,
+  routesPrivate,
+  routesAdmin,
+  routesCreate,
+  routesManage
+}

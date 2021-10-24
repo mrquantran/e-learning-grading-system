@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components"
+import { NavLink } from "react-router-dom"
 
 export const CourseCardImageStyled = styled.div`
   overflow: hidden;
@@ -72,7 +73,7 @@ export const CourseDraftItemStyled = styled.div`
   }
 `
 
-export const HoverDraftCourse = styled.a`
+export const HoverDraftCourse = styled(NavLink)`
   display: flex;
   align-items: center;
   justify-content: center;

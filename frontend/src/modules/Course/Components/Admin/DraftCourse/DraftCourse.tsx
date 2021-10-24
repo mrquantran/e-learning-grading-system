@@ -8,8 +8,9 @@ import {
   CourseProgressStyled,
   HoverDraftCourse
 } from "../DraftCourseList/DraftCourseList.styled"
+import { NavLink } from "react-router-dom"
 
-export default function DraftCourse({ title }) {
+export default function DraftCourse({ id, title }) {
   return (
     <Row>
       <Col span={12}>
@@ -59,9 +60,14 @@ export default function DraftCourse({ title }) {
                   />
                 </div>
               </CourseProgressStyled>
-              <HoverDraftCourse className="edit-manage-course">
+              {/* <NavLink to={`/instructor/course/${id}/manage`}> */}
+              <HoverDraftCourse
+                to={`/course/${id}/manage`}
+                className="edit-manage-course"
+              >
                 Edit / manage course
               </HoverDraftCourse>
+              {/* </NavLink> */}
             </div>
           </div>
         </CourseDraftItemStyled>
