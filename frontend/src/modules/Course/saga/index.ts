@@ -12,6 +12,7 @@ import actionsEnroll from "../action/enrollAction"
 import { errorNotification, getError } from "@/utils/notification"
 import { ENROLL_COURSE } from "../action/enrollAction"
 import { TYPE_USER } from "@/utils/ENUM"
+import { history } from "@/App/App"
 
 function* fetchDetailCourse(id) {
   const { params } = id
@@ -20,6 +21,11 @@ function* fetchDetailCourse(id) {
     yield put({ type: actionsCourseDetail.FETCH_COURSE_DETAIL.REQUEST })
 
     const { data: course } = yield call(API.courseAPI.fetchDetailCourse, params)
+
+    if (!course.isPublic) {
+      history.push("/")
+    }
+
     yield put({
       type: actionsCourseDetail.FETCH_COURSE_DETAIL.SUCCESS,
       payload: course

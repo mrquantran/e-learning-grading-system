@@ -13,6 +13,7 @@ import { validate } from '../../validation/validate.js';
 import { isAuth } from '../../middleware/auth.js';
 import { getDecodedToken } from '../../helpers/auth.helper.js';
 import { coursesController } from '../../controller/course/course.js';
+import { isCourseDraft } from '../../middleware/isCourseDraft.js';
 
 const router = express.Router();
 const { PrismaClient } = pkg;
@@ -21,42 +22,6 @@ const prisma = new PrismaClient();
 async function getCourses() {
   const courses = await prisma.course.findMany();
   return courses;
-}
-
-async function getCourseById(id) {
-  const courseById = await prisma.course.findUnique({
-    where: {
-      id: Number(id),
-    },
-    include: {
-      members: {
-        select: {
-          role: true,
-          user: {
-            select: {
-              firstName: true,
-              lastName: true,
-              email: true,
-              social: true,
-            },
-          },
-        },
-        // include: {
-        //   // role: true,
-        //   user: true,
-        // },
-        // where: {
-        //   role: 'TEACHER',
-        // },
-      },
-    },
-  });
-
-  const author = courseById.members.filter((item) => { if (item.role === 'TEACHER') return true; }).map((item) => ({ ...item.user }));
-  const totalStudents = courseById.members.filter((item) => { if (item.role === 'STUDENT') return true; }).reduce((acc) => acc + 1, 0);
-
-  const { members, ...data } = courseById;
-  return { ...data, author, totalStudents };
 }
 
 async function createCourse(name, courseDetails, userId) {
@@ -178,13 +143,7 @@ router.get('/:id', validate([
   param('id')
     .isNumeric()
     .withMessage('Id is not a number'),
-]), (req, res, next) => getCourseById(req.params.id)
-  .then((courseById) => res.json(courseById))
-  .catch((error) => {
-  // 500 (Internal Server Error) - Something has gone wrong in your application.
-    const httpError = createHttpError(500, error);
-    next(httpError);
-  }));
+]), isCourseDraft, (req, res, next) => coursesController.getCourseById(req, res));
 
 router.get('/:id/status', isAuth, validate([
   param('id')
