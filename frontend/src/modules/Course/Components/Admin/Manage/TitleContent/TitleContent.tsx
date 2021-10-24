@@ -14,11 +14,11 @@ const TitleFlexStyled = styled.div`
   display: flex;
 `
 
-export default function TitleContent() {
+export default function TitleContent({ title }) {
   return (
     <TitleContentStyled>
       <TitleFlexStyled>
-        <h2>Course landing page</h2>
+        <h2>{title}</h2>
       </TitleFlexStyled>
     </TitleContentStyled>
   )

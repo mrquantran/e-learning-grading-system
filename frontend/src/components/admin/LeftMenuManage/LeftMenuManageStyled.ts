@@ -15,4 +15,8 @@ export const LeftMenuManageStyled = styled.div`
     margin: 0 0 10px 22px;
     font-weight: 700;
   }
+
+  .ant-menu-sub.ant-menu-inline {
+    background: #f0f2f5;
+  }
 `

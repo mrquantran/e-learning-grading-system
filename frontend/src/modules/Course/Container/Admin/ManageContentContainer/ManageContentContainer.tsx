@@ -6,14 +6,14 @@ import {
   ManageWrapperComponentStyled
 } from "./ManageContainer.styled"
 
-export default function ManageContentContainer() {
+export default function ManageContentContainer({ selectedComponent }) {
   return (
     <ManageContentContainerStyled>
       <div>
-        <TitleContent />
+        <TitleContent title={selectedComponent.title} />
       </div>
       <ManageWrapperComponentStyled>
-        <LandingPageCourse />
+        <selectedComponent.component />
       </ManageWrapperComponentStyled>
     </ManageContentContainerStyled>
   )

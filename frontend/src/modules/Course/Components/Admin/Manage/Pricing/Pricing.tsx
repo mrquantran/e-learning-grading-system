@@ -1,5 +1,5 @@
 import React from "react"
 
 export default function Pricing() {
-  return <div></div>
+  return <div>Pricing</div>
 }

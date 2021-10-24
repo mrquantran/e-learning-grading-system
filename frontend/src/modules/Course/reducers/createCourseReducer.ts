@@ -26,47 +26,47 @@ const initialState = {
   manageTabs: {
     course: [
       {
-        id: 0,
+        id: "createYourContent",
         title: "Create your content",
         childTabs: [
           {
-            index: 1,
+            id: "film&Edit",
             title: "Film & Edit",
             component: FilmEdit
           },
           {
-            index: 2,
+            id: "curriculum",
             title: "Curriculum",
             component: Curriculum
           },
           {
-            index: 3,
+            id: "captions",
             title: "Captions",
             component: Captions
           }
         ]
       },
       {
-        id: 1,
+        id: "publishYourCourses",
         title: "Publish Your Courses",
         childTabs: [
           {
-            index: 4,
+            id: "courseLandingPage",
             title: "Course Landing Page",
             component: LandingPageCourse
           },
           {
-            index: 5,
+            id: "pricing",
             title: "Pricing",
             component: Pricing
           },
           {
-            index: 6,
+            id: "promotions",
             title: "Promotions",
             component: Promotions
           },
           {
-            index: 7,
+            id: "courseMessage",
             title: "Course Message",
             component: CourseMessage
           }
