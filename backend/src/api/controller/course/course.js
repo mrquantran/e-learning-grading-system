@@ -56,6 +56,8 @@ async function getCoursePublic(req, res) {
 async function createDraftCourse(req, res) {
   const { name } = req.body;
 
+  const token = await getDecodedToken(req);
+
   try {
     // when creating a course make the authenticated user a teacher of the course
     await prisma.course.create({
@@ -63,6 +65,16 @@ async function createDraftCourse(req, res) {
         name,
         isPublic: false,
         isDraft: true,
+        members: {
+          create: {
+            role: 'TEACHER',
+            user: {
+              connect: {
+                id: Number(token.id),
+              },
+            },
+          },
+        },
       },
     });
 

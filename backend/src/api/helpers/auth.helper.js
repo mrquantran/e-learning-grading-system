@@ -9,7 +9,7 @@ export function getAccessToken(req) {
 }
 
 export async function getDecodedToken(req) {
-  const token = getAccessToken(req);
+  const token = await getAccessToken(req);
   const { data } = await jwtHelper.verifyToken(token, accessTokenSecret);
   return data;
 }
