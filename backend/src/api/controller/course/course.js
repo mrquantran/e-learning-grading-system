@@ -88,8 +88,41 @@ async function createDraftCourse(req, res) {
   }
 }
 
+async function getDraftCourse(req, res) {
+  const token = await getDecodedToken(req);
+
+  try {
+    // when creating a course make the authenticated user a teacher of the course
+    const courses = await prisma.course.findMany({
+      where: {
+        isDraft: true,
+        members: {
+          every: {
+            userId: Number(token.id),
+          },
+        },
+      },
+      select: {
+        id: true,
+        name: true,
+        courseDetails: true,
+        isDraft: true,
+
+      },
+    });
+
+    return res.status(200).json(courses);
+  } catch (error) {
+    console.log(error);
+    // 500 (Internal Server Error) - Something has gone wrong in your application.
+    const httpError = createHttpError(500, error);
+    return res.status(500).json({ message: httpError });
+  }
+}
+
 export const coursesController = {
   getCoursePublic,
   getEnrollCourses,
   createDraftCourse,
+  getDraftCourse,
 };

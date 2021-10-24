@@ -164,6 +164,8 @@ router.get('/', (req, res, next) => coursesController.getCoursePublic(req, res))
 
 router.get('/enroll', isAuth, (req, res) => coursesController.getEnrollCourses(req, res));
 
+router.get('/draft', isAuth, (req, res) => coursesController.getDraftCourse(req, res));
+
 // create post course
 router.post('/', isAuth, validate([
   body('name')
