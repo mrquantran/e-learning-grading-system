@@ -3,6 +3,8 @@ import { PageHeader, Tag } from "antd"
 import { ContainerHeaderManage } from "./HeaderManage.styled"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 
+import { SettingOutlined } from "@ant-design/icons"
+
 export default function HeaderManage() {
   return (
     <ContainerHeaderManage>
@@ -15,7 +17,8 @@ export default function HeaderManage() {
         extra={[
           <ButtonStyled primary key="save">
             Save
-          </ButtonStyled>
+          </ButtonStyled>,
+          <SettingOutlined />
         ]}
       ></PageHeader>
     </ContainerHeaderManage>

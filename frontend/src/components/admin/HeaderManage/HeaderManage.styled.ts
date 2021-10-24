@@ -13,9 +13,27 @@ export const ContainerHeaderManage = styled.div`
   height: 65px;
   span {
     font-size: 20px;
+    display: flex;
+    align-items: center;
+  }
+
+  .ant-page-header-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 
   .ant-page-header {
     width: 100%;
+  }
+
+  .ant-page-header-heading-left {
+    display: flex;
+    align-items: baseline;
+  }
+
+  .ant-page-header-back {
+    display: flex;
+    align-items: center;
   }
 `

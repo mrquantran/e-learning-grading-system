@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { Input } from "antd"
+import { Checkbox, Input, Radio } from "antd"
 
 export const InputAntd = styled(Input)`
   min-width: 18rem;
@@ -23,3 +23,9 @@ export const InputAntd = styled(Input)`
     height: 44px;
   }
 `
+
+export const CheckboxAntd = styled(Checkbox)`
+  padding: 0 5px;
+`
+
+export const RadioAntd = styled(Radio)``

@@ -23,6 +23,14 @@ export const ButtonStyled = styled.button`
       border-color: #04a08b;
       color: #ffffff;
     `}
+
+  ${props =>
+    props.purple &&
+    css`
+      color: #fff;
+      background-color: #a435f0;
+      border: 1px solid transparent;
+    `}
   ${props =>
     props.danger &&
     css`
