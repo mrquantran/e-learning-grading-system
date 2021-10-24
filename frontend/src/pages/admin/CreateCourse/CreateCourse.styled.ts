@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const ContentCreateCourseStyled = styled.div`
   padding: 6.4rem 2.4rem;
