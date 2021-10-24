@@ -1,3 +1,4 @@
+import HeaderManage from "@/components/admin/HeaderManage/HeaderManage"
 import LeftMenuManage from "@/components/admin/LeftMenuManage/LeftMenuManage"
 import ManageContentContainer from "@/modules/Course/Container/Admin/ManageContentContainer/ManageContentContainer"
 import { RootState } from "@/redux/reducer/rootReducer"
@@ -27,14 +28,19 @@ export default function MangeCoursePage() {
   }
 
   return (
-    <ManageCourseStyled>
-      <LeftMenuManage
-        selectedKey={selectedKey}
-        setSelectedKey={setSelectedKey}
+    <>
+      <HeaderManage
+        headerExtra={findComponent() ? findComponent() : initialProps}
       />
-      <ManageContentContainer
-        selectedComponent={findComponent() ? findComponent() : initialProps}
-      ></ManageContentContainer>
-    </ManageCourseStyled>
+      <ManageCourseStyled>
+        <LeftMenuManage
+          selectedKey={selectedKey}
+          setSelectedKey={setSelectedKey}
+        />
+        <ManageContentContainer
+          selectedComponent={findComponent() ? findComponent() : initialProps}
+        ></ManageContentContainer>
+      </ManageCourseStyled>
+    </>
   )
 }

@@ -1,4 +1,3 @@
-import HeaderManage from "@/components/admin/HeaderManage/HeaderManage"
 import { RootState } from "@/redux/reducer/rootReducer"
 import React from "react"
 import { useSelector } from "react-redux"
@@ -17,7 +16,6 @@ export default function ManageTemplate(props) {
       render={propsRoute => {
         return isAuthenticated ? (
           <LayoutStyled className="site-layout">
-            <HeaderManage />
             <Component {...propsRoute} />
           </LayoutStyled>
         ) : (
