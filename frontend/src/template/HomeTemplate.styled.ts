@@ -6,6 +6,7 @@ import "antd/dist/antd.css"
 export const LayoutStyled: React.FunctionComponent<LayoutProps> = styled(
   Layout
 )`
+  overflow: auto;
   height: inherit;
   .site-layout .site-layout-background {
     background: #fff;
