@@ -16,6 +16,10 @@ const fetchCoursesEnroll = (): Promise<AxiosResponse<any>> => {
   return axios.get(`/courses/enroll`)
 }
 
+const fetchDraftCourses = (): Promise<AxiosResponse<any>> => {
+  return axios.get(`/courses/draft`)
+}
+
 const enrollCourse = (courseId, type): Promise<AxiosResponse<any>> => {
   const data = { role: type }
   return axios.post(`/courses/${courseId}/enroll`, data)
@@ -29,6 +33,7 @@ const courseAPI = {
   fetchDetailCourse,
   fetchCoursesEnroll,
   fetchDetailCourseStatus,
+  fetchDraftCourses,
   enrollCourse,
   createDraftCourse
 }

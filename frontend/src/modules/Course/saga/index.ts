@@ -1,5 +1,6 @@
 import { successNotification } from "./../../../utils/notification"
 import {
+  FETCH_COURSES_DRAFT,
   FETCH_COURSES_ENROLL,
   FETCH_COURSE_STATUS
 } from "./../action/courseAction"
@@ -94,6 +95,25 @@ function* fetchCoursesEnroll() {
   }
 }
 
+function* fetchDraftCourses() {
+  try {
+    yield put({ type: actionsCourseDetail.FETCH_COURSES_DRAFT.REQUEST })
+
+    const { data } = yield call(API.courseAPI.fetchDraftCourses)
+
+    yield put({
+      type: actionsCourseDetail.FETCH_COURSES_DRAFT.SUCCESS,
+      payload: data
+    })
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionsCourseDetail.FETCH_COURSES_ENROLL.ERROR,
+      payload: error.message
+    })
+  }
+}
+
 function* fetchAndUpdateStatus(courseId) {
   yield fork(fetchCourseStatus, { payload: courseId })
 }
@@ -114,11 +134,16 @@ function* watchFetchCoursesEnroll() {
   yield takeLatest(FETCH_COURSES_ENROLL, fetchCoursesEnroll)
 }
 
+function* watchFetchDraftCourse() {
+  yield takeLatest(FETCH_COURSES_DRAFT, fetchDraftCourses)
+}
+
 export default function* courseSaga() {
   yield all([
     watchFetchDetailCourse(),
     watchEnrollCourse(),
     watchFetchCourseStatus(),
-    watchFetchCoursesEnroll()
+    watchFetchCoursesEnroll(),
+    watchFetchDraftCourse()
   ])
 }

@@ -3,6 +3,10 @@ import actions from "../action/courseAction"
 
 const initialState = {
   course: {},
+  instructorCourse: {
+    data: [],
+    isFetching: false
+  },
   statusCourse: {
     isFetching: false,
     isEnroll: null,
@@ -70,6 +74,33 @@ const courseReducer = (state = initialState, { type, payload }) => {
         ...state,
         myCourse: {
           ...state.myCourse,
+          isFetching: false,
+          error: payload
+        }
+      }
+
+    case actions.FETCH_COURSES_DRAFT.REQUEST:
+      return {
+        ...state,
+        instructorCourse: {
+          ...state.instructorCourse,
+          isFetching: true
+        }
+      }
+    case actions.FETCH_COURSES_DRAFT.SUCCESS:
+      return {
+        ...state,
+        instructorCourse: {
+          ...state.instructorCourse,
+          data: payload,
+          isFetching: false
+        }
+      }
+    case actions.FETCH_COURSES_DRAFT.ERROR:
+      return {
+        ...state,
+        instructorCourse: {
+          ...state.instructorCourse,
           isFetching: false,
           error: payload
         }

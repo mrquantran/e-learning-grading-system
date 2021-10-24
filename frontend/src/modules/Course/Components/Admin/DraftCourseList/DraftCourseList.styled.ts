@@ -43,6 +43,16 @@ export const CourseDraftItemStyled = styled.div`
     justify-content: space-between;
     border-radius: 10px;
     color: #172b4c;
+    position: relative;
+
+    &:hover {
+      .body-course-draft {
+        opacity: 0.3;
+      }
+      .edit-manage-course {
+        opacity: 1;
+      }
+    }
     ${props =>
       props.flex &&
       css`
@@ -60,6 +70,25 @@ export const CourseDraftItemStyled = styled.div`
     margin: 0;
     font-weight: 400;
   }
+`
+
+export const HoverDraftCourse = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  color: #401b9c !important;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02rem;
+  font-size: 15px;
+  text-decoration: none;
 `
 
 export const CourseProgressStyled = styled.div`

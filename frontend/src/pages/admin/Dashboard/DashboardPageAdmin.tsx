@@ -1,7 +1,7 @@
 import { history } from "@/App/App"
 import { useRouter } from "@/hooks/useRouter"
 import CreateCourseCarousel from "@/modules/Course/Components/Admin/CreateCourse/CreateCourseCarousel"
-import DraftCourseList from "@/modules/Course/Components/Admin/DraftCourseList/DraftCourseList"
+import DraftCourseContainer from "@/modules/Course/Container/Admin/DraftCourseContainer/DraftCourseContainer"
 import pathRoute from "@/routes/routePath"
 import { PageContentStyled } from "@/stylesheets/Page/Page.styled"
 import React, { useEffect } from "react"
@@ -20,7 +20,7 @@ export default function DashboardPageAdmin() {
   return (
     <PageContentStyled>
       <CreateCourseCarousel />
-      <DraftCourseList />
+      <DraftCourseContainer />
     </PageContentStyled>
   )
 }
