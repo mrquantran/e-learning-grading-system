@@ -16,7 +16,13 @@ const button = [
   {
     id: "courseLandingPage",
     button: (
-      <ButtonStyled primary key="save">
+      <ButtonStyled
+        // onClick={e => e.preventDefault()}
+        primary
+        key="save"
+        form="form-landing-page"
+        type="submit"
+      >
         Save
       </ButtonStyled>
     )

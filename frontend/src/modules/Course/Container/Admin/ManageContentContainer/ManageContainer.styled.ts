@@ -6,6 +6,7 @@ export const ManageContentContainerStyled = styled.div`
   width: 100%;
   background: #fff;
   box-shadow: 0 2px 8px 2px rgb(28 29 31 / 15%);
+  height: fit-content;
 `
 
 export const ManageWrapperComponentStyled = styled.div`
