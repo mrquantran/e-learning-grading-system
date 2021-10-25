@@ -157,29 +157,6 @@ router.get('/:id/status', isAuth, validate([
     next(httpError);
   }));
 
-// // POST courses
-// router.post('/', validate([
-//   body('name')
-//     .notEmpty()
-//     .withMessage('name can not be empty'),
-//   body('courseDetails')
-//     .notEmpty()
-//     .withMessage('course detail can not be empty')
-//     .bail()
-//     .isLength({ min: 20 })
-//     .withMessage('course detail must be at least 20 characters'),
-// ]), (req, res, next) => {
-//   const { name, courseDetails } = req.body;
-
-//   createCourse(name, courseDetails)
-//     .then((createdCourse) => res.json(createdCourse))
-//     .catch((error) => {
-//       // 500 (Internal Server Error) - Something has gone wrong in your application.
-//       const httpError = createHttpError(500, error);
-//       next(httpError);
-//     });
-// });
-
 // PUT course
 router.put('/:id', validate([
   param('id')
@@ -195,24 +172,7 @@ router.put('/:id', validate([
       .isLength({ min: 20 })
       .withMessage('course detail must be at least 20 characters'),
   ]),
-]), (req, res, next) => {
-  try {
-    validationResult(req).throw();
-  } catch (err) {
-    // Oh noes. This user doesn't have enough skills for this...
-    res.status(400).json({ message: err.message });
-  }
-  const { name, courseDetails } = req.body;
-  const { id } = req.params;
-
-  updateCourse(name, courseDetails, id)
-    .then((updatedCourse) => res.json(updatedCourse))
-    .catch((error) => {
-    // 500 (Internal Server Error) - Something has gone wrong in your application.
-      const httpError = createHttpError(500, error);
-      next(httpError);
-    });
-});
+]), isAuth, (req, res) => coursesController.updateCourse(req, res));
 
 router.delete('/:id', validate([
   param('id')

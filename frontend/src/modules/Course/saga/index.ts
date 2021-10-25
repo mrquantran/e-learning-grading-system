@@ -7,7 +7,9 @@ import {
 import { API } from "@/apis"
 import { all, call, fork, put, takeLatest } from "@redux-saga/core/effects"
 import { FETCH_COURSE_DETAIL } from "../action/courseAction"
-import manageCourseActions from "../action/manageCourseAction"
+import manageCourseActions, {
+  UPDATE_INSTRUCTOR_COURSE
+} from "../action/manageCourseAction"
 import actionsCourseDetail from "../action/courseAction"
 import actionsEnroll from "../action/enrollAction"
 import { errorNotification, getError } from "@/utils/notification"
@@ -23,10 +25,6 @@ function* fetchDetailCourse(id) {
     yield put({ type: actionsCourseDetail.FETCH_COURSE_DETAIL.REQUEST })
 
     const { data: course } = yield call(API.courseAPI.fetchDetailCourse, params)
-
-    if (!course.isPublic) {
-      history.push("/")
-    }
 
     yield put({
       type: actionsCourseDetail.FETCH_COURSE_DETAIL.SUCCESS,
@@ -143,6 +141,27 @@ function* fetchInstructorCourseDetail({ payload: id }: any) {
   }
 }
 
+function* updateInstructorCourse({ payload }: any) {
+  const { courseId, data } = payload
+
+  try {
+    yield put({
+      type: manageCourseActions.UPDATE_INSTRUCTOR_COURSE.REQUEST
+    })
+
+    const {
+      data: { message }
+    } = yield call(API.courseAPI.updateCourse, Number(courseId), data)
+
+    successNotification(message)
+    yield fork(fetchAndUpdateCourseDetail, courseId)
+  } catch {}
+}
+
+function* fetchAndUpdateCourseDetail(courseId) {
+  yield fork(fetchInstructorCourseDetail, { payload: courseId })
+}
+
 function* fetchAndUpdateStatus(courseId) {
   yield fork(fetchCourseStatus, { payload: courseId })
 }
@@ -171,6 +190,10 @@ function* watchFetchInstructorCourseDetail() {
   yield takeLatest(FETCH_INSTRUCTOR_COURSE_DETAIL, fetchInstructorCourseDetail)
 }
 
+function* watchUpdateInstructorCourse() {
+  yield takeLatest(UPDATE_INSTRUCTOR_COURSE, updateInstructorCourse)
+}
+
 export default function* courseSaga() {
   yield all([
     watchFetchDetailCourse(),
@@ -178,6 +201,7 @@ export default function* courseSaga() {
     watchFetchCourseStatus(),
     watchFetchCoursesEnroll(),
     watchFetchDraftCourse(),
-    watchFetchInstructorCourseDetail()
+    watchFetchInstructorCourseDetail(),
+    watchUpdateInstructorCourse()
   ])
 }

@@ -3,15 +3,17 @@
 import SelectInput from "@/components/Formik/Select/SelectInput"
 import { FormGroup, InputAntd } from "@/stylesheets/Input/Inputantd.styled"
 import { LabelAntdStyled } from "@/stylesheets/Input/LabelAntd.styled"
-import { Formik } from "formik"
+import { Form, Formik } from "formik"
 import { countryList } from "@/utils/CountryList"
 import { OPTIONS_CATEGORY, OPTIONS_LEVEL } from "@/utils/ENUM"
 import { Col, Row } from "antd"
 import React, { useEffect, useState } from "react"
 import { UploadImageStyled } from "./LandingPageCourse.styled"
 import UploadInput from "@/components/Formik/Upload/UploadInput"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/redux/reducer/rootReducer"
+import { UPDATE_INSTRUCTOR_COURSE } from "@/modules/Course/action/manageCourseAction"
+import { useRouter } from "@/hooks/useRouter"
 
 export default function LandingPageCourse() {
   const options = countryList.map(item => {
@@ -20,7 +22,11 @@ export default function LandingPageCourse() {
 
   const defaultValue = countryList.find(item => item === "Vietnam")
 
+  const dispatch = useDispatch()
   const { data } = useSelector((state: RootState) => state.create.detail)
+
+  const router = useRouter()
+  const { courseId } = router.query
 
   const [initialValue, setInitialValue] = useState<any>({
     name: "",
@@ -41,8 +47,18 @@ export default function LandingPageCourse() {
     }
   }, [data])
 
+  const handleSubmit = e => {
+    dispatch({
+      type: UPDATE_INSTRUCTOR_COURSE,
+      payload: {
+        courseId,
+        data: initialValue
+      }
+    })
+  }
+
   return (
-    <Formik initialValues={initialValue} onSubmit={(values, actions) => {}}>
+    <Formik initialValues={initialValue} onSubmit={handleSubmit}>
       {props => {
         return (
           <form
@@ -84,6 +100,7 @@ export default function LandingPageCourse() {
                 <Col span={8}>
                   <FormGroup col3>
                     <SelectInput
+                      key="country"
                       defaultValue={defaultValue}
                       options={options}
                     />
@@ -93,6 +110,7 @@ export default function LandingPageCourse() {
                 <Col span={8}>
                   <FormGroup col3>
                     <SelectInput
+                      key="level"
                       defaultValue={OPTIONS_LEVEL[0].value}
                       options={OPTIONS_LEVEL}
                     />
@@ -101,6 +119,7 @@ export default function LandingPageCourse() {
                 <Col span={8}>
                   <FormGroup>
                     <SelectInput
+                      key="category"
                       options={OPTIONS_CATEGORY}
                       defaultValue={OPTIONS_CATEGORY[0].value}
                     />

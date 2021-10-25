@@ -197,10 +197,37 @@ async function getDraftCourse(req, res) {
   }
 }
 
+async function updateCourse(req, res) {
+  const { id } = req.params;
+  const { name, courseDetails } = req.body;
+  try {
+    if (!await isTeacherEnroll(req, res)) {
+      return res.status(403).json({ message: 'you dont have permission to perform this action' });
+    }
+
+    // update course
+    // eslint-disable-next-line no-unused-vars
+    const updatedCourse = await prisma.course.update({
+      where: { id: Number(id) },
+      data: {
+        name,
+        courseDetails,
+      },
+    });
+
+    return res.status(200).json({ message: 'Course updated successfully' });
+  } catch (error) {
+    console.log(error);
+    // 500 (Internal Server Error) - Something has gone wrong in your application.
+    const httpError = createHttpError(500, error);
+    return res.status(500).json({ message: httpError });
+  }
+}
 export const coursesController = {
   getCoursePublic,
   getEnrollCourses,
   createDraftCourse,
   getDraftCourse,
   getCourseById,
+  updateCourse,
 };

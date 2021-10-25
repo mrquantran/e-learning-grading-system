@@ -25,7 +25,7 @@ export default function Dashboard() {
 
       <Row>
         <Col span={12}>
-          <UpcomingTest />
+          {/* <UpcomingTest /> */}
           <Row>
             <Col span={12}>
               <TotalItem title="Total Courses" total="15" />
@@ -37,7 +37,7 @@ export default function Dashboard() {
         </Col>
         <Col span={12}>
           <Carousel2 />
-          <GoodStudent />
+          {/* <GoodStudent /> */}
         </Col>
       </Row>
     </DashboardComponentsStyled>

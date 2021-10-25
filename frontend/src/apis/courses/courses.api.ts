@@ -28,6 +28,10 @@ const enrollCourse = (courseId, type): Promise<AxiosResponse<any>> => {
 const createDraftCourse = (data): Promise<AxiosResponse<any>> => {
   return axios.post(`/courses`, data)
 }
+
+const updateCourse = (courseId, data): Promise<AxiosResponse<any>> => {
+  return axios.put(`/courses/${courseId}`, data)
+}
 const courseAPI = {
   fetchCourses,
   fetchDetailCourse,
@@ -35,7 +39,8 @@ const courseAPI = {
   fetchDetailCourseStatus,
   fetchDraftCourses,
   enrollCourse,
-  createDraftCourse
+  createDraftCourse,
+  updateCourse
 }
 
 export default courseAPI
