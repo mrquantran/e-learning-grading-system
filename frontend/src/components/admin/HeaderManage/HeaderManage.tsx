@@ -6,6 +6,8 @@ import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import { SettingOutlined } from "@ant-design/icons"
 import { RootState } from "@/redux/reducer/rootReducer"
 import { useSelector } from "react-redux"
+import { history } from "@/App/App"
+import pathRoute from "@/routes/routePath"
 
 const button = [
   { id: "film&Edit", button: <ButtonStyled /> },
@@ -34,7 +36,7 @@ export default function HeaderManage({ headerExtra }) {
     <ContainerHeaderManage>
       <PageHeader
         className="site-page-header"
-        onBack={() => null}
+        onBack={() => history.push(pathRoute.instructor)}
         title={title}
         subTitle="0min of video content uploaded"
         tags={<Tag color="blue">Draft</Tag>}

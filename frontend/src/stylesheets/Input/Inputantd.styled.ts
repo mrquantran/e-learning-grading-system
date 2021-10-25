@@ -1,5 +1,38 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 import { Checkbox, Input, Radio } from "antd"
+
+export const FormGroup = styled.div`
+  margin-bottom: 15px;
+  position: relative;
+
+  ${props =>
+    props.col3 &&
+    css`
+      flex: 1 0 auto;
+      min-width: 1px;
+      // width: 220px;
+      // margin-left: 10px;
+      margin-right: 20px;
+    `}
+
+  ${props =>
+    props.upload &&
+    css`
+      .ant-upload.ant-upload-select {
+        width: 100%;
+      }
+    `}
+`
+
+export const SelectInputStyled = styled.div`
+  .ant-select-selector {
+    height: 100% !important;
+  }
+  .ant-select-selection-item {
+    display: flex;
+    align-items: center;
+  }
+`
 
 export const InputAntd = styled(Input)`
   min-width: 18rem;
@@ -19,6 +52,12 @@ export const InputAntd = styled(Input)`
   box-shadow: none;
   transition: border-color ease-in-out 0.08s, box-shadow ease-in-out 0.08s;
   height: 44px;
+
+  ${props =>
+    props.description &&
+    css`
+      height: 75px;
+    `}
 `
 
 export const CheckboxAntd = styled(Checkbox)`

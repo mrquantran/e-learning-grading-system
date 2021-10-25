@@ -14,9 +14,9 @@ export default function MangeCoursePage() {
   } = useSelector((state: RootState) => state.create)
 
   const initialProps = {
-    id: course[0].childTabs[0].id,
-    title: course[0].childTabs[0].title,
-    component: course[0].childTabs[0].component
+    id: course[1].childTabs[0].id,
+    title: course[1].childTabs[0].title,
+    component: course[1].childTabs[0].component
   }
 
   const findComponent = () => {

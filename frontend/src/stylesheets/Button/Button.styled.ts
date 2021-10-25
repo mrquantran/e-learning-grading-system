@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components"
 
+export const ButtonGroup = styled.div``
+
 export const ButtonStyled = styled.button`
   border-radius: 4px;
   box-shadow: none;

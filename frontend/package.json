@@ -5,6 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "antd": "^4.16.13",
+    "antd-img-crop": "^3.16.0",
     "axios": "^0.21.4",
     "formik": "^2.2.9",
     "jwt-decode": "^3.1.2",
