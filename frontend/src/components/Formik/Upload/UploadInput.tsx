@@ -47,6 +47,8 @@ export default function UploadInput() {
     imgWindow.document.write(image.outerHTML)
   }
 
+  const disable = fileList.length > 0 ? true : false
+
   return (
     <ImgCrop rotate>
       <Upload
@@ -57,6 +59,7 @@ export default function UploadInput() {
         beforeUpload={beforeUpload}
         onChange={onChange}
         onPreview={onPreview}
+        maxCount={1}
       >
         <InputAntd />
       </Upload>
