@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const CourseItemStyled = styled.div`
   .pull-up {
@@ -31,6 +31,11 @@ export const CourseItemStyled = styled.div`
     flex: 1 1 auto;
     border-radius: 10px;
     color: #172b4c;
+    ${props =>
+      props.flex &&
+      css`
+        display: flex;
+      `}
   }
 
   .theme-primary .bg-primary {

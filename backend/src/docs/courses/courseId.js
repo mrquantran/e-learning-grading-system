@@ -43,6 +43,9 @@ const getCoursesById = {
     tags: ['Courses'],
     description: 'Update courses',
     operationId: 'updateCourse',
+    security: [
+      { bearerAuth: [] },
+    ],
     parameters: [
       // expected params.
       {

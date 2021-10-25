@@ -6,12 +6,76 @@ import TypeCourse, {
   validateSchemaTypeCourse
 } from "../Components/Admin/Step/TypeCourse/TypeCourse"
 import actionsCreateCourse from "../action/createCourseAction"
+import actionsManageCourse from "../action/manageCourseAction"
+import FilmEdit from "../Components/Admin/Manage/Film&Edit/FilmEdit"
+import Curriculum from "../Components/Admin/Manage/Currcilum/Curriculum"
+import Captions from "../Components/Admin/Manage/Captions/Captions"
+import Pricing from "../Components/Admin/Manage/Pricing/Pricing"
+import Promotions from "../Components/Admin/Manage/Promotions/Promotions"
+import CourseMessage from "../Components/Admin/Manage/CourseMessage/CourseMessage"
+import LandingPageCourse from "@/modules/Course/Components/Admin/Manage/LandingPageCourse/LandingPageCourse"
 
 const initialState = {
   isFetching: false,
   isProcessing: false,
   error: null,
   step: null,
+  detail: {
+    data: {},
+    isFetching: false
+  },
+  manageTabs: {
+    course: [
+      {
+        id: "createYourContent",
+        title: "Create your content",
+        childTabs: [
+          {
+            id: "film&Edit",
+            title: "Film & Edit",
+            component: FilmEdit
+          },
+          {
+            id: "curriculum",
+            title: "Curriculum",
+            component: Curriculum
+          },
+          {
+            id: "captions",
+            title: "Captions",
+            component: Captions
+          }
+        ]
+      },
+      {
+        id: "publishYourCourses",
+        title: "Publish Your Courses",
+        childTabs: [
+          {
+            id: "courseLandingPage",
+            title: "Course Landing Page",
+            component: LandingPageCourse
+          },
+          {
+            id: "pricing",
+            title: "Pricing",
+            component: Pricing
+          },
+          {
+            id: "promotions",
+            title: "Promotions",
+            component: Promotions
+          },
+          {
+            id: "courseMessage",
+            title: "Course Message",
+            component: CourseMessage
+          }
+        ]
+      }
+    ],
+    test: []
+  },
   tabs: {
     course: [
       {
@@ -50,6 +114,32 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
       return { ...state, isProcessing: false, step: 1 }
     case actionsCreateCourse.CREATE_DRAFT_COURSE.ERROR:
       return { ...state, isProcessing: false, error: payload }
+    case actionsManageCourse.FETCH_INSTRUCTOR_COURSE_DETAIL.REQUEST:
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          isProcessing: true
+        }
+      }
+    case actionsManageCourse.FETCH_INSTRUCTOR_COURSE_DETAIL.SUCCESS:
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          data: payload,
+          isProcessing: false
+        }
+      }
+    case actionsManageCourse.FETCH_INSTRUCTOR_COURSE_DETAIL.ERROR:
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          error: payload,
+          isProcessing: false
+        }
+      }
     default:
       return state
   }

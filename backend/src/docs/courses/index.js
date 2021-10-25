@@ -4,6 +4,7 @@ import courseId from './courseId.js';
 import enrollCourse from './enrollCourse.js';
 import courseIdStatus from './courseIdStatus.js';
 import getCourseEnroll from './getCourseEnroll.js';
+import getDraftCourse from './getDraftCourse.js';
 
 const pathCourses = {
   '/courses': {
@@ -14,6 +15,9 @@ const pathCourses = {
   },
   '/courses/enroll': {
     ...getCourseEnroll,
+  },
+  '/courses/draft': {
+    ...getDraftCourse,
   },
   '/courses/{id}/enroll': {
     ...enrollCourse,

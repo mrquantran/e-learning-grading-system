@@ -29,10 +29,10 @@ model Lectures {
   createdAt        DateTime           @default(now())
   courseId         Int
   course           Course?            @relation(fields: [courseId], references: [id])
-  lecturesMaterial LecutresMaterial[]
+  lecturesMaterial LecturesMaterial[]
 }
 
-model LecutresMaterial {
+model LecturesMaterial {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
   title     String

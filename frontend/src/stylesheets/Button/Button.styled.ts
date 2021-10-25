@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components"
 
+export const ButtonGroup = styled.div``
+
 export const ButtonStyled = styled.button`
   border-radius: 4px;
   box-shadow: none;
@@ -22,6 +24,14 @@ export const ButtonStyled = styled.button`
       background-color: #04a08b;
       border-color: #04a08b;
       color: #ffffff;
+    `}
+
+  ${props =>
+    props.purple &&
+    css`
+      color: #fff;
+      background-color: #a435f0;
+      border: 1px solid transparent;
     `}
   ${props =>
     props.danger &&

@@ -25,6 +25,7 @@ async function main() {
   await prisma.token.deleteMany({});
   await prisma.favoriteCourse.deleteMany({});
   await prisma.user.deleteMany({});
+  await prisma.lecturesMaterial.deleteMany({});
   await prisma.lectures.deleteMany({});
   await prisma.course.deleteMany({});
 
