@@ -9,6 +9,7 @@ import { Col, Row } from "antd"
 import React, { useState } from "react"
 import { Upload, message } from "antd"
 import { UploadImageStyled } from "./LandingPageCourse.styled"
+import UploadInput from "@/components/Formik/Upload/UploadInput"
 
 export default function LandingPageCourse() {
   const options = countryList.map(item => {
@@ -82,6 +83,7 @@ export default function LandingPageCourse() {
                   .jpeg,. gif, or .png. no text on the image.
                 </span>
               </p>
+              <UploadInput />
             </FormGroup>
           </Col>
         </Row>

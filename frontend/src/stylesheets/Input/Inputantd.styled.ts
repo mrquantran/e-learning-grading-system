@@ -21,6 +21,10 @@ export const FormGroup = styled.div`
       .ant-upload.ant-upload-select {
         width: 100%;
       }
+      .ant-upload.ant-upload-select-picture-card {
+        background-color: none;
+        border: none;
+      }
     `}
 `
 
