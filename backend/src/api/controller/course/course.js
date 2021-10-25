@@ -93,10 +93,17 @@ async function createDraftCourse(req, res) {
 
 async function getCourseById(req, res) {
   const { id } = req.params;
+  const token = await getDecodedToken(req);
+
   try {
-    const courseById = await prisma.course.findUnique({
+    const courseById = await prisma.course.findFirst({
       where: {
         id: Number(id),
+        members: {
+          every: {
+            userId: Number(token.id),
+          },
+        },
       },
       include: {
         members: {
@@ -150,7 +157,6 @@ async function getCourseById(req, res) {
 
 async function getDraftCourse(req, res) {
   const token = await getDecodedToken(req);
-
   try {
     // when creating a course make the authenticated user a teacher of the course
     const courses = await prisma.course.findMany({

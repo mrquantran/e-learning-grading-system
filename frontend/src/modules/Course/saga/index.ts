@@ -7,12 +7,14 @@ import {
 import { API } from "@/apis"
 import { all, call, fork, put, takeLatest } from "@redux-saga/core/effects"
 import { FETCH_COURSE_DETAIL } from "../action/courseAction"
+import manageCourseActions from "../action/manageCourseAction"
 import actionsCourseDetail from "../action/courseAction"
 import actionsEnroll from "../action/enrollAction"
 import { errorNotification, getError } from "@/utils/notification"
 import { ENROLL_COURSE } from "../action/enrollAction"
 import { TYPE_USER } from "@/utils/ENUM"
 import { history } from "@/App/App"
+import { FETCH_INSTRUCTOR_COURSE_DETAIL } from "../action/manageCourseAction"
 
 function* fetchDetailCourse(id) {
   const { params } = id
@@ -120,6 +122,27 @@ function* fetchDraftCourses() {
   }
 }
 
+function* fetchInstructorCourseDetail({ payload: id }: any) {
+  try {
+    yield put({
+      type: manageCourseActions.FETCH_INSTRUCTOR_COURSE_DETAIL.REQUEST
+    })
+
+    const { data: course } = yield call(API.courseAPI.fetchDetailCourse, id)
+
+    yield put({
+      type: manageCourseActions.FETCH_INSTRUCTOR_COURSE_DETAIL.SUCCESS,
+      payload: course
+    })
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: manageCourseActions.FETCH_INSTRUCTOR_COURSE_DETAIL.ERROR,
+      payload: error.message
+    })
+  }
+}
+
 function* fetchAndUpdateStatus(courseId) {
   yield fork(fetchCourseStatus, { payload: courseId })
 }
@@ -144,12 +167,17 @@ function* watchFetchDraftCourse() {
   yield takeLatest(FETCH_COURSES_DRAFT, fetchDraftCourses)
 }
 
+function* watchFetchInstructorCourseDetail() {
+  yield takeLatest(FETCH_INSTRUCTOR_COURSE_DETAIL, fetchInstructorCourseDetail)
+}
+
 export default function* courseSaga() {
   yield all([
     watchFetchDetailCourse(),
     watchEnrollCourse(),
     watchFetchCourseStatus(),
     watchFetchCoursesEnroll(),
-    watchFetchDraftCourse()
+    watchFetchDraftCourse(),
+    watchFetchInstructorCourseDetail()
   ])
 }
