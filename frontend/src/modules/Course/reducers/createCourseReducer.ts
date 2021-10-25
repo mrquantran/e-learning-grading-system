@@ -6,6 +6,7 @@ import TypeCourse, {
   validateSchemaTypeCourse
 } from "../Components/Admin/Step/TypeCourse/TypeCourse"
 import actionsCreateCourse from "../action/createCourseAction"
+import actionsManageCourse from "../action/manageCourseAction"
 import FilmEdit from "../Components/Admin/Manage/Film&Edit/FilmEdit"
 import Curriculum from "../Components/Admin/Manage/Currcilum/Curriculum"
 import Captions from "../Components/Admin/Manage/Captions/Captions"
@@ -113,6 +114,32 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
       return { ...state, isProcessing: false, step: 1 }
     case actionsCreateCourse.CREATE_DRAFT_COURSE.ERROR:
       return { ...state, isProcessing: false, error: payload }
+    case actionsManageCourse.FETCH_INSTRUCTOR_COURSE_DETAIL.REQUEST:
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          isProcessing: true
+        }
+      }
+    case actionsManageCourse.FETCH_INSTRUCTOR_COURSE_DETAIL.SUCCESS:
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          data: payload,
+          isProcessing: false
+        }
+      }
+    case actionsManageCourse.FETCH_INSTRUCTOR_COURSE_DETAIL.ERROR:
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          error: payload,
+          isProcessing: false
+        }
+      }
     default:
       return state
   }

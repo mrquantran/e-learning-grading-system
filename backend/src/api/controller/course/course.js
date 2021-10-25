@@ -99,11 +99,6 @@ async function getCourseById(req, res) {
     const courseById = await prisma.course.findFirst({
       where: {
         id: Number(id),
-        members: {
-          every: {
-            userId: Number(token.id),
-          },
-        },
       },
       include: {
         members: {
@@ -138,6 +133,22 @@ async function getCourseById(req, res) {
       if (!await isTeacherEnroll(req, res)) {
         return res.status(403).json({ message: 'you dont have permission to perform this action' });
       }
+      const dataJson = await prisma.course.findFirst({
+        where: {
+          id: Number(id),
+          members: {
+            every: {
+              userId: Number(token.id),
+            },
+          },
+        },
+      });
+
+      if (!dataJson) {
+        return res.status(401).json({ message: 'dont have data' });
+      }
+
+      return res.status(200).json(dataJson);
     }
 
     const dataJson = { ...data, author, totalStudents };

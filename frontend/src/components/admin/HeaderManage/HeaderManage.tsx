@@ -4,6 +4,8 @@ import { ContainerHeaderManage } from "./HeaderManage.styled"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 
 import { SettingOutlined } from "@ant-design/icons"
+import { RootState } from "@/redux/reducer/rootReducer"
+import { useSelector } from "react-redux"
 
 const button = [
   { id: "film&Edit", button: <ButtonStyled /> },
@@ -24,12 +26,16 @@ const button = [
 export default function HeaderManage({ headerExtra }) {
   const buttonExtra = button.find(item => item.id === headerExtra.id)
 
+  const { name: title } = useSelector(
+    (state: RootState) => state.create.detail.data
+  )
+
   return (
     <ContainerHeaderManage>
       <PageHeader
         className="site-page-header"
         onBack={() => null}
-        title="Title"
+        title={title}
         subTitle="0min of video content uploaded"
         tags={<Tag color="blue">Draft</Tag>}
         extra={[buttonExtra?.button, <SettingOutlined />]}
