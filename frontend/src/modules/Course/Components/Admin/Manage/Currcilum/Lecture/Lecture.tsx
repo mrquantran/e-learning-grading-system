@@ -22,14 +22,14 @@ const text = `
   it can be found as a welcome guest in many households across the world.
 `
 
-function HeaderPanel() {
+function HeaderPanel({ order }) {
   return (
     <HeaderPanelStyled>
       <Row justify="space-between" style={{ width: "100%" }}>
         <FlexItemStyled>
           <SpanGroup>
             <CheckCircleFilled style={{ paddingRight: "5px" }} />
-            <span>Lecture 1</span>
+            <span>Lecture {order}</span>
           </SpanGroup>
           <SpanGroup pl10>
             <FileTextOutlined style={{ paddingRight: "5px" }} />
@@ -44,15 +44,15 @@ function HeaderPanel() {
   )
 }
 
-export default function Lecture() {
+export default function Lecture({ order }) {
   return (
     <LectureStyled>
       <Collapse
-        defaultActiveKey={["1"]}
+        // defaultActiveKey={["1"]}
         onChange={callback}
         expandIconPosition="right"
       >
-        <Panel header={<HeaderPanel />} key="1">
+        <Panel header={<HeaderPanel order={order} />} key="1">
           <p>{text}</p>
         </Panel>
       </Collapse>

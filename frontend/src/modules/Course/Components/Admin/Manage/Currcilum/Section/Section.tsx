@@ -7,8 +7,8 @@ import {
   SectionTitle
 } from "./Section.styled"
 import { FileTextOutlined } from "@ant-design/icons"
-import Lecture from "../Manage/Currcilum/Lecture/Lecture"
-import LecturesContainer from "../Manage/Currcilum/Container/LecturesContainer"
+import Lecture from "../Lecture/Lecture"
+import LecturesContainer from "../Container/LecturesContainer"
 
 export default function Section({ title, order }) {
   return (
@@ -27,7 +27,7 @@ export default function Section({ title, order }) {
         </FlexItemStyled>
       </SectionContent>
       {/* <Lecture /> */}
-      <LecturesContainer />
+      <LecturesContainer id={title} />
     </SectionStyled>
   )
 }

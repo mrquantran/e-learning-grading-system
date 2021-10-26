@@ -1,13 +1,13 @@
 import React, { useState } from "react"
-import Section from "../../Section/Section"
+import Section from "./Section/Section"
 import { CurriculumContainer, CurriculumTitle } from "./Curriculum.styled"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 
 const sectionArray = [
-  { id: "id-section1", content: "Introduction" },
-  { id: "id-section2", content: "Basic" },
-  { id: "id-section3", content: "Intermediate" },
-  { id: "id-section4", content: "Advanced" }
+  { id: "id-section1", content: "Introduction" }
+  // { id: "id-section2", content: "Basic" }
+  // { id: "id-section3", content: "Intermediate" },
+  // { id: "id-section4", content: "Advanced" }
 ]
 
 const reorder = (list, startIndex, endIndex) => {
@@ -19,24 +19,25 @@ const reorder = (list, startIndex, endIndex) => {
 }
 
 const SectionList = React.memo(function SectionList({ section }: any) {
-  return section.map((item, index: number) => (
-    <Draggable
-      draggableId={item.id.toString()}
-      index={index}
-      key={item.id.toString()}
-    >
-      {provided => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          index={index}
-        >
-          <Section title={item.content} order={index + 1} />
-        </div>
-      )}
-    </Draggable>
-  ))
+  return section.map((item, index: number) => {
+    console.log(section)
+    console.log(item)
+    debugger
+    return (
+      <Draggable draggableId={item.id} index={index} key={item.id}>
+        {provided => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            index={index}
+          >
+            <Section title={item.content} order={index + 1} />
+          </div>
+        )}
+      </Draggable>
+    )
+  })
 })
 
 export default function Curriculum() {
@@ -48,17 +49,26 @@ export default function Curriculum() {
       return
     }
 
-    if (result.destination.index === result.source.index) {
-      return
+    if (result.type === "curriculumSection") {
+      const section = reorder(
+        state.section,
+        result.source.index,
+        result.destination.index
+      )
+      setState({ section })
     }
-
-    const section = reorder(
-      state.section,
-      result.source.index,
-      result.destination.index
-    )
-
-    setState({ section })
+    // if (!result.destination) {
+    //   return
+    // }
+    // if (result.destination.index === result.source.index) {
+    //   return
+    // }
+    // const section = reorder(
+    //   state.section,
+    //   result.source.index,
+    //   result.destination.index
+    // )
+    // setState({ section })
   }
 
   return (
@@ -81,7 +91,7 @@ export default function Curriculum() {
               console.log(e)
             }}
           >
-            <Droppable droppableId="curriculum">
+            <Droppable droppableId="curriculumSection">
               {provided => (
                 <div
                   ref={provided.innerRef}
