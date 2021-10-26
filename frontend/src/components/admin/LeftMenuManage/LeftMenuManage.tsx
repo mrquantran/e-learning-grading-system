@@ -16,7 +16,7 @@ export default function LeftMenuManage({ selectedKey, setSelectedKey }) {
   } = useSelector((state: RootState) => state.create)
 
   useEffect(() => {
-    setSelectedKey(course[1].childTabs[0].id)
+    setSelectedKey(course[0].childTabs[1].id)
   }, [])
 
   const renderSubMenu = () => {
@@ -37,7 +37,7 @@ export default function LeftMenuManage({ selectedKey, setSelectedKey }) {
       <Menu
         // theme={this.state.theme}
         // onClick={this.handleClick}
-        defaultSelectedKeys={[course[1].childTabs[0].id]}
+        defaultSelectedKeys={[course[0].childTabs[1].id]}
         style={{ width: 256 }}
         defaultOpenKeys={course.map(item => item.id)}
         mode="inline"
