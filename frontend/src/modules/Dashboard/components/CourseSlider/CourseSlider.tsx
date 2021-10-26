@@ -57,6 +57,16 @@ export default function CourseSlider() {
 
   return (
     <CourseSliderStyled>
+      <div className="box no-shadow mb-0 bg-transparent">
+        <div className="box-header no-border px-0">
+          <h4 className="box-title">Popular Courses</h4>
+          <ul className="box-controls pull-right d-md-flex d-none">
+            <li>
+              <button className="btn btn-primary-light px-10">View All</button>
+            </li>
+          </ul>
+        </div>
+      </div>
       <Slider {...settings}>{renderCourses()}</Slider>
     </CourseSliderStyled>
   )

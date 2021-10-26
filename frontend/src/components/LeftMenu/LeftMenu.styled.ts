@@ -48,3 +48,13 @@ export const Container = styled.div`
     }
   }
 `
+
+export const UserMenuItem = styled.div`
+  .ant-menu-title-content {
+    display: flex;
+    align-items: center;
+  }
+  .ant-menu.ant-menu-inline-collapsed > .ant-menu-item {
+    justify-content: flex-start;
+  }
+`

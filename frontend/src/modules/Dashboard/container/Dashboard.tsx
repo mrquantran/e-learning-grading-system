@@ -24,20 +24,20 @@ export default function Dashboard() {
       <CourseSlider />
 
       <Row>
-        <Col span={12}>
+        <Col span={12} style={{ paddingRight: "20px" }}>
           {/* <UpcomingTest /> */}
-          <Row>
-            <Col span={12}>
+          <GoodStudent />
+        </Col>
+        <Col span={12}>
+          <Carousel2 />
+          {/* <Row>
+            <Col span={12} style={{ paddingRight: "20px" }}>
               <TotalItem title="Total Courses" total="15" />
             </Col>
             <Col span={12}>
               <TotalItem title="Available Tests" total="5" />
             </Col>
-          </Row>
-        </Col>
-        <Col span={12}>
-          <Carousel2 />
-          {/* <GoodStudent /> */}
+          </Row> */}
         </Col>
       </Row>
     </DashboardComponentsStyled>

@@ -12,26 +12,32 @@ const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
 const getEnrollCourses = async (req, res) => {
-  const token = await getDecodedToken(req);
+  try {
+    const token = await getDecodedToken(req);
 
-  //   console.log(token);
+    //   console.log(token);
 
-  const courseEnroll = await prisma.user.findUnique({
-    where: {
-      id: Number(token.id),
-    },
-    select: {
-      courses: {
-        select: {
-          course: true,
+    const courseEnroll = await prisma.user.findUnique({
+      where: {
+        id: Number(token.id),
+      },
+      select: {
+        courses: {
+          select: {
+            course: true,
+          },
         },
       },
-    },
-  });
+    });
 
-  const data = courseEnroll.courses.map((item) => item.course);
+    const data = courseEnroll.courses.map((item) => item.course);
 
-  return res.status(200).json(data);
+    return res.status(200).json(data);
+  } catch (error) {
+  // 500 (Internal Server Error) - Something has gone wrong in your application.
+    const httpError = createHttpError(500, error);
+    return res.status(500).json({ message: httpError });
+  }
 };
 
 async function getCoursePublic(req, res) {

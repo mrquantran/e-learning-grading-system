@@ -12,3 +12,8 @@ export const FlexItemStyled = styled.div`
       width: 100%;
     `}
 `
+
+export const SpaceBetweenDivStyled = styled.div`
+  display: flex;
+  // justify:
+`
