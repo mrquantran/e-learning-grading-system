@@ -3,6 +3,7 @@ import Section from "./Section/Section"
 import { CurriculumContainer, CurriculumTitle } from "./Curriculum.styled"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { dataCurriculum } from "./dataExample"
+import { TypeSection } from "@/utils/ENUM"
 
 const sectionArray = dataCurriculum
 
@@ -43,55 +44,93 @@ const SectionList = function SectionList({ section }: any) {
 
 export default function Curriculum() {
   const [state, setState] = useState<any>({ section: sectionArray })
-  const [dropIndex, setDropIndex] = useState<number>(-1)
-
-  console.log("state", state)
 
   function onDragEnd(result) {
+    const { source, destination } = result
+
     // Make sure we have a valid destination
-    if (result.destination === undefined || result.destination === null)
-      return null
+    if (destination === undefined || destination === null) return null
 
     // Make sure we're actually moving the item
     if (
-      result.source.droppableId === result.destination.droppableId &&
-      result.destination.index === result.source.index
+      source.droppableId === destination.droppableId &&
+      destination.index === source.index
     )
       return null
 
-    if (!result.destination) {
-      return
-    }
+    /**
+     * droppableId with Section{ID}
+     * we should move to number id just like in database
+     * get sourceIndex = index start drag
+     * get destIndex = index end drop
+     */
+    const sourceParentId = Number(
+      result.source.droppableId.replace(TypeSection.SECTION, "")
+    )
+    const destParentId = Number(
+      result.destination.droppableId.replace(TypeSection.SECTION, "")
+    )
 
-    if (result.type === "curriculumSection") {
+    const sourceIndex = result.source.index
+    const destIndex = result.destination.index
+
+    // 1. in case we drag order section
+    if (result.type === TypeSection.SECTION) {
       const section = reorder(
         state.section,
         result.source.index,
         result.destination.index
       )
       setState({ section })
-    } else {
-      const parentId = Number(result.source.droppableId.replace("Section", ""))
+    }
+    // 2. incase we drag lecture
+    else if (result.type === TypeSection.LECTURE) {
       const itemSubItemMap = state.section.reduce((acc, item) => {
         acc[item.id] = item.lecturesMaterial
         return acc
       }, {})
-      const subItemsForCorrespondingParent = itemSubItemMap[parentId]
-      // debugger
 
-      const reorderedSubItems = reorder(
-        subItemsForCorrespondingParent,
-        result.source.index,
-        result.destination.index
-      )
+      const sourceSubItems = itemSubItemMap[sourceParentId]
+      const destSubItems = itemSubItemMap[destParentId]
 
       let newItems = [...state.section]
-      newItems = newItems.map(item => {
-        if (item.id === parentId) {
-          item.lecturesMaterial = reorderedSubItems
-        }
-        return item
-      })
+
+      // 2.1 incase we drag lecture in this section
+      if (sourceParentId === destParentId) {
+        const reorderedSubItems = reorder(
+          sourceSubItems,
+          sourceIndex,
+          destIndex
+        )
+        newItems = newItems.map(item => {
+          if (item.id === sourceParentId) {
+            item.lecturesMaterial = reorderedSubItems
+          }
+          return item
+        })
+        setState({
+          section: newItems
+        })
+      }
+      // 2.2 incase we drag lecture to other section
+      else {
+        let newSourceSubItems = [...sourceSubItems]
+        const [draggedItem] = newSourceSubItems.splice(sourceIndex, 1)
+
+        let newDestSubItems = [...destSubItems]
+        newDestSubItems.splice(destIndex, 0, draggedItem)
+        newItems = newItems.map(item => {
+          if (item.id === sourceParentId) {
+            item.lecturesMaterial = newSourceSubItems
+          } else if (item.id === destParentId) {
+            item.lecturesMaterial = newDestSubItems
+          }
+          return item
+        })
+        setState({
+          section: newItems
+        })
+      }
 
       setState({
         section: newItems
@@ -130,10 +169,13 @@ export default function Curriculum() {
           <DragDropContext
             onDragEnd={onDragEnd}
             onDragUpdate={e => {
-              console.log(e)
+              // console.log(e)
             }}
           >
-            <Droppable droppableId="curriculumSection" type="curriculumSection">
+            <Droppable
+              droppableId={TypeSection.SECTION}
+              type={TypeSection.SECTION}
+            >
               {provided => (
                 <div
                   ref={provided.innerRef}

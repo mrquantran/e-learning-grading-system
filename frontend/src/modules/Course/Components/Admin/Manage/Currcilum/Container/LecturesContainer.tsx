@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import Lecture from "../Lecture/Lecture"
 import { Droppable, DragDropContext, Draggable } from "react-beautiful-dnd"
+import { TypeSection } from "@/utils/ENUM"
 
 export const lectureArray = [
   { id: "Lecture1", content: "Hello" },
@@ -35,7 +36,7 @@ const LectureList = React.memo(function LectureList({ section }: any) {
 
 export default function LecturesContainer({ lecture, idSection }: any) {
   return (
-    <Droppable droppableId={idSection} type="lecture">
+    <Droppable droppableId={idSection} type={TypeSection.LECTURE}>
       {provided => (
         <div ref={provided.innerRef}>
           <LectureList section={lecture} />
