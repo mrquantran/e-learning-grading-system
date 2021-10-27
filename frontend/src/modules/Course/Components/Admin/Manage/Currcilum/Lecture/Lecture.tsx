@@ -22,7 +22,7 @@ const text = `
   it can be found as a welcome guest in many households across the world.
 `
 
-function HeaderPanel({ order }) {
+function HeaderPanel({ title, order }) {
   return (
     <HeaderPanelStyled>
       <Row justify="space-between" style={{ width: "100%" }}>
@@ -33,7 +33,7 @@ function HeaderPanel({ order }) {
           </SpanGroup>
           <SpanGroup pl10>
             <FileTextOutlined style={{ paddingRight: "5px" }} />
-            <span>Basic to typescript</span>
+            <span>{title}</span>
           </SpanGroup>
         </FlexItemStyled>
         <FlexItemStyled>
@@ -44,7 +44,7 @@ function HeaderPanel({ order }) {
   )
 }
 
-export default function Lecture({ order }) {
+export default function Lecture({ title, order }) {
   return (
     <LectureStyled>
       <Collapse
@@ -52,7 +52,7 @@ export default function Lecture({ order }) {
         onChange={callback}
         expandIconPosition="right"
       >
-        <Panel header={<HeaderPanel order={order} />} key="1">
+        <Panel header={<HeaderPanel title={title} order={order} />} key="1">
           <p>{text}</p>
         </Panel>
       </Collapse>

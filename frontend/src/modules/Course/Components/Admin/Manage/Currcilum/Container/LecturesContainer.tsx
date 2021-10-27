@@ -13,7 +13,7 @@ const LectureList = React.memo(function LectureList({ section }: any) {
   return section.map((item, index: number) => {
     return (
       <Draggable
-        draggableId={item.id.toString()}
+        draggableId={`lecture${item.id.toString()}`}
         index={index}
         key={item.id.toString()}
       >
@@ -24,7 +24,7 @@ const LectureList = React.memo(function LectureList({ section }: any) {
             {...provided.dragHandleProps}
             index={index}
           >
-            <Lecture order={index + 1} />
+            <Lecture order={index + 1} title={item.title} />
             {/* {provided.placeholder} */}
           </div>
         )}
@@ -33,13 +33,12 @@ const LectureList = React.memo(function LectureList({ section }: any) {
   })
 })
 
-export default function LecturesContainer({ id }) {
-  const [state, setState] = useState<any>({ lecture: lectureArray })
+export default function LecturesContainer({ lecture, idSection }: any) {
   return (
-    <Droppable droppableId={id}>
+    <Droppable droppableId={idSection} type="lecture">
       {provided => (
         <div ref={provided.innerRef}>
-          <LectureList section={state.lecture} />
+          <LectureList section={lecture} />
           {provided.placeholder}
         </div>
       )}

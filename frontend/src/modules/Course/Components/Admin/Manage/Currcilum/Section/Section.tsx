@@ -9,7 +9,13 @@ import {
 import { FileTextOutlined } from "@ant-design/icons"
 import LecturesContainer from "../Container/LecturesContainer"
 
-export default function Section({ draggableHandle, title, order }) {
+export default function Section({
+  id,
+  draggableHandle,
+  title,
+  order,
+  lecturesMaterial
+}) {
   return (
     <SectionStyled>
       <SectionContent {...draggableHandle}>
@@ -26,7 +32,7 @@ export default function Section({ draggableHandle, title, order }) {
         </FlexItemStyled>
       </SectionContent>
       {/* <Lecture /> */}
-      <LecturesContainer id={title} />
+      <LecturesContainer idSection={id} lecture={lecturesMaterial} />
     </SectionStyled>
   )
 }

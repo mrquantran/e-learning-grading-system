@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const SectionStyled = styled.li`
-  margin-top: 80px;
+  margin-top: 60px;
   padding-bottom: 40px;
 
   border: 1px solid #6a6f73;
