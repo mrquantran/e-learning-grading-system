@@ -29,10 +29,14 @@ const SectionList = React.memo(function SectionList({ section }: any) {
           <div
             ref={provided.innerRef}
             {...provided.draggableProps}
-            {...provided.dragHandleProps}
             index={index}
           >
-            <Section title={item.content} order={index + 1} />
+            <Section
+              draggableHandle={...provided.dragHandleProps}
+              title={item.content}
+              order={index + 1}
+            />
+            {provided.placeholder}
           </div>
         )}
       </Draggable>
@@ -91,7 +95,7 @@ export default function Curriculum() {
               console.log(e)
             }}
           >
-            <Droppable droppableId="curriculumSection">
+            <Droppable droppableId="curriculumSection" type="section">
               {provided => (
                 <div
                   ref={provided.innerRef}

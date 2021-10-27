@@ -7,13 +7,12 @@ import {
   SectionTitle
 } from "./Section.styled"
 import { FileTextOutlined } from "@ant-design/icons"
-import Lecture from "../Lecture/Lecture"
 import LecturesContainer from "../Container/LecturesContainer"
 
-export default function Section({ title, order }) {
+export default function Section({ draggableHandle, title, order }) {
   return (
     <SectionStyled>
-      <SectionContent>
+      <SectionContent {...draggableHandle}>
         <FlexItemStyled>
           <SectionTitle>
             <span>

@@ -40,6 +40,7 @@ export default function LecturesContainer({ id }) {
       {provided => (
         <div ref={provided.innerRef}>
           <LectureList section={state.lecture} />
+          {provided.placeholder}
         </div>
       )}
     </Droppable>
