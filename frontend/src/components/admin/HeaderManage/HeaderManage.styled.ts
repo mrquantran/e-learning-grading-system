@@ -25,6 +25,7 @@ export const ContainerHeaderManage = styled.div`
 
   .ant-page-header {
     width: 100%;
+    padding: 5px 24px;
   }
 
   .ant-page-header-heading-left {
