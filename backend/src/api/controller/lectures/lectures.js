@@ -1,7 +1,9 @@
+/* eslint-disable import/extensions */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
 /* eslint-disable import/prefer-default-export */
 import pkg from '@prisma/client';
+import { isTeacherEnroll } from '../../helpers/course/isStudentEnroll.js';
 
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
@@ -10,6 +12,9 @@ const getLectureOfCourse = async (req, res) => {
   try {
     const { id } = req.params;
 
+    if (!await isTeacherEnroll(req, res)) {
+      return res.status(403).json({ message: 'you dont have permission to perform this action' });
+    }
     const lectures = await prisma.course.findUnique({
       where: {
         id: Number(id),

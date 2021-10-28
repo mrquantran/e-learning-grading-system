@@ -20,6 +20,7 @@ const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
 
 // eslint-disable-next-line consistent-return
+// eslint-disable-next-line no-unused-vars
 export const isTeacherEnroll = async (req, res) => {
   const token = await getDecodedToken(req);
 
