@@ -1,14 +1,35 @@
 import styled from "styled-components"
 
 export const SectionStyled = styled.li`
-  margin-top: 60px;
-  padding-bottom: 40px;
+  margin-top: 40px;
+  // padding-bottom: 40px;
+
+  .Section .ant-collapse-header {
+    display: flex;
+    align-items: center;
+  }
+
+  .ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    padding: 0;
+  }
+
+  .Section .ant-collapse {
+    // border: 1px solid #6a6f73;
+    background-color: #f7f9fa;
+  }
+
+  .Section .ant-collapse-content {
+    background-color: #f7f9fa;
+    border-top: none;
+  }
 
   border: 1px solid #6a6f73;
+
   background-color: #f7f9fa;
 `
 
 export const SectionContent = styled.div`
+  width: 100%;
   border: 0;
   padding: 20px 10px;
 `

@@ -9,9 +9,11 @@ export const LectureStyled = styled.div`
 
   .ant-collapse {
     border: 1px solid #6a6f73;
+    background-color: #fff !important;
   }
   .ant-collapse-content {
-    border-top: 1px solid #6a6f73;
+    border-top: 1px solid #6a6f73 !important;
+    background-color: #fff !important;
   }
 
   .ant-collapse-header {

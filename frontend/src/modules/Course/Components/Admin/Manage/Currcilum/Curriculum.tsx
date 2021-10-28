@@ -17,7 +17,6 @@ const reorder = (list, startIndex, endIndex) => {
 }
 
 const SectionList = function SectionList({ section }: any) {
-  console.log(section)
   return section.map((item, index: number) => {
     return (
       <Draggable draggableId={item.id.toString()} index={index} key={item.id}>
@@ -131,10 +130,6 @@ export default function Curriculum() {
           section: newItems
         })
       }
-
-      setState({
-        section: newItems
-      })
     }
 
     // if (!result.destination) {

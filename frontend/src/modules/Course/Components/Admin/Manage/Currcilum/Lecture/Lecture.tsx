@@ -1,11 +1,7 @@
 import React from "react"
 import { Collapse, Row } from "antd"
 import { HeaderPanelStyled, LectureStyled } from "./Lecture.styled"
-import {
-  FileTextOutlined,
-  PlusOutlined,
-  CheckCircleFilled
-} from "@ant-design/icons"
+import { FileTextOutlined, CheckCircleFilled } from "@ant-design/icons"
 import { FlexItemStyled } from "@/stylesheets/Div/Div.styled"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import { SpanGroup } from "@/stylesheets/Text/Text.styled"
@@ -13,7 +9,7 @@ import { SpanGroup } from "@/stylesheets/Text/Text.styled"
 const { Panel } = Collapse
 
 function callback(key) {
-  console.log(key)
+  // console.log(key)
 }
 
 const text = `
@@ -49,6 +45,7 @@ export default function Lecture({ title, order }) {
     <LectureStyled>
       <Collapse
         // defaultActiveKey={["1"]}
+        className="lecture"
         onChange={callback}
         expandIconPosition="right"
       >

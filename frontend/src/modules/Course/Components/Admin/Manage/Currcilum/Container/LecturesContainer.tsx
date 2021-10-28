@@ -1,6 +1,6 @@
-import React, { useState } from "react"
+import React from "react"
 import Lecture from "../Lecture/Lecture"
-import { Droppable, DragDropContext, Draggable } from "react-beautiful-dnd"
+import { Droppable, Draggable } from "react-beautiful-dnd"
 import { TypeSection } from "@/utils/ENUM"
 
 export const lectureArray = [
