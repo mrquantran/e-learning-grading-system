@@ -427,3 +427,8 @@ button {
   flex: 1 1 auto;
   border-radius: 10px;
 }
+
+.button:active {
+  background-color: none;
+  border: none;
+}

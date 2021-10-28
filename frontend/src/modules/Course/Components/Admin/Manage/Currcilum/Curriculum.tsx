@@ -25,6 +25,7 @@ const SectionList = function SectionList({ section }: any) {
             ref={provided.innerRef}
             {...provided.draggableProps}
             index={index}
+            // style={{ position: "relative" }}
           >
             <Section
               id={`Section${item.id.toString()}`}

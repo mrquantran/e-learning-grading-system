@@ -1,9 +1,9 @@
 import styled from "styled-components"
 
 export const SectionStyled = styled.li`
-  margin-top: 40px;
+  margin-top: 60px;
   // padding-bottom: 40px;
-
+  position: relative;
   .Section .ant-collapse-header {
     display: flex;
     align-items: center;
