@@ -3,6 +3,7 @@ const store = "course"
 export const GO_TO_STEP = `${store}/GO_TO_STEP`
 export const FETCH_INSTRUCTOR_COURSE_DETAIL = `${store}/FETCH_INSTRUCTOR_COURSE_DETAIL`
 export const UPDATE_INSTRUCTOR_COURSE = `${store}/UPDATE_INSTRUCTOR_COURSE`
+export const FETCH_COURSE_LECTURE = `${store}/FETCH_COURSE_LECTURE`
 
 export default class ManageCourseAction {
   static FETCH_INSTRUCTOR_COURSE_DETAIL = {
@@ -15,5 +16,11 @@ export default class ManageCourseAction {
     REQUEST: `${store}/UPDATE_INSTRUCTOR_COURSE_REQUEST`,
     SUCCESS: `${store}/UPDATE_INSTRUCTOR_COURSE_SUCCESS`,
     ERROR: `${store}/UPDATE_INSTRUCTOR_COURSE_ERROR`
+  }
+
+  static FETCH_COURSE_LECTURE = {
+    REQUEST: `${store}/FETCH_COURSE_LECTURE_REQUEST`,
+    SUCCESS: `${store}/FETCH_COURSE_LECTURE_SUCCESS`,
+    ERROR: `${store}/FETCH_COURSE_LECTURE_ERROR`
   }
 }

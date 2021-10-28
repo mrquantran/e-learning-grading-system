@@ -47,16 +47,4 @@ export default class CourseDetailAction {
     SUCCESS: `${store}/FETCH_COURSES_DRAFT_SUCCESS`,
     ERROR: `${store}/FETCH_COURSES_DRAFT_ERROR`
   }
-
-  static fetchCoursesData(payload) {
-    return createAction(this.FETCH_COURSE_DETAIL.REQUEST, payload)
-  }
-
-  static fetchCoursesDataSuccess(payload) {
-    return createAction(this.FETCH_COURSE_DETAIL.SUCCESS, payload)
-  }
-
-  static fetchCoursesDataError(payload) {
-    return createAction(this.FETCH_COURSE_DETAIL.ERROR, payload)
-  }
 }

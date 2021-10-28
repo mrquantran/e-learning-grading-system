@@ -30,7 +30,7 @@ export const ContainerHeaderManage = styled.div`
 
   .ant-page-header-heading-left {
     display: flex;
-    align-items: baseline;
+    align-items: center;
   }
 
   .ant-page-header-back {

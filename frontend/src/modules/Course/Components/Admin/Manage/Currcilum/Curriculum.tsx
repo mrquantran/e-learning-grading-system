@@ -1,9 +1,13 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Section from "./Section/Section"
 import { CurriculumContainer, CurriculumTitle } from "./Curriculum.styled"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { dataCurriculum } from "./dataExample"
-import { TypeSection } from "@/utils/ENUM"
+import { TypeSection, TYPE_LECTURES } from "@/utils/ENUM"
+import { useDispatch, useSelector } from "react-redux"
+import { useRouter } from "@/hooks/useRouter"
+import { FETCH_COURSE_LECTURE } from "@/modules/Course/action/manageCourseAction"
+import { RootState } from "@/redux/reducer/rootReducer"
 
 const sectionArray = dataCurriculum
 
@@ -17,7 +21,7 @@ const reorder = (list, startIndex, endIndex) => {
 }
 
 const SectionList = function SectionList({ section }: any) {
-  return section.map((item, index: number) => {
+  return section?.map((item, index: number) => {
     return (
       <Draggable draggableId={item.id.toString()} index={index} key={item.id}>
         {provided => (
@@ -43,7 +47,24 @@ const SectionList = function SectionList({ section }: any) {
 }
 
 export default function Curriculum() {
-  const [state, setState] = useState<any>({ section: sectionArray })
+  const dispatch = useDispatch()
+
+  const router = useRouter()
+  const { courseId } = router.query
+
+  const { data } = useSelector((state: RootState) => state.create.curriculum)
+
+  const [state, setState] = useState<any>({ section: data })
+
+  useEffect(() => {
+    setState({ section: data })
+  }, [data, courseId])
+
+  useEffect(() => {
+    dispatch({ type: FETCH_COURSE_LECTURE, payload: courseId })
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, courseId])
 
   function onDragEnd(result) {
     const { source, destination } = result
