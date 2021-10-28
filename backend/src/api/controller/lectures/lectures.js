@@ -58,4 +58,40 @@ const getLectureOfCourse = async (req, res) => {
   }
 };
 
-export const lectures = { getLectureOfCourse };
+const createSection = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title } = req.body;
+
+    if (!await isTeacherEnroll(req, res)) {
+      return res.status(403).json({ message: 'you dont have permission to perform this action' });
+    }
+
+    const dataLecture = {
+      title,
+      courseId: Number(id),
+    };
+
+    // eslint-disable-next-line no-unused-vars
+    const lectures = await prisma.lectures.create({
+      data: {
+        title: dataLecture.title,
+        course: {
+          connect: {
+            id: Number(id),
+          },
+        },
+      },
+    });
+
+    const message = 'Your section has been created successfully';
+
+    return res.status(200).json({ message });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+    return res.status(500).json({ message: error });
+  }
+};
+
+export const lectures = { getLectureOfCourse, createSection };
