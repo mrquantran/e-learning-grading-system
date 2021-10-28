@@ -39,6 +39,12 @@ export const SelectInputStyled = styled.div`
 `
 
 export const InputAntd = styled(Input)`
+  &:hover,
+  &:focus {
+    background: #fff;
+    border: 1px solid #1c1d1f;
+    box-shadow: none;
+  }
   min-width: 18rem;
   max-width: 100rem;
   margin: 0 auto;
@@ -61,6 +67,15 @@ export const InputAntd = styled(Input)`
     props.description &&
     css`
       height: 75px;
+    `}
+
+  ${props =>
+    props.section &&
+    css`
+      height: 34px;
+      padding: 0 10 px;
+      font-size: 13px;
+      line-height: 1.287;
     `}
 `
 

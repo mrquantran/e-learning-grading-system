@@ -432,3 +432,7 @@ button {
   background-color: none;
   border: none;
 }
+
+button:focus {
+  outline: none;
+}

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const EditArrowStyled = styled.div`
   margin-left: 60px;
@@ -19,6 +19,82 @@ export const EditArrowContainer = styled.div`
 `
 
 export const ButtonEdit = styled.button`
+
+  @keyframes fadeout {
+    0% {
+      transform: scale(0);
+      transform-origin: 50% 50%;
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1);
+      transform-origin: 50% 50%;
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes clock {
+    0% {
+        transform: rotate(0deg);
+    }
+    25%{
+        transform: rotate(-11.25deg);
+    }
+    50%{
+        transform: rotate(-22.5deg);
+    }
+    75%{
+        transform: rotate(-33.75deg);
+
+    }
+    100%{
+        transform: rotate(-45deg);
+    }
+  }
+
+    @keyframes reverseClock {
+    0% {
+        transform: rotate(-45deg);
+    }
+    25%{
+        transform: rotate(-33.75deg);
+    }
+    50%{
+        transform: rotate(-22.5deg);
+    }
+    75%{
+        transform: rotate(-11.25deg);
+
+    }
+    100%{
+        transform: rotate(0deg);
+    }
+  }
+
+  .anticon{
+    transition: all .5s ease-in-out;
+      animation: ${({ isFocus }) =>
+        isFocus
+          ? css`
+          clock 0.5s ease-in-out 1 forwards;
+        `
+          : css`
+          reverseClock 0.5s ease-in-out 1 forwards;
+        `};
+  }
+
   top: 45px;
   position: relative;
   left: -19px;
@@ -41,6 +117,28 @@ export const ButtonEdit = styled.button`
     height: 21px;
     content: "";
     right: -11px;
+    animation: 
     top: 2px;
   }
+
+
+
+  ${props =>
+    props.isFocus &&
+    css`
+      border: 1px dashed #fff;
+      border-bottom: none;
+      border-left: none;
+      transition: all 500ms;
+      opacity: 1;
+      .anticon {
+        transform: rotate(-45deg);
+      }
+
+      &:before {
+        border: 1px dashed #fff;
+        border-bottom: none;
+        border-left: none;
+      }
+    `}
 `

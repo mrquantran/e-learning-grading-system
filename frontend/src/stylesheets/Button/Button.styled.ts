@@ -1,6 +1,9 @@
 import styled, { css } from "styled-components"
 
-export const ButtonGroup = styled.div``
+export const ButtonGroup = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`
 
 export const ButtonStyled = styled.button`
   border-radius: 4px;
@@ -45,6 +48,14 @@ export const ButtonStyled = styled.button`
       background-color: #a435f0;
       border: 1px solid transparent;
     `}
+
+  ${props =>
+    props.dangerText &&
+    css`
+      font-weight: 700;
+      color: #ff562f;
+    `}
+
   ${props =>
     props.danger &&
     css`
@@ -84,4 +95,11 @@ export const ButtonStyled = styled.button`
       border-color: #00baff;
       color: #ffffff;
     `};
+
+  ${props =>
+    props.transparent &&
+    css`
+      background-color: transparent !important;
+      border: 1 px solid transparent !important;
+    `}
 `

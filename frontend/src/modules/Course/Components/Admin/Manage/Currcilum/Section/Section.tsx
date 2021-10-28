@@ -1,5 +1,5 @@
 import { FlexItemStyled } from "@/stylesheets/Div/Div.styled"
-import React from "react"
+import React, { useState } from "react"
 import {
   SectionContent,
   SectionGroupTitle,
@@ -10,6 +10,7 @@ import { FileTextOutlined, CaretRightOutlined } from "@ant-design/icons"
 import LecturesContainer from "../Container/LecturesContainer"
 import { Collapse } from "antd"
 import EditArrow from "../EditArrow/EditArrow"
+import InputSection from "../InputSection/InputSection"
 
 const { Panel } = Collapse
 
@@ -20,10 +21,32 @@ export default function Section({
   order,
   lecturesMaterial
 }) {
+  const [inputSection, setInputSection] = useState<any>(null)
+
+  const [isFocus, setFocus] = useState<boolean>(false)
+
+  const handleClickAddSection = () => {
+    setInputSection(
+      <InputSection handleCloseAddSection={handleCloseAddSection} />
+    )
+    setFocus(true)
+  }
+
+  const handleCloseAddSection = () => {
+    setInputSection(null)
+    setFocus(false)
+  }
+
   return (
-    <>
+    <div style={{ position: "relative" }}>
+      <EditArrow
+        isFocus={isFocus}
+        handleCloseAddSection={handleCloseAddSection}
+        handleClickAddSection={handleClickAddSection}
+      />
+      {/* <InputSection /> */}
+      {inputSection}
       <SectionStyled key={id}>
-        <EditArrow />
         <Collapse
           defaultActiveKey={[id]}
           expandIconPosition="right"
@@ -56,6 +79,6 @@ export default function Section({
           {/* <Lecture /> */}
         </Collapse>
       </SectionStyled>
-    </>
+    </div>
   )
 }

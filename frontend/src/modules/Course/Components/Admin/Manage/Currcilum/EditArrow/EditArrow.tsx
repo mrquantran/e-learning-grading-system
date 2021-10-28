@@ -14,11 +14,18 @@ const iconStyle: any = {
   position: "inherit"
 }
 
-export default function EditArrow() {
+export default function EditArrow({
+  isFocus,
+  handleClickAddSection,
+  handleCloseAddSection
+}) {
   return (
-    <EditArrowStyled>
+    <EditArrowStyled
+      isFocus={isFocus}
+      onClick={!isFocus ? handleClickAddSection : handleCloseAddSection}
+    >
       <EditArrowContainer>
-        <ButtonEdit className="editArrow">
+        <ButtonEdit isFocus={isFocus} className="editArrow">
           <PlusOutlined style={iconStyle} />
         </ButtonEdit>
       </EditArrowContainer>

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled, { css } from "styled-components"
 
 export const SectionStyled = styled.li`
   margin-top: 60px;
@@ -26,12 +26,24 @@ export const SectionStyled = styled.li`
   border: 1px solid #6a6f73;
 
   background-color: #f7f9fa;
+
+  ${props =>
+    props.input &&
+    css`
+      // padding-bottom: 20px;
+      border-bottom: 1px solid #6a6f73;
+      margin-left: -61 px;
+      margin-right: -11 px;
+      margin-top: -80 px;
+      padding-top: 80 px;
+      background: #fff;
+    `}
 `
 
 export const SectionContent = styled.div`
   width: 100%;
   border: 0;
-  padding: 20px 10px;
+  padding: 10px 10px 20px 10px;
 `
 
 export const SectionTitle = styled.div`
@@ -55,4 +67,8 @@ export const SectionGroupTitle = styled.span`
   .anticon {
     padding-right: 5px;
   }
+`
+export const SectionCreateInput = styled.div`
+  // padding-left: 10px;
+  width: 100%;
 `
