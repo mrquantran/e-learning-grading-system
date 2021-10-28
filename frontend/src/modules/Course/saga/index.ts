@@ -172,7 +172,7 @@ function* fetchInstructorCourseDetail({ payload: id }: any) {
   }
 }
 
-function* fetchCourseLectures({ payload: id }: any) {
+export function* fetchCourseLectures({ payload: id }: any) {
   try {
     yield put({
       type: manageCourseActions.FETCH_COURSE_LECTURE.REQUEST

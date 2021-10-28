@@ -11,6 +11,9 @@ import LecturesContainer from "../Container/LecturesContainer"
 import { Collapse } from "antd"
 import EditArrow from "../EditArrow/EditArrow"
 import InputSection from "../InputSection/InputSection"
+import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
+import ModeEditIcon from "@mui/icons-material/ModeEdit"
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 
 const { Panel } = Collapse
 
@@ -66,6 +69,22 @@ export default function Section({
                         <FileTextOutlined />
                         <span>{title}</span>
                       </SectionGroupTitle>
+                      <FlexItemStyled className="editDeleteGroup">
+                        <ButtonStyled
+                          style={{ padding: "2px 8px" }}
+                          transparent
+                        >
+                          <ModeEditIcon sx={{ fontSize: 15 }} />
+                        </ButtonStyled>
+                        <ButtonStyled
+                          style={{
+                            padding: "2px 0px"
+                          }}
+                          transparent
+                        >
+                          <DeleteForeverIcon sx={{ fontSize: 15 }} />
+                        </ButtonStyled>
+                      </FlexItemStyled>
                     </span>
                   </SectionTitle>
                 </FlexItemStyled>

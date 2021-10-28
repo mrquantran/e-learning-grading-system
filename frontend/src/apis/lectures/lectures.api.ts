@@ -4,7 +4,12 @@ const fetchLectureDetail = (params): Promise<AxiosResponse<any>> => {
   return axios.get(`/courses/${params}/lectures`)
 }
 
+const createSectionLecture = (courseId, data): Promise<AxiosResponse<any>> => {
+  return axios.post(`/courses/${courseId}/lectures/section`, data)
+}
+
 const lecturesAPI = {
-  fetchLectureDetail
+  fetchLectureDetail,
+  createSectionLecture
 }
 export default lecturesAPI

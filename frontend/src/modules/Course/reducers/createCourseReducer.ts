@@ -149,7 +149,6 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
         ...state,
         curriculum: {
           ...state.curriculum,
-          data: [],
           isFetching: true
         }
       }

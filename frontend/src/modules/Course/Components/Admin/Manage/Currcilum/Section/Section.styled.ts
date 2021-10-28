@@ -44,6 +44,13 @@ export const SectionContent = styled.div`
   width: 100%;
   border: 0;
   padding: 10px 10px 20px 10px;
+
+  &:hover {
+    .editDeleteGroup {
+      opacity: 1;
+      transition: all 500ms;
+    }
+  }
 `
 
 export const SectionTitle = styled.div`
@@ -56,6 +63,11 @@ export const SectionTitle = styled.div`
   max-width: 480px;
   padding: 5px 5px 5px 0;
   white-space: nowrap;
+
+  .editDeleteGroup {
+    opacity: 0;
+    font-size: 10px;
+  }
 `
 
 export const SectionGroupTitle = styled.span`

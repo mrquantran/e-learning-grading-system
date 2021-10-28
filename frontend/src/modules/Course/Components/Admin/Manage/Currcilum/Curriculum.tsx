@@ -2,14 +2,11 @@ import React, { useEffect, useState } from "react"
 import Section from "./Section/Section"
 import { CurriculumContainer, CurriculumTitle } from "./Curriculum.styled"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import { dataCurriculum } from "./dataExample"
-import { TypeSection, TYPE_LECTURES } from "@/utils/ENUM"
+import { TypeSection } from "@/utils/ENUM"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "@/hooks/useRouter"
 import { FETCH_COURSE_LECTURE } from "@/modules/Course/action/manageCourseAction"
 import { RootState } from "@/redux/reducer/rootReducer"
-
-const sectionArray = dataCurriculum
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {

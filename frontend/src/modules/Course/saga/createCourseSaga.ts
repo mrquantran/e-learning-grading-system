@@ -4,13 +4,17 @@ import {
   warningNotification
 } from "@/utils/notification"
 import { errorNotification } from "./../../../utils/notification"
-import { all, call, put, takeLatest } from "@redux-saga/core/effects"
-import { CREATE_DRAFT_COURSE } from "../action/createCourseAction"
+import { all, call, fork, put, takeLatest } from "@redux-saga/core/effects"
+import {
+  CREATE_COURSE_SECTION_LECTURE,
+  CREATE_DRAFT_COURSE
+} from "../action/createCourseAction"
 import actionCreateCourse from "../action/createCourseAction"
 import { API } from "@/apis"
 import { history } from "@/App/App"
 import pathRoute from "@/routes/routePath"
 import { TYPE_CREATE_COURSE } from "@/utils/ENUM"
+import { fetchCourseLectures } from "."
 
 function* createDraftCourse({ payload }: any) {
   try {
@@ -43,10 +47,49 @@ function* createDraftCourse({ payload }: any) {
   }
 }
 
+function* createSectionLecture({ payload }: any) {
+  try {
+    yield put({
+      type: actionCreateCourse.CREATE_COURSE_SECTION_LECTURE.REQUEST
+    })
+
+    // id of course lecture create
+    const { courseId } = payload
+
+    //data create
+    const {
+      data: { title }
+    } = payload
+
+    const bodyData = { title }
+
+    const {
+      data: { message }
+    } = yield call(API.lectureAPI.createSectionLecture, courseId, bodyData)
+
+    successNotification(message)
+    fetchAndUpdateLectureCourse(courseId)
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionCreateCourse.CREATE_DRAFT_COURSE.ERROR,
+      payload: error.message
+    })
+  }
+}
+
+function* fetchAndUpdateLectureCourse(courseId) {
+  yield fork(fetchCourseLectures, { payload: courseId })
+}
+
 function* watchCreateDraftCourse() {
   yield takeLatest(CREATE_DRAFT_COURSE, createDraftCourse)
 }
 
+function* watchCreateCourseSectionLecture() {
+  yield takeLatest(CREATE_COURSE_SECTION_LECTURE, createSectionLecture)
+}
+
 export default function* createCourseSaga() {
-  yield all([watchCreateDraftCourse()])
+  yield all([watchCreateDraftCourse(), watchCreateCourseSectionLecture()])
 }
