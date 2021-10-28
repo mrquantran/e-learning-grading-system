@@ -84,9 +84,7 @@ const createSection = async (req, res) => {
       },
     });
 
-    const message = 'Your section has been created successfully';
-
-    return res.status(200).json({ message });
+    return res.status(200).json(lectures);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error);

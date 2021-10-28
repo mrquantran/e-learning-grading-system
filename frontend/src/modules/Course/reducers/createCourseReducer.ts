@@ -170,6 +170,14 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
           isFetching: false
         }
       }
+    case actionsCreateCourse.CREATE_COURSE_SECTION_LECTURE.SUCCESS:
+      return {
+        ...state,
+        curriculum: {
+          ...state.curriculum,
+          data: payload
+        }
+      }
     default:
       return state
   }

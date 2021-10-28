@@ -4,7 +4,14 @@ import {
   warningNotification
 } from "@/utils/notification"
 import { errorNotification } from "./../../../utils/notification"
-import { all, call, fork, put, takeLatest } from "@redux-saga/core/effects"
+import {
+  all,
+  call,
+  fork,
+  put,
+  select,
+  takeLatest
+} from "@redux-saga/core/effects"
 import {
   CREATE_COURSE_SECTION_LECTURE,
   CREATE_DRAFT_COURSE
@@ -13,8 +20,11 @@ import actionCreateCourse from "../action/createCourseAction"
 import { API } from "@/apis"
 import { history } from "@/App/App"
 import pathRoute from "@/routes/routePath"
-import { TYPE_CREATE_COURSE } from "@/utils/ENUM"
+import { TypeSection, TYPE_CREATE_COURSE } from "@/utils/ENUM"
 import { fetchCourseLectures } from "."
+import { RootState } from "@/redux/reducer/rootReducer"
+
+const getSectionOfCourse = (state: RootState) => state.create.curriculum.data
 
 function* createDraftCourse({ payload }: any) {
   try {
@@ -48,27 +58,43 @@ function* createDraftCourse({ payload }: any) {
 }
 
 function* createSectionLecture({ payload }: any) {
+  const selectionCourse = yield select(getSectionOfCourse)
+  const {
+    // arrow of section to create
+    sectionArrow,
+    // id of course lecture create
+    courseId,
+    //data create
+    data: { title }
+  } = payload
   try {
     yield put({
       type: actionCreateCourse.CREATE_COURSE_SECTION_LECTURE.REQUEST
     })
 
-    // id of course lecture create
-    const { courseId } = payload
-
-    //data create
-    const {
-      data: { title }
-    } = payload
-
     const bodyData = { title }
 
-    const {
-      data: { message }
-    } = yield call(API.lectureAPI.createSectionLecture, courseId, bodyData)
+    const { data } = yield call(
+      API.lectureAPI.createSectionLecture,
+      courseId,
+      bodyData
+    )
+
+    const sectionData = { ...data, lecturesMaterial: [] }
+
+    const newSection = [...selectionCourse]
+
+    newSection.splice(sectionArrow - 1, 0, sectionData)
+
+    yield put({
+      type: actionCreateCourse.CREATE_COURSE_SECTION_LECTURE.SUCCESS,
+      payload: newSection
+    })
+
+    const message = "Your section has been created successfully"
 
     successNotification(message)
-    fetchAndUpdateLectureCourse(courseId)
+    // yield fetchAndUpdateLectureCourse(courseId)
   } catch (error: any) {
     errorNotification(getError(error))
     yield put({

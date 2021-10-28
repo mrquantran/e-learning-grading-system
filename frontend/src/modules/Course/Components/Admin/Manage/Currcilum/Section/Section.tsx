@@ -30,7 +30,10 @@ export default function Section({
 
   const handleClickAddSection = () => {
     setInputSection(
-      <InputSection handleCloseAddSection={handleCloseAddSection} />
+      <InputSection
+        handleCloseAddSection={handleCloseAddSection}
+        sectionArrow={order}
+      />
     )
     setFocus(true)
   }

@@ -19,7 +19,7 @@ const initialValues = {
   objective: ""
 }
 
-export default function InputSection({ handleCloseAddSection }) {
+export default function InputSection({ sectionArrow, handleCloseAddSection }) {
   const router = useRouter()
   const { courseId } = router.query
 
@@ -30,6 +30,7 @@ export default function InputSection({ handleCloseAddSection }) {
       type: CREATE_COURSE_SECTION_LECTURE,
       payload: {
         courseId,
+        sectionArrow,
         data: values
       }
     })
