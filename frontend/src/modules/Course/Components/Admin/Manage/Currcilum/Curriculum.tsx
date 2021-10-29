@@ -5,7 +5,10 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { TypeSection } from "@/utils/ENUM"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "@/hooks/useRouter"
-import { FETCH_COURSE_LECTURE } from "@/modules/Course/action/manageCourseAction"
+import {
+  FETCH_COURSE_LECTURE,
+  UPDATE_COURSE_LECTURE
+} from "@/modules/Course/action/manageCourseAction"
 import { RootState } from "@/redux/reducer/rootReducer"
 
 // a little function to help us with reordering the result
@@ -62,6 +65,15 @@ export default function Curriculum() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, courseId])
+
+  useEffect(() => {
+    if (data.length !== 0) {
+      dispatch({
+        type: UPDATE_COURSE_LECTURE,
+        payload: { courseId, data: state.section }
+      })
+    }
+  }, [state.section])
 
   function onDragEnd(result) {
     const { source, destination } = result

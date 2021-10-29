@@ -1,3 +1,4 @@
+import { UPDATE_COURSE_LECTURE } from "./../action/manageCourseAction"
 import {
   getError,
   successNotification,
@@ -149,6 +150,31 @@ function* deleteSectionLecture({ payload }: any) {
   }
 }
 
+function* updateCourseLecture({ payload }: any) {
+  // const selectionCourse = yield select(getSectionOfCourse)
+  const {
+    // id of course lecture create
+    courseId,
+    data
+  } = payload
+  try {
+    const {
+      data: { message }
+    } = yield call(API.lectureAPI.updateCourseLecture, courseId, data)
+
+    // yield put({
+    //   type: actionManageCourse.UPDATE_COURSE_LECTURE.SUCCESS,
+    //   payload: data
+    // })
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionManageCourse.DELETE_COURSE_LECTURE.ERROR,
+      payload: error.message
+    })
+  }
+}
+
 function* watchDeleteCourseSectionLecture() {
   yield takeLatest(DELETE_COURSE_LECTURE, deleteSectionLecture)
 }
@@ -165,10 +191,15 @@ function* watchCreateCourseSectionLecture() {
   yield takeLatest(CREATE_COURSE_SECTION_LECTURE, createSectionLecture)
 }
 
+function* watchUpdateLecture() {
+  yield takeLatest(UPDATE_COURSE_LECTURE, updateCourseLecture)
+}
+
 export default function* createCourseSaga() {
   yield all([
     watchCreateDraftCourse(),
     watchCreateCourseSectionLecture(),
-    watchDeleteCourseSectionLecture()
+    watchDeleteCourseSectionLecture(),
+    watchUpdateLecture()
   ])
 }

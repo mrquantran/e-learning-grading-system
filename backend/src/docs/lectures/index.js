@@ -2,6 +2,7 @@
 import createSection from './createSection.js';
 import deleteSection from './deleteSection.js';
 import getLectureByCourseId from './lectureByCourseId.js';
+import updateCurriculumItems from './updateCurriculumItems.js';
 
 const pathCourses = {
   '/courses/{id}/lectures': {
@@ -12,6 +13,9 @@ const pathCourses = {
   },
   'lectures/{id}': {
     ...deleteSection,
+  },
+  'courses/{id}/instructor-curriculum-items': {
+    ...updateCurriculumItems,
   },
 };
 

@@ -12,9 +12,15 @@ const deleteSectionLecture = (sectionId): Promise<AxiosResponse<any>> => {
   return axios.delete(`/lectures/${sectionId}`)
 }
 
+const updateCourseLecture = (courseId, items): Promise<AxiosResponse<any>> => {
+  const data = { items }
+  return axios.put(`/courses/${courseId}/instructor-curriculum-items`, data)
+}
+
 const lecturesAPI = {
   fetchLectureDetail,
   createSectionLecture,
-  deleteSectionLecture
+  deleteSectionLecture,
+  updateCourseLecture
 }
 export default lecturesAPI
