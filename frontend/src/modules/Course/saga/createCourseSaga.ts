@@ -116,7 +116,20 @@ function* deleteSectionLecture({ payload }: any) {
   try {
     yield put({ type: actionManageCourse.DELETE_COURSE_LECTURE.REQUEST })
 
-    const { data } = yield call(API.lectureAPI.deleteSectionLecture, sectionId)
+    const ONLY_ONE_ITEM = 0
+    if (selectionCourse.length === ONLY_ONE_ITEM) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { data } = yield call(
+        API.lectureAPI.deleteSectionLecture,
+        sectionId
+      )
+    } else {
+      const message =
+        "Your first lecture is outside of a section. Create a section to hold this lecture."
+      errorNotification(message)
+
+      return
+    }
 
     let newSection = [...selectionCourse]
     newSection = newSection.filter(item => {
