@@ -10,6 +10,12 @@ export const LectureArrowStyled = styled.div`
       opacity: 1 !important;
     }
   }
+  ${props =>
+    props.type &&
+    css`
+      top: 10px;
+      left: 14px;
+    `}
 `
 
 export const ButtonAddLecture = styled.button`

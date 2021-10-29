@@ -19,6 +19,11 @@ export const TYPE_LECTURES = {
   SECTION: "section"
 }
 
+export const TYPE_LECTURES2 = {
+  SECTION: "section",
+  LECTURE: "lecture"
+}
+
 export const TYPE_CREATE_COURSE = {
   COURSE: "course",
   TEST: "test"

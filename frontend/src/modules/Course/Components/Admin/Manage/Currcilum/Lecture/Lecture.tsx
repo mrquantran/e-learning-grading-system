@@ -7,6 +7,7 @@ import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import { SpanGroup } from "@/stylesheets/Text/Text.styled"
 import SelectLecture from "../SelectLecture/SelectLecture"
 import AddLectureArrow from "../AddLectureArrow/AddLectureArrow"
+import { TYPE_LECTURES2 } from "@/utils/ENUM"
 
 const { Panel } = Collapse
 
@@ -59,6 +60,7 @@ export default function Lecture({ title, order }) {
   return (
     <>
       <AddLectureArrow
+        type={TYPE_LECTURES2.LECTURE}
         isFocus={isFocus}
         handleCloseLecture={handleCloseLecture}
         handleClickAddLecture={handleClickAddLecture}

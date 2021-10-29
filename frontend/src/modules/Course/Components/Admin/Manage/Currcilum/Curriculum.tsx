@@ -10,7 +10,6 @@ import {
   UPDATE_COURSE_LECTURE
 } from "@/modules/Course/action/manageCourseAction"
 import { RootState } from "@/redux/reducer/rootReducer"
-import { dataCurriculum } from "./dataExample"
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -55,26 +54,26 @@ export default function Curriculum() {
 
   const { data } = useSelector((state: RootState) => state.create.curriculum)
 
-  const [state, setState] = useState<any>({ section: dataCurriculum })
+  const [state, setState] = useState<any>({ section: data })
 
-  // useEffect(() => {
-  //   setState({ section: data })
-  // }, [data, courseId])
+  useEffect(() => {
+    setState({ section: data })
+  }, [data, courseId])
 
-  // useEffect(() => {
-  //   dispatch({ type: FETCH_COURSE_LECTURE, payload: courseId })
+  useEffect(() => {
+    dispatch({ type: FETCH_COURSE_LECTURE, payload: courseId })
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [dispatch, courseId])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, courseId])
 
-  // useEffect(() => {
-  //   if (data.length !== 0) {
-  //     dispatch({
-  //       type: UPDATE_COURSE_LECTURE,
-  //       payload: { courseId, data: state.section }
-  //     })
-  //   }
-  // }, [state.section])
+  useEffect(() => {
+    if (data.length !== 0) {
+      dispatch({
+        type: UPDATE_COURSE_LECTURE,
+        payload: { courseId, data: state.section }
+      })
+    }
+  }, [state.section])
 
   function onDragEnd(result) {
     const { source, destination } = result
