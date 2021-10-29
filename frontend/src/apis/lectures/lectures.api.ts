@@ -8,8 +8,13 @@ const createSectionLecture = (courseId, data): Promise<AxiosResponse<any>> => {
   return axios.post(`/courses/${courseId}/lectures/section`, data)
 }
 
+const deleteSectionLecture = (sectionId): Promise<AxiosResponse<any>> => {
+  return axios.delete(`/lectures/${sectionId}`)
+}
+
 const lecturesAPI = {
   fetchLectureDetail,
-  createSectionLecture
+  createSectionLecture,
+  deleteSectionLecture
 }
 export default lecturesAPI

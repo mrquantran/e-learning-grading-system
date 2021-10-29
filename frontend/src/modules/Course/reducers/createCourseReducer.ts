@@ -178,6 +178,14 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
           data: payload
         }
       }
+    case actionsManageCourse.DELETE_COURSE_LECTURE.SUCCESS:
+      return {
+        ...state,
+        curriculum: {
+          ...state.curriculum,
+          data: payload
+        }
+      }
     default:
       return state
   }

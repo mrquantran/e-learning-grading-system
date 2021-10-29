@@ -4,7 +4,7 @@ export const GO_TO_STEP = `${store}/GO_TO_STEP`
 export const FETCH_INSTRUCTOR_COURSE_DETAIL = `${store}/FETCH_INSTRUCTOR_COURSE_DETAIL`
 export const UPDATE_INSTRUCTOR_COURSE = `${store}/UPDATE_INSTRUCTOR_COURSE`
 export const FETCH_COURSE_LECTURE = `${store}/FETCH_COURSE_LECTURE`
-
+export const DELETE_COURSE_LECTURE = `${store}/DELETE_COURSE_LECTURE`
 export default class ManageCourseAction {
   static FETCH_INSTRUCTOR_COURSE_DETAIL = {
     REQUEST: `${store}/FETCH_INSTRUCTOR_COURSE_DETAIL_REQUEST`,
@@ -22,5 +22,11 @@ export default class ManageCourseAction {
     REQUEST: `${store}/FETCH_COURSE_LECTURE_REQUEST`,
     SUCCESS: `${store}/FETCH_COURSE_LECTURE_SUCCESS`,
     ERROR: `${store}/FETCH_COURSE_LECTURE_ERROR`
+  }
+
+  static DELETE_COURSE_LECTURE = {
+    REQUEST: `${store}/DELETE_COURSE_LECTURE_REQUEST`,
+    SUCCESS: `${store}/DELETE_COURSE_LECTURE_SUCCESS`,
+    ERROR: `${store}/DELETE_COURSE_LECTURE_ERROR`
   }
 }

@@ -48,64 +48,71 @@ export default function InputSection({ sectionArrow, handleCloseAddSection }) {
             {/* <FileTextOutlined /> */}
             <Formik
               initialValues={initialValues}
-              onSubmit={async values => {
-                await handleSubmit(values)
+              onSubmit={values => {
+                handleSubmit(values)
               }}
             >
-              <Form>
-                <div style={{ flex: 1 }}>
-                  <FormGroup>
-                    <Field name="title" type="text">
-                      {({
-                        field, // { name, value, onChange, onBlur }
-                        form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-                        meta
-                      }) => (
-                        <InputAntd
-                          section
-                          id="title"
-                          placeholder="Enter a Title"
-                          name="title"
-                          {...field}
-                        />
-                      )}
-                    </Field>
-                  </FormGroup>
-                  <FormGroup>
-                    <LabelAntdStyled fontSmall>
-                      What will students be able to do at the end of this
-                      section?
-                    </LabelAntdStyled>
-                    <Field name="objective" type="text">
-                      {({
-                        field, // { name, value, onChange, onBlur }
-                        form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-                        meta
-                      }) => (
-                        <InputAntd
-                          id="title"
-                          name="objective"
-                          section
-                          placeholder="Enter a Learning Objective"
-                          {...field}
-                        />
-                      )}
-                    </Field>
-                  </FormGroup>
-                  <ButtonGroup>
-                    <ButtonStyled udemy purple type="submit">
-                      Add section
-                    </ButtonStyled>
-                    <ButtonStyled
-                      onClick={handleCloseAddSection}
-                      dangerText
-                      transparent
-                    >
-                      Cancel
-                    </ButtonStyled>
-                  </ButtonGroup>
-                </div>
-              </Form>
+              {props => (
+                <form onSubmit={props.handleSubmit}>
+                  <div style={{ flex: 1 }}>
+                    <FormGroup>
+                      <Field name="title" type="text">
+                        {({
+                          field, // { name, value, onChange, onBlur }
+                          form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+                          meta
+                        }) => (
+                          <InputAntd
+                            section
+                            id="title"
+                            placeholder="Enter a Title"
+                            name="title"
+                            {...field}
+                          />
+                        )}
+                      </Field>
+                    </FormGroup>
+                    <FormGroup>
+                      <LabelAntdStyled fontSmall>
+                        What will students be able to do at the end of this
+                        section?
+                      </LabelAntdStyled>
+                      <Field name="objective" type="text">
+                        {({
+                          field, // { name, value, onChange, onBlur }
+                          form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
+                          meta
+                        }) => (
+                          <InputAntd
+                            id="title"
+                            name="objective"
+                            section
+                            placeholder="Enter a Learning Objective"
+                            {...field}
+                          />
+                        )}
+                      </Field>
+                    </FormGroup>
+                    <ButtonGroup>
+                      <ButtonStyled
+                        onClick={props.handleSubmit}
+                        udemy
+                        purple
+                        // type="submit"
+                      >
+                        Add section
+                      </ButtonStyled>
+                      <ButtonStyled
+                        onClick={handleCloseAddSection}
+                        dangerText
+                        transparent
+                      >
+                        Cancel
+                      </ButtonStyled>
+                    </ButtonGroup>
+                  </div>
+                </form>
+              )}
             </Formik>
           </SectionCreateInput>
         </FlexItemStyled>

@@ -14,6 +14,10 @@ import InputSection from "../InputSection/InputSection"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import ModeEditIcon from "@mui/icons-material/ModeEdit"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
+import { TypeSection } from "@/utils/ENUM"
+import { useDispatch } from "react-redux"
+import { DELETE_COURSE_LECTURE } from "@/modules/Course/action/manageCourseAction"
+import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
 
 const { Panel } = Collapse
 
@@ -25,8 +29,10 @@ export default function Section({
   lecturesMaterial
 }) {
   const [inputSection, setInputSection] = useState<any>(null)
-
   const [isFocus, setFocus] = useState<boolean>(false)
+  const idSection = Number(id.replace(TypeSection.SECTION, ""))
+
+  const dispatch = useDispatch()
 
   const handleClickAddSection = () => {
     setInputSection(
@@ -41,6 +47,21 @@ export default function Section({
   const handleCloseAddSection = () => {
     setInputSection(null)
     setFocus(false)
+  }
+
+  const handleDeleteSection = () => {
+    dispatch({ type: DELETE_COURSE_LECTURE, payload: { sectionId: idSection } })
+  }
+
+  const modal = {
+    title: "Please Confirm",
+    description:
+      "You are about to remove a curriculum item. Are you sure you want to continue?",
+    buttonModalConfirm: {
+      okButton: {
+        function: handleDeleteSection
+      }
+    }
   }
 
   return (
@@ -85,7 +106,16 @@ export default function Section({
                           }}
                           transparent
                         >
-                          <DeleteForeverIcon sx={{ fontSize: 15 }} />
+                          <DeleteForeverIcon
+                            onClick={() =>
+                              showConfirm(
+                                modal.title,
+                                modal.description,
+                                modal.buttonModalConfirm
+                              )
+                            }
+                            sx={{ fontSize: 15 }}
+                          />
                         </ButtonStyled>
                       </FlexItemStyled>
                     </span>

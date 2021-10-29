@@ -17,12 +17,14 @@ import {
   CREATE_DRAFT_COURSE
 } from "../action/createCourseAction"
 import actionCreateCourse from "../action/createCourseAction"
+import actionManageCourse from "../action/manageCourseAction"
 import { API } from "@/apis"
 import { history } from "@/App/App"
 import pathRoute from "@/routes/routePath"
-import { TypeSection, TYPE_CREATE_COURSE } from "@/utils/ENUM"
+import { TYPE_CREATE_COURSE } from "@/utils/ENUM"
 import { fetchCourseLectures } from "."
 import { RootState } from "@/redux/reducer/rootReducer"
+import { DELETE_COURSE_LECTURE } from "../action/manageCourseAction"
 
 const getSectionOfCourse = (state: RootState) => state.create.curriculum.data
 
@@ -104,6 +106,43 @@ function* createSectionLecture({ payload }: any) {
   }
 }
 
+function* deleteSectionLecture({ payload }: any) {
+  const selectionCourse = yield select(getSectionOfCourse)
+  const {
+    //sectionId will deleted
+    // id of course lecture create
+    sectionId
+  } = payload
+  try {
+    yield put({ type: actionManageCourse.DELETE_COURSE_LECTURE.REQUEST })
+
+    const { data } = yield call(API.lectureAPI.deleteSectionLecture, sectionId)
+
+    let newSection = [...selectionCourse]
+    newSection = newSection.filter(item => {
+      if (item.id !== sectionId) return true
+    })
+
+    yield put({
+      type: actionManageCourse.DELETE_COURSE_LECTURE.SUCCESS,
+      payload: newSection
+    })
+
+    const message = "Your section has been deleted"
+    successNotification(message)
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionManageCourse.DELETE_COURSE_LECTURE.ERROR,
+      payload: error.message
+    })
+  }
+}
+
+function* watchDeleteCourseSectionLecture() {
+  yield takeLatest(DELETE_COURSE_LECTURE, deleteSectionLecture)
+}
+
 function* fetchAndUpdateLectureCourse(courseId) {
   yield fork(fetchCourseLectures, { payload: courseId })
 }
@@ -117,5 +156,9 @@ function* watchCreateCourseSectionLecture() {
 }
 
 export default function* createCourseSaga() {
-  yield all([watchCreateDraftCourse(), watchCreateCourseSectionLecture()])
+  yield all([
+    watchCreateDraftCourse(),
+    watchCreateCourseSectionLecture(),
+    watchDeleteCourseSectionLecture()
+  ])
 }

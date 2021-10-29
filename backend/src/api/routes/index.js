@@ -35,7 +35,7 @@ router.use('/courses', coursesList);
 router.use('/courses/tests', testResults);
 
 // lectures
-router.use('/courses', lectures);
+router.use('/', lectures);
 
 // router.use('/user/top', testResultTopScore);
 

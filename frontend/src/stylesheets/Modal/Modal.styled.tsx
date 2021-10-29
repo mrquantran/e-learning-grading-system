@@ -25,7 +25,7 @@ export function showConfirm(
     title: title,
     icon: <ExclamationCircleOutlined />,
     content: description,
-    centered: true,
+    centered: false,
     okText: okButton?.text || "Confirm",
     cancelText: cancelButton?.text || "Cancel",
     onOk: okButton?.function
