@@ -25,6 +25,7 @@ const getLectureOfCourse = async (req, res) => {
             id: true,
             title: true,
             createdAt: true,
+            sort: true,
             lecturesMaterial: {
               select: {
                 id: true,
@@ -38,6 +39,8 @@ const getLectureOfCourse = async (req, res) => {
     });
 
     const data = [];
+
+    lectures.lectures.sort((a, b) => a.sort - b.sort);
 
     // eslint-disable-next-line array-callback-return
     lectures.lectures.map(({ lecturesMaterial, ...rest }, index) => {
@@ -139,24 +142,24 @@ const deleteSection = async (req, res) => {
 const updateSection = async (req, res) => {
   try {
     const { id } = req.params;
-    const { item } = req.body;
+    const { items } = req.body;
 
     if (!await isTeacherEnrollWithLectureId(req, res)) {
       return res.status(403).json({ message: 'you dont have permission to perform this action' });
     }
 
     // eslint-disable-next-line no-shadow
-    item.forEach(async (lecture, index) => {
-      await prisma.lectures.upsert({
+    items.forEach(async (lecture, index) => {
+      await prisma.lectures.updateMany({
         where: {
           courseId: Number(id),
+          id: Number(lecture.id),
         },
         data: {
           title: lecture.title,
-        },
-        create: {
           sort: index,
         },
+
       });
     });
 
