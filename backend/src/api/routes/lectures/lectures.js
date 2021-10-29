@@ -18,10 +18,14 @@ router.post('/courses/:id/lectures/section', validate([param('id')
   .isNumeric()
   .withMessage('Id is not a number'), body('title')
   .notEmpty()
-  .withMessage('title can not be empty')]), isAuth, lectures.createSection);
+  .withMessage('Title can not be empty')]), isAuth, lectures.createSection);
 
 router.delete('/lectures/:id', validate([param('id')
   .isNumeric()
   .withMessage('Id is not a number')]), isAuth, lectures.deleteSection);
+
+router.put('/courses/:id/instructor-curriculum-items', validate([param('id')
+  .isNumeric()
+  .withMessage('Id is not a number'), body('items').notEmpty().withMessage('Title can not be empty')]), isAuth, lectures.updateSection);
 
 export default router;

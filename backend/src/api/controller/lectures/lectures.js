@@ -136,4 +136,39 @@ const deleteSection = async (req, res) => {
   }
 };
 
-export const lectures = { getLectureOfCourse, createSection, deleteSection };
+const updateSection = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { item } = req.body;
+
+    if (!await isTeacherEnrollWithLectureId(req, res)) {
+      return res.status(403).json({ message: 'you dont have permission to perform this action' });
+    }
+
+    // eslint-disable-next-line no-shadow
+    item.forEach(async (lecture, index) => {
+      await prisma.lectures.upsert({
+        where: {
+          courseId: Number(id),
+        },
+        data: {
+          title: lecture.title,
+        },
+        create: {
+          sort: index,
+        },
+      });
+    });
+
+    const message = 'Your curriculum item has been updated';
+    return res.status(200).json({ message });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+    return res.status(500).json({ message: error });
+  }
+};
+
+export const lectures = {
+  getLectureOfCourse, createSection, updateSection, deleteSection,
+};

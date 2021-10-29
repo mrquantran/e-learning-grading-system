@@ -28,6 +28,7 @@ model Lectures {
   title            String
   createdAt        DateTime           @default(now())
   courseId         Int
+  sort             Int?
   course           Course?            @relation(fields: [courseId], references: [id])
   lecturesMaterial LecturesMaterial[]
 }
