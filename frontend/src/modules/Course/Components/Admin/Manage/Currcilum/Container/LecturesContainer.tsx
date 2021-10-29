@@ -26,7 +26,7 @@ const LectureList = React.memo(function LectureList({ section }: any) {
             index={index}
           >
             <Lecture order={index + 1} title={item.title} />
-            {/* {provided.placeholder} */}
+            {provided.placeholder}
           </div>
         )}
       </Draggable>
@@ -34,11 +34,19 @@ const LectureList = React.memo(function LectureList({ section }: any) {
   })
 })
 
+const getListStyle = isDraggingOver => ({
+  padding: 8,
+  margin: "10px 0"
+})
+
 export default function LecturesContainer({ lecture, idSection }: any) {
   return (
     <Droppable droppableId={idSection} type={TypeSection.LECTURE}>
-      {provided => (
-        <div ref={provided.innerRef}>
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          style={getListStyle(snapshot.isDraggingOver)}
+        >
           <LectureList section={lecture} />
           {provided.placeholder}
         </div>

@@ -68,14 +68,14 @@ function* createSectionLecture({ payload }: any) {
     // id of course lecture create
     courseId,
     //data create
-    data: { title }
+    data: { title, description }
   } = payload
   try {
     yield put({
       type: actionCreateCourse.CREATE_COURSE_SECTION_LECTURE.REQUEST
     })
 
-    const bodyData = { title }
+    const bodyData = { title, description }
 
     const { data } = yield call(
       API.lectureAPI.createSectionLecture,

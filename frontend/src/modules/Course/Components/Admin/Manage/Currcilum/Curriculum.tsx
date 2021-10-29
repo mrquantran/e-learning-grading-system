@@ -151,9 +151,16 @@ export default function Curriculum() {
         newDestSubItems.splice(destIndex, 0, draggedItem)
         newItems = newItems.map(item => {
           if (item.id === sourceParentId) {
+            newSourceSubItems = newSourceSubItems.map(lecture => {
+              return { ...lecture, lectureId: item.id }
+            })
             item.lecturesMaterial = newSourceSubItems
           } else if (item.id === destParentId) {
+            newDestSubItems = newDestSubItems.map(lecture => {
+              return { ...lecture, lectureId: item.id }
+            })
             item.lecturesMaterial = newDestSubItems
+            item.lecturesMaterial.lectureId = item.id
           }
           return item
         })

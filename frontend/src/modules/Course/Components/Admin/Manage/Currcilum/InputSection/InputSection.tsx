@@ -16,7 +16,7 @@ import { CREATE_COURSE_SECTION_LECTURE } from "@/modules/Course/action/createCou
 
 const initialValues = {
   title: "",
-  objective: ""
+  description: ""
 }
 
 export default function InputSection({ sectionArrow, handleCloseAddSection }) {
@@ -77,15 +77,15 @@ export default function InputSection({ sectionArrow, handleCloseAddSection }) {
                         What will students be able to do at the end of this
                         section?
                       </LabelAntdStyled>
-                      <Field name="objective" type="text">
+                      <Field name="description" type="text">
                         {({
                           field, // { name, value, onChange, onBlur }
                           form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
                           meta
                         }) => (
                           <InputAntd
-                            id="title"
-                            name="objective"
+                            id="description"
+                            name="description"
                             section
                             placeholder="Enter a Learning Objective"
                             {...field}
