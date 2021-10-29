@@ -6,6 +6,7 @@ export const ManageContentContainerStyled = styled.div`
   width: 100%;
   background: #fff;
   box-shadow: 0 2px 8px 2px rgb(28 29 31 / 15%);
+  min-height: -webkit-fill-available;
   height: fit-content;
 `
 

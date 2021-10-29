@@ -4,6 +4,11 @@ export const REGEX_EMAIL =
 export const REGEX_PASSWORD =
   "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
 
+export const TYPE_INPUT = {
+  CREATE: "create",
+  UPDATE: "update"
+}
+
 export const TYPE_USER = {
   student: "STUDENT",
   teacher: " TEACHER"
@@ -100,3 +105,8 @@ export const OPTIONS_CATEGORY = [
     value: 13
   }
 ]
+
+export const TypeSection = {
+  SECTION: "Section",
+  LECTURE: "Lecture"
+}

@@ -67,6 +67,16 @@ async function createDraftCourse(req, res) {
 
   const token = await getDecodedToken(req);
 
+  const dataLecture = [
+    {
+      title: 'Introduction',
+      lecturesMaterial: [
+        {
+          title: 'Introduction',
+        },
+      ],
+    }];
+
   try {
     // when creating a course make the authenticated user a teacher of the course
     await prisma.course.create({
@@ -74,6 +84,16 @@ async function createDraftCourse(req, res) {
         name,
         isPublic: false,
         isDraft: true,
+        lectures: {
+          create: dataLecture.map((item) => ({
+            title: item.title,
+            lecturesMaterial: {
+              create: item.lecturesMaterial.map((lecture) => ({
+                title: lecture.title,
+              })),
+            },
+          })),
+        },
         members: {
           create: {
             role: 'TEACHER',

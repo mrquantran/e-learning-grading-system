@@ -24,6 +24,10 @@ const initialState = {
     data: {},
     isFetching: false
   },
+  curriculum: {
+    data: [],
+    isFetching: false
+  },
   manageTabs: {
     course: [
       {
@@ -140,6 +144,57 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
           isProcessing: false
         }
       }
+    case actionsManageCourse.FETCH_COURSE_LECTURE.REQUEST:
+      return {
+        ...state,
+        curriculum: {
+          ...state.curriculum,
+          isFetching: true
+        }
+      }
+    case actionsManageCourse.FETCH_COURSE_LECTURE.SUCCESS:
+      return {
+        ...state,
+        curriculum: {
+          ...state.curriculum,
+          data: payload,
+          isFetching: false
+        }
+      }
+    case actionsManageCourse.FETCH_COURSE_LECTURE.ERROR:
+      return {
+        ...state,
+        curriculum: {
+          ...state.curriculum,
+          error: payload,
+          isFetching: false
+        }
+      }
+    case actionsCreateCourse.CREATE_COURSE_SECTION_LECTURE.SUCCESS:
+      return {
+        ...state,
+        curriculum: {
+          ...state.curriculum,
+          data: payload
+        }
+      }
+    case actionsManageCourse.DELETE_COURSE_LECTURE.SUCCESS:
+      return {
+        ...state,
+        curriculum: {
+          ...state.curriculum,
+          data: payload
+        }
+      }
+    case actionsManageCourse.UPDATE_LECTURE_SECTION.SUCCESS: {
+      return {
+        ...state,
+        curriculum: {
+          ...state.curriculum,
+          data: payload
+        }
+      }
+    }
     default:
       return state
   }

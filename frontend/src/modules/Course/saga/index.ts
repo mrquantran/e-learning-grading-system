@@ -8,15 +8,46 @@ import { API } from "@/apis"
 import { all, call, fork, put, takeLatest } from "@redux-saga/core/effects"
 import { FETCH_COURSE_DETAIL } from "../action/courseAction"
 import manageCourseActions, {
+  FETCH_COURSE_LECTURE,
   UPDATE_INSTRUCTOR_COURSE
 } from "../action/manageCourseAction"
 import actionsCourseDetail from "../action/courseAction"
 import actionsEnroll from "../action/enrollAction"
 import { errorNotification, getError } from "@/utils/notification"
 import { ENROLL_COURSE } from "../action/enrollAction"
-import { TYPE_USER } from "@/utils/ENUM"
-import { history } from "@/App/App"
+import { TYPE_LECTURES, TYPE_USER } from "@/utils/ENUM"
 import { FETCH_INSTRUCTOR_COURSE_DETAIL } from "../action/manageCourseAction"
+
+const mappingData = list => {
+  let section = list
+    .filter(item => {
+      if (item._class === TYPE_LECTURES.CHAPTER) {
+        return true
+      }
+    })
+    .map(item => {
+      const newItem = { ...item, lecturesMaterial: [] }
+      return newItem
+    })
+
+  const lecture = list.filter(item => {
+    if (item._class === TYPE_LECTURES.SECTION) {
+      return true
+    }
+  })
+
+  const newItems = [...section]
+
+  section = section?.map(item => {
+    lecture.map(lecture => {
+      if (lecture.objectIndex === item.objectIndex) {
+        newItems[item.objectIndex - 1].lecturesMaterial.push(lecture)
+      }
+    })
+  })
+
+  return newItems
+}
 
 function* fetchDetailCourse(id) {
   const { params } = id
@@ -141,6 +172,28 @@ function* fetchInstructorCourseDetail({ payload: id }: any) {
   }
 }
 
+export function* fetchCourseLectures({ payload: id }: any) {
+  try {
+    yield put({
+      type: manageCourseActions.FETCH_COURSE_LECTURE.REQUEST
+    })
+
+    const { data: course } = yield call(API.courseAPI.fetchCourseLectures, id)
+
+    const newData = mappingData(course)
+
+    yield put({
+      type: manageCourseActions.FETCH_COURSE_LECTURE.SUCCESS,
+      payload: newData
+    })
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: manageCourseActions.FETCH_COURSE_LECTURE.ERROR,
+      payload: error.message
+    })
+  }
+}
 function* updateInstructorCourse({ payload }: any) {
   const { courseId, data } = payload
 
@@ -194,6 +247,10 @@ function* watchUpdateInstructorCourse() {
   yield takeLatest(UPDATE_INSTRUCTOR_COURSE, updateInstructorCourse)
 }
 
+function* watchFetchCourseLectures() {
+  yield takeLatest(FETCH_COURSE_LECTURE, fetchCourseLectures)
+}
+
 export default function* courseSaga() {
   yield all([
     watchFetchDetailCourse(),
@@ -201,6 +258,7 @@ export default function* courseSaga() {
     watchFetchCourseStatus(),
     watchFetchCoursesEnroll(),
     watchFetchDraftCourse(),
+    watchFetchCourseLectures(),
     watchFetchInstructorCourseDetail(),
     watchUpdateInstructorCourse()
   ])

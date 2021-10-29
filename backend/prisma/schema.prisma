@@ -26,8 +26,10 @@ model User {
 model Lectures {
   id               Int                @id @default(autoincrement())
   title            String
+  description      String?
   createdAt        DateTime           @default(now())
   courseId         Int
+  sort             Int?
   course           Course?            @relation(fields: [courseId], references: [id])
   lecturesMaterial LecturesMaterial[]
 }

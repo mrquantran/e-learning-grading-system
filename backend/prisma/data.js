@@ -97,6 +97,7 @@ const courses = [
     lectures: [
       {
         title: 'Introduction',
+        description: 'Typescript course description',
         lecturesMaterial: [
           {
             title: 'What is TypeScript?',
@@ -108,6 +109,7 @@ const courses = [
       },
       {
         title: 'Terminal',
+        description: 'Typescript course description',
         lecturesMaterial: [
           {
             title: 'Update about terminal section',
@@ -125,6 +127,7 @@ const courses = [
       },
       {
         title: 'Github',
+        description: 'Typescript course description',
         lecturesMaterial: [
           {
             title: 'Section Introduction',
