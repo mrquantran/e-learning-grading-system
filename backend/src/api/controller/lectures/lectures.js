@@ -31,6 +31,7 @@ const getLectureOfCourse = async (req, res) => {
                 id: true,
                 title: true,
                 createdAt: true,
+                lectureId: true,
               },
             },
           },
@@ -46,7 +47,9 @@ const getLectureOfCourse = async (req, res) => {
     lectures.lectures.map(({ lecturesMaterial, ...rest }, index) => {
       data.push({ ...rest, objectIndex: index + 1, _class: 'chapter' });
       for (const section of lecturesMaterial) {
-        data.push({ ...section, _class: 'section', objectIndex: index + 1 });
+        data.push({
+          ...section, _class: 'section', objectIndex: index + 1,
+        });
       }
     });
 
@@ -64,7 +67,7 @@ const getLectureOfCourse = async (req, res) => {
 const createSection = async (req, res) => {
   try {
     const { id } = req.params;
-    const { title } = req.body;
+    const { title, description } = req.body;
 
     if (!await isTeacherEnroll(req, res)) {
       return res.status(403).json({ message: 'you dont have permission to perform this action' });
@@ -72,6 +75,7 @@ const createSection = async (req, res) => {
 
     const dataLecture = {
       title,
+      description,
       courseId: Number(id),
     };
 
@@ -79,6 +83,7 @@ const createSection = async (req, res) => {
     const lectures = await prisma.lectures.create({
       data: {
         title: dataLecture.title,
+        description: dataLecture.description,
         course: {
           connect: {
             id: Number(id),
@@ -144,7 +149,7 @@ const updateSection = async (req, res) => {
     const { id } = req.params;
     const { items } = req.body;
 
-    if (!await isTeacherEnrollWithLectureId(req, res)) {
+    if (!await isTeacherEnroll(req, res)) {
       return res.status(403).json({ message: 'you dont have permission to perform this action' });
     }
 
@@ -160,6 +165,22 @@ const updateSection = async (req, res) => {
           sort: index,
         },
 
+      });
+
+      lecture.lecturesMaterial.forEach(async (item) => {
+        await prisma.lecturesMaterial.update({
+          where: {
+            id: Number(item.id),
+          },
+          data: {
+            title: item.title,
+            lecture: {
+              connect: {
+                id: Number(item.lectureId),
+              },
+            },
+          },
+        });
       });
     });
 

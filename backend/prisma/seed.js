@@ -85,9 +85,11 @@ async function main() {
         lectures: {
           create: course.lectures.map((item) => ({
             title: item.title,
+            description: item.description,
             lecturesMaterial: {
               create: item.lecturesMaterial.map((lecture) => ({
                 title: lecture.title,
+                description: lecture.description,
               })),
             },
           })),
