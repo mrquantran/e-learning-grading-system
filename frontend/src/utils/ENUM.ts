@@ -30,12 +30,58 @@ export const TYPE_CREATE_COURSE = {
 }
 
 export const TYPE_LECTURE = [
-  { id: "lecture", title: "Lecture", active: true },
-  { id: "quiz", title: "Quiz", active: true },
-  { id: "coding", title: "Coding Exercise", active: true },
-  { id: "practiceTest", title: "Practice Test", active: false },
-  { id: "Assignment", title: "Assignment", active: true }
+  {
+    id: "lecture",
+    title: "Lecture",
+    titleInput: "New Lecture:",
+    submitText: "Add Lecture",
+    formField: [{ name: "title", placeHolder: "Enter a title" }],
+    active: true
+  },
+  {
+    id: "quiz",
+    title: "Quiz",
+    titleInput: "New Quiz:",
+    submitText: "Add Quiz",
+    formField: [
+      { name: "title", placeHolder: "Enter a title" },
+      { name: "description", placeHolder: "Quiz description" }
+    ],
+    active: true
+  },
+  {
+    id: "coding",
+    title: "Coding Exercise",
+    titleInput: "New Coding Exercise:",
+    submitText: "Add Coding Exercise",
+    formField: [{ name: "title", placeHolder: "Enter a title" }],
+    active: true
+  },
+  {
+    id: "practiceTest",
+    title: "Practice Test",
+    titleInput: "New Practice Test:",
+    submitText: "",
+    formField: [{ name: "title", placeHolder: "Enter a title" }],
+    active: false
+  },
+  {
+    id: "assignment",
+    title: "Assignment:",
+    titleInput: "",
+    formField: [{ name: "title", placeHolder: "Enter a title" }],
+    submitText: "Add Assignment",
+    active: true
+  }
 ]
+
+export const TYPE_LECTURE_ID = {
+  LECTURE: "lecture",
+  QUIZ: "quiz",
+  CODING: "coding",
+  PRACTICE_TEST: "practiceTest",
+  ASSIGNMENT: "assignment"
+}
 
 export const OPTIONS_LEVEL = [
   {
