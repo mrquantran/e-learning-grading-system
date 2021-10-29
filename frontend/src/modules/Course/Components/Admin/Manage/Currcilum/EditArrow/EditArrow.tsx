@@ -15,18 +15,20 @@ const iconStyle: any = {
 }
 
 export default function EditArrow({
+  type,
   isFocus,
   handleClickAddSection,
   handleCloseAddSection
 }) {
   return (
     <EditArrowStyled
+      type={type}
       isFocus={isFocus}
       onClick={!isFocus ? handleClickAddSection : handleCloseAddSection}
     >
       <EditArrowContainer>
         <ButtonEdit isFocus={isFocus} className="editArrow">
-          <PlusOutlined style={iconStyle} />
+          <PlusOutlined style={iconStyle} className="addSectionIcon" />
         </ButtonEdit>
       </EditArrowContainer>
     </EditArrowStyled>

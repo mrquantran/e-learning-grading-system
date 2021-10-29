@@ -24,6 +24,14 @@ export const TYPE_CREATE_COURSE = {
   TEST: "test"
 }
 
+export const TYPE_LECTURE = [
+  { id: "lecture", title: "Lecture", active: true },
+  { id: "quiz", title: "Quiz", active: true },
+  { id: "coding", title: "Coding Exercise", active: true },
+  { id: "practiceTest", title: "Practice Test", active: false },
+  { id: "Assignment", title: "Assignment", active: true }
+]
+
 export const OPTIONS_LEVEL = [
   {
     content: "-- Select Level --",

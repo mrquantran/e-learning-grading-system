@@ -15,7 +15,7 @@ export const ButtonStyled = styled.button`
   font-size: 1.1rem;
   // height: 50px;
   white-space: nowrap;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.2s ease-in-out;
   display: inline-flex;
   text-align: center;
   justify-content: center;
@@ -32,6 +32,38 @@ export const ButtonStyled = styled.button`
       font-weight: 700;
       border: 1px solid #1c1d1f;
     `}
+
+  ${props =>
+    props.tertiary &&
+    css`
+      font-weight: 700;
+      font-size: 15px;
+      color: #5624d0;
+      background-color: transparent;
+      border: 1px solid transparent;
+      padding: 0 5px;
+      margin: 0;
+      &:focus {
+        color: #5624d0;
+        background-color: transparent;
+      }
+      &:hover {
+        color: #401b9c;
+        background-color: transparent;
+        border-color: transparent;
+      }
+    `}
+
+      ${props =>
+    props.disabledUdemy &&
+    css`
+      background-color: transparent !important;
+      border-color: transparent !important;
+      color: #6a6f73 !important;
+      opacity: 1;
+    `}
+
+ 
 
   ${props =>
     props.success &&

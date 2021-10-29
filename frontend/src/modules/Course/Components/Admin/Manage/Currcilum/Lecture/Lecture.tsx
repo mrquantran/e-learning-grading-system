@@ -1,10 +1,12 @@
-import React from "react"
+import React, { useState } from "react"
 import { Collapse, Row } from "antd"
 import { HeaderPanelStyled, LectureStyled } from "./Lecture.styled"
 import { FileTextOutlined, CheckCircleFilled } from "@ant-design/icons"
 import { FlexItemStyled } from "@/stylesheets/Div/Div.styled"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import { SpanGroup } from "@/stylesheets/Text/Text.styled"
+import SelectLecture from "../SelectLecture/SelectLecture"
+import AddLectureArrow from "../AddLectureArrow/AddLectureArrow"
 
 const { Panel } = Collapse
 
@@ -41,18 +43,39 @@ function HeaderPanel({ title, order }) {
 }
 
 export default function Lecture({ title, order }) {
+  const [isFocus, setFocus] = useState<boolean>(false)
+  const [inputSection, setInputSection] = useState<any>(null)
+
+  const handleClickAddLecture = () => {
+    setInputSection(<SelectLecture />)
+    setFocus(true)
+  }
+
+  const handleCloseLecture = () => {
+    setInputSection(null)
+    setFocus(false)
+  }
+
   return (
-    <LectureStyled>
-      <Collapse
-        // defaultActiveKey={["1"]}
-        className="lecture"
-        onChange={callback}
-        expandIconPosition="right"
-      >
-        <Panel header={<HeaderPanel title={title} order={order} />} key="1">
-          <p>{text}</p>
-        </Panel>
-      </Collapse>
-    </LectureStyled>
+    <>
+      <AddLectureArrow
+        isFocus={isFocus}
+        handleCloseLecture={handleCloseLecture}
+        handleClickAddLecture={handleClickAddLecture}
+      />
+      {inputSection}
+      <LectureStyled>
+        <Collapse
+          // defaultActiveKey={["1"]}
+          className="lecture"
+          onChange={callback}
+          expandIconPosition="right"
+        >
+          <Panel header={<HeaderPanel title={title} order={order} />} key="1">
+            <p>{text}</p>
+          </Panel>
+        </Collapse>
+      </LectureStyled>
+    </>
   )
 }

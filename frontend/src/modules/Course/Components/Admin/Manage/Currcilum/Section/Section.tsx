@@ -14,10 +14,11 @@ import InputSection from "../InputSection/InputSection"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import ModeEditIcon from "@mui/icons-material/ModeEdit"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
-import { TypeSection, TYPE_INPUT } from "@/utils/ENUM"
+import { TypeSection, TYPE_INPUT, TYPE_LECTURES } from "@/utils/ENUM"
 import { useDispatch } from "react-redux"
 import { DELETE_COURSE_LECTURE } from "@/modules/Course/action/manageCourseAction"
 import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
+import SelectLecture from "../SelectLecture/SelectLecture"
 
 const { Panel } = Collapse
 
@@ -132,11 +133,11 @@ export default function Section({
   return (
     <div style={{ position: "relative" }}>
       <EditArrow
+        type={TYPE_LECTURES.CHAPTER}
         isFocus={isFocus}
         handleCloseAddSection={handleCloseAddSection}
         handleClickAddSection={handleClickAddSection}
       />
-      {/* <InputSection /> */}
       {inputSection}
       <SectionStyled key={id}>
         <Collapse
