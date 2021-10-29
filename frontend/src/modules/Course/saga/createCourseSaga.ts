@@ -1,4 +1,8 @@
-import { UPDATE_COURSE_LECTURE } from "./../action/manageCourseAction"
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  UPDATE_COURSE_LECTURE,
+  UPDATE_LECTURE_SECTION
+} from "./../action/manageCourseAction"
 import {
   getError,
   successNotification,
@@ -22,12 +26,13 @@ import actionManageCourse from "../action/manageCourseAction"
 import { API } from "@/apis"
 import { history } from "@/App/App"
 import pathRoute from "@/routes/routePath"
-import { TYPE_CREATE_COURSE } from "@/utils/ENUM"
+import { TypeSection, TYPE_CREATE_COURSE } from "@/utils/ENUM"
 import { fetchCourseLectures } from "."
 import { RootState } from "@/redux/reducer/rootReducer"
 import { DELETE_COURSE_LECTURE } from "../action/manageCourseAction"
 
 const getSectionOfCourse = (state: RootState) => state.create.curriculum.data
+const getSectionId = id => Number(id.replace(TypeSection.SECTION, ""))
 
 function* createDraftCourse({ payload }: any) {
   try {
@@ -130,6 +135,7 @@ function* deleteSectionLecture({ payload }: any) {
     const { data } = yield call(API.lectureAPI.deleteSectionLecture, sectionId)
 
     let newSection = [...selectionCourse]
+    // eslint-disable-next-line array-callback-return
     newSection = newSection.filter(item => {
       if (item.id !== sectionId) return true
     })
@@ -175,6 +181,40 @@ function* updateCourseLecture({ payload }: any) {
   }
 }
 
+function* updateSection({ payload }: any) {
+  const selectionCourse = yield select(getSectionOfCourse)
+  const { courseId, sectionId, data } = payload
+  try {
+    const newSelectionCourse = selectionCourse.map(item => {
+      if (item.id === sectionId) {
+        return { ...item, title: data.title, description: data.description }
+      }
+      return item
+    })
+
+    const {
+      data: { message }
+    } = yield call(
+      API.lectureAPI.updateCourseLecture,
+      courseId,
+      newSelectionCourse
+    )
+
+    yield put({
+      type: actionManageCourse.UPDATE_LECTURE_SECTION.SUCCESS,
+      payload: newSelectionCourse
+    })
+
+    successNotification(message)
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionManageCourse.UPDATE_LECTURE_SECTION.ERROR,
+      payload: error.message
+    })
+  }
+}
+
 function* watchDeleteCourseSectionLecture() {
   yield takeLatest(DELETE_COURSE_LECTURE, deleteSectionLecture)
 }
@@ -195,11 +235,16 @@ function* watchUpdateLecture() {
   yield takeLatest(UPDATE_COURSE_LECTURE, updateCourseLecture)
 }
 
+function* watchUpdateSection() {
+  yield takeLatest(UPDATE_LECTURE_SECTION, updateSection)
+}
+
 export default function* createCourseSaga() {
   yield all([
     watchCreateDraftCourse(),
     watchCreateCourseSectionLecture(),
     watchDeleteCourseSectionLecture(),
-    watchUpdateLecture()
+    watchUpdateLecture(),
+    watchUpdateSection()
   ])
 }

@@ -13,32 +13,55 @@ import {
 import { Formik, Form, Field } from "formik"
 import { useDispatch } from "react-redux"
 import { CREATE_COURSE_SECTION_LECTURE } from "@/modules/Course/action/createCourseAction"
+import { TYPE_INPUT } from "@/utils/ENUM"
+import { UPDATE_LECTURE_SECTION } from "@/modules/Course/action/manageCourseAction"
 
 const initialValues = {
   title: "",
   description: ""
 }
 
-export default function InputSection({ sectionArrow, handleCloseAddSection }) {
+export default function InputSection({
+  sectionId,
+  type,
+  sectionArrow,
+  handleCloseAddSection
+}) {
   const router = useRouter()
   const { courseId } = router.query
 
   const dispatch = useDispatch()
 
   const handleSubmit = values => {
-    dispatch({
-      type: CREATE_COURSE_SECTION_LECTURE,
-      payload: {
-        courseId,
-        sectionArrow,
-        data: values
-      }
-    })
+    // if not edit
+    if (type === TYPE_INPUT.CREATE) {
+      dispatch({
+        type: CREATE_COURSE_SECTION_LECTURE,
+        payload: {
+          courseId,
+          sectionArrow,
+          data: values
+        }
+      })
+    } else {
+      dispatch({
+        type: UPDATE_LECTURE_SECTION,
+        payload: {
+          courseId,
+          sectionId,
+          data: values
+        }
+      })
+    }
     handleCloseAddSection()
   }
 
+  const editOrAddButton = () => {
+    return type === TYPE_INPUT.CREATE ? "Add section " : "Save section"
+  }
+
   return (
-    <SectionStyled input>
+    <SectionStyled type={type} input onClick={e => e.stopPropagation()}>
       <SectionContent>
         <FlexItemStyled baseline>
           <SectionTitle>
@@ -100,7 +123,7 @@ export default function InputSection({ sectionArrow, handleCloseAddSection }) {
                         purple
                         // type="submit"
                       >
-                        Add section
+                        {editOrAddButton()}
                       </ButtonStyled>
                       <ButtonStyled
                         onClick={handleCloseAddSection}

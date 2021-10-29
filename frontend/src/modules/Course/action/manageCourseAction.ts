@@ -6,6 +6,7 @@ export const UPDATE_INSTRUCTOR_COURSE = `${store}/UPDATE_INSTRUCTOR_COURSE`
 export const FETCH_COURSE_LECTURE = `${store}/FETCH_COURSE_LECTURE`
 export const DELETE_COURSE_LECTURE = `${store}/DELETE_COURSE_LECTURE`
 export const UPDATE_COURSE_LECTURE = `${store}/UPDATE_COURSE_LECTURE`
+export const UPDATE_LECTURE_SECTION = `${store}/UPDATE_LECTURE_SECTION`
 
 export default class ManageCourseAction {
   static FETCH_INSTRUCTOR_COURSE_DETAIL = {
@@ -36,5 +37,11 @@ export default class ManageCourseAction {
     REQUEST: `${store}/UPDATE_COURSE_LECTURE_REQUEST`,
     SUCCESS: `${store}/UPDATE_COURSE_LECTURE_SUCCESS`,
     ERROR: `${store}/UPDATE_COURSE_LECTURE_ERROR`
+  }
+
+  static UPDATE_LECTURE_SECTION = {
+    REQUEST: `${store}/UPDATE_LECTURE_SECTION_REQUEST`,
+    SUCCESS: `${store}/UPDATE_LECTURE_SECTION_SUCCESS`,
+    ERROR: `${store}/UPDATE_LECTURE_SECTION_ERROR`
   }
 }

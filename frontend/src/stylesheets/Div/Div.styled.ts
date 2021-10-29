@@ -7,11 +7,27 @@ export const FlexItemStyled = styled.div`
   ${props => props.reverse && css``}
 
   ${props =>
+    props.opacity &&
+    css`
+      display: none;
+      transition: 500ms linear all;
+    `}
+
+
+  ${props =>
     props.baseline &&
     css`
       align-items: baseline;
     `}
 
+
+  ${props =>
+    props.spaceBetween &&
+    css`
+      justify-content: space-between;
+    `}
+
+    
 
   ${props =>
     props.w100 &&

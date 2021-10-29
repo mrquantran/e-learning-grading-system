@@ -1,7 +1,17 @@
+import { TYPE_INPUT } from "@/utils/ENUM"
 import styled, { css } from "styled-components"
 
 export const SectionStyled = styled.li`
   margin-top: 60px;
+
+  ${props => {
+    if (props.type === TYPE_INPUT.UPDATE) {
+      return css`
+        margin: 10px;
+      `
+    }
+  }}
+
   // padding-bottom: 40px;
   position: relative;
   .Section .ant-collapse-header {
@@ -32,10 +42,10 @@ export const SectionStyled = styled.li`
     css`
       // padding-bottom: 20px;
       border-bottom: 1px solid #6a6f73;
-      margin-left: -61 px;
-      margin-right: -11 px;
-      margin-top: -80 px;
-      padding-top: 80 px;
+      // margin-left: -61px;
+      // margin-right: -11px;
+      // margin-top: -80px;
+      // padding-top: 80px;
       background: #fff;
     `}
 `
@@ -51,6 +61,13 @@ export const SectionContent = styled.div`
       transition: all 500ms;
     }
   }
+
+  ${props =>
+    props.opacity &&
+    css`
+      display: none;
+      transition: 500ms linear all;
+    `}
 `
 
 export const SectionTitle = styled.div`

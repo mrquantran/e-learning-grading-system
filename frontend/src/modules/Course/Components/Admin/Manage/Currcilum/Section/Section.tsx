@@ -14,7 +14,7 @@ import InputSection from "../InputSection/InputSection"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import ModeEditIcon from "@mui/icons-material/ModeEdit"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
-import { TypeSection } from "@/utils/ENUM"
+import { TypeSection, TYPE_INPUT } from "@/utils/ENUM"
 import { useDispatch } from "react-redux"
 import { DELETE_COURSE_LECTURE } from "@/modules/Course/action/manageCourseAction"
 import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
@@ -30,13 +30,27 @@ export default function Section({
 }) {
   const [inputSection, setInputSection] = useState<any>(null)
   const [isFocus, setFocus] = useState<boolean>(false)
+  const [editSection, setEditSection] = useState<any>(null)
+  const [isFocusEdit, setFocusEdit] = useState<boolean>(false)
   const idSection = Number(id.replace(TypeSection.SECTION, ""))
 
   const dispatch = useDispatch()
 
+  const handleCloseAddSection = () => {
+    setInputSection(null)
+    setFocus(false)
+  }
+
+  const handleCloseEditSection = () => {
+    setEditSection(null)
+    setFocusEdit(false)
+  }
+
   const handleClickAddSection = () => {
     setInputSection(
       <InputSection
+        sectionId={idSection}
+        type={TYPE_INPUT.CREATE}
         handleCloseAddSection={handleCloseAddSection}
         sectionArrow={order}
       />
@@ -44,9 +58,16 @@ export default function Section({
     setFocus(true)
   }
 
-  const handleCloseAddSection = () => {
-    setInputSection(null)
-    setFocus(false)
+  const handleClickEditSection = () => {
+    setEditSection(
+      <InputSection
+        sectionId={idSection}
+        type={TYPE_INPUT.UPDATE}
+        handleCloseAddSection={handleCloseEditSection}
+        sectionArrow={order}
+      />
+    )
+    setFocusEdit(true)
   }
 
   const handleDeleteSection = () => {
@@ -61,6 +82,50 @@ export default function Section({
       okButton: {
         function: handleDeleteSection
       }
+    }
+  }
+
+  const renderHeaderPanel = () => {
+    if (!isFocusEdit) {
+      return (
+        <SectionContent {...draggableHandle} onClick={e => e.stopPropagation()}>
+          <FlexItemStyled>
+            <SectionTitle>
+              <span>
+                Section {order}:{" "}
+                <SectionGroupTitle>
+                  <FileTextOutlined />
+                  <span>{title}</span>
+                </SectionGroupTitle>
+                <FlexItemStyled className="editDeleteGroup">
+                  <ButtonStyled
+                    onClick={handleClickEditSection}
+                    style={{ padding: "2px 8px" }}
+                    transparent
+                  >
+                    <ModeEditIcon sx={{ fontSize: 15 }} />
+                  </ButtonStyled>
+                  <ButtonStyled
+                    style={{
+                      padding: "2px 0px"
+                    }}
+                    transparent
+                    onClick={() =>
+                      showConfirm(
+                        modal.title,
+                        modal.description,
+                        modal.buttonModalConfirm
+                      )
+                    }
+                  >
+                    <DeleteForeverIcon sx={{ fontSize: 15 }} />
+                  </ButtonStyled>
+                </FlexItemStyled>
+              </span>
+            </SectionTitle>
+          </FlexItemStyled>
+        </SectionContent>
+      )
     }
   }
 
@@ -82,49 +147,8 @@ export default function Section({
             <CaretRightOutlined rotate={isActive ? 90 : 0} />
           )}
         >
-          <Panel
-            header={
-              <SectionContent {...draggableHandle}>
-                <FlexItemStyled>
-                  <SectionTitle>
-                    <span>
-                      Section {order}:{" "}
-                      <SectionGroupTitle>
-                        <FileTextOutlined />
-                        <span>{title}</span>
-                      </SectionGroupTitle>
-                      <FlexItemStyled className="editDeleteGroup">
-                        <ButtonStyled
-                          style={{ padding: "2px 8px" }}
-                          transparent
-                        >
-                          <ModeEditIcon sx={{ fontSize: 15 }} />
-                        </ButtonStyled>
-                        <ButtonStyled
-                          style={{
-                            padding: "2px 0px"
-                          }}
-                          transparent
-                        >
-                          <DeleteForeverIcon
-                            onClick={() =>
-                              showConfirm(
-                                modal.title,
-                                modal.description,
-                                modal.buttonModalConfirm
-                              )
-                            }
-                            sx={{ fontSize: 15 }}
-                          />
-                        </ButtonStyled>
-                      </FlexItemStyled>
-                    </span>
-                  </SectionTitle>
-                </FlexItemStyled>
-              </SectionContent>
-            }
-            key={id}
-          >
+          {editSection}
+          <Panel showArrow={!isFocusEdit} header={renderHeaderPanel()} key={id}>
             <LecturesContainer idSection={id} lecture={lecturesMaterial} />
           </Panel>
 

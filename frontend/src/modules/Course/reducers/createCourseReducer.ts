@@ -186,6 +186,15 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
           data: payload
         }
       }
+    case actionsManageCourse.UPDATE_LECTURE_SECTION.SUCCESS: {
+      return {
+        ...state,
+        curriculum: {
+          ...state.curriculum,
+          data: payload
+        }
+      }
+    }
     default:
       return state
   }
