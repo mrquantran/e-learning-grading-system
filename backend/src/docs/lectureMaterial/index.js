@@ -1,10 +1,13 @@
 /* eslint-disable import/extensions */
-
 import createLectureMaterial from './createLectureMaterial.js';
+import deleteMaterialLecture from './deleteLectureMaterial.js';
 
 const pathCourses = {
-  'lectures/{id}/lecture-material': {
+  'lectures/{id}/lectures-material': {
     ...createLectureMaterial,
+  },
+  'lecture-material/{id}': {
+    ...deleteMaterialLecture,
   },
 };
 

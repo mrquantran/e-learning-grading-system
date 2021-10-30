@@ -10,10 +10,14 @@ import { lecturesMaterial } from '../../controller/lecturesMaterial/lecturesMate
 
 const router = express.Router();
 
-router.post('/:id/lecture-material', validate([param('id')
+router.post('/lectures/:id/lectures-material', validate([param('id')
   .isNumeric()
   .withMessage('Id is not a number'), body('title')
   .notEmpty()
   .withMessage('Title can not be empty')]), isAuth, lecturesMaterial.createLecture);
+
+router.delete('/lectures-material/:id', validate([param('id')
+  .isNumeric()
+  .withMessage('Id is not a number')]), isAuth, lecturesMaterial.deleteLecture);
 
 export default router;

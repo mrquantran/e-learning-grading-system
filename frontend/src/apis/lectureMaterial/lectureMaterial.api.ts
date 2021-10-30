@@ -5,7 +5,7 @@ import axios, { AxiosResponse } from "axios"
 // }
 
 const createLecture = (sectionId, data): Promise<AxiosResponse<any>> => {
-  return axios.post(`/lectures/${sectionId}/lecture-material`, data)
+  return axios.post(`/lectures/${sectionId}/lectures-material`, data)
 }
 
 // const deleteSectionLecture = (sectionId): Promise<AxiosResponse<any>> => {

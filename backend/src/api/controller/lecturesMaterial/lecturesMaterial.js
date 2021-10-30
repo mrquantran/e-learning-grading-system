@@ -38,6 +38,43 @@ const createLecture = async (req, res) => {
   }
 };
 
+const deleteLecture = async (req, res) => {
+  try {
+    const { id: lectureId } = req.params;
+
+    if (!await isTeacherEnrollWithLectureId(req, res)) {
+      return res.status(403).json({ message: 'you dont have permission to perform this action' });
+    }
+
+    const getLectureMaterial = await prisma.lecturesMaterial.findUnique({
+      where: {
+        id: Number(lectureId),
+      },
+    });
+
+    if (!getLectureMaterial) {
+      const message = 'Your curriculum item does not exist';
+      return res.status(200).json({ message });
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const lectureMaterial = await prisma.lecturesMaterial.delete({
+      where: {
+        id: Number(lectureId),
+      },
+    });
+
+    const message = 'Your curriculum has been deleted';
+
+    return res.status(200).json({ message });
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+    return res.status(500).json({ message: error });
+  }
+};
+
 export const lecturesMaterial = {
   createLecture,
+  deleteLecture,
 };
