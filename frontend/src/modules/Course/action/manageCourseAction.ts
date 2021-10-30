@@ -15,6 +15,11 @@ export const DELETE_LECTURE = `${store}/DELETE_LECTURE`
 export const UPDATE_LECTURE = `${store}/UPDATE_LECTURE`
 
 export default class ManageCourseAction {
+  static changeSelectedComponent = key => ({
+    type: CHANGE_SELECTED_COMPONENT,
+    payload: key
+  })
+
   static FETCH_INSTRUCTOR_COURSE_DETAIL = {
     REQUEST: `${store}/FETCH_INSTRUCTOR_COURSE_DETAIL_REQUEST`,
     SUCCESS: `${store}/FETCH_INSTRUCTOR_COURSE_DETAIL_SUCCESS`,

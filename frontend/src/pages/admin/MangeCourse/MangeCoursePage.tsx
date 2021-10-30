@@ -1,6 +1,8 @@
 import HeaderManage from "@/components/admin/HeaderManage/HeaderManage"
 import LeftMenuManage from "@/components/admin/LeftMenuManage/LeftMenuManage"
-import { CHANGE_SELECTED_COMPONENT } from "@/modules/Course/action/manageCourseAction"
+import ManageCourseAction, {
+  CHANGE_SELECTED_COMPONENT
+} from "@/modules/Course/action/manageCourseAction"
 import ManageContentContainer from "@/modules/Course/Container/Admin/ManageContentContainer/ManageContentContainer"
 import { RootState } from "@/redux/reducer/rootReducer"
 import React, { useState } from "react"
@@ -14,7 +16,7 @@ export default function MangeCoursePage() {
   const dispatch = useDispatch()
 
   const handleChangeSelectedComponent = key => {
-    dispatch({ type: CHANGE_SELECTED_COMPONENT, payload: key })
+    dispatch(ManageCourseAction.changeSelectedComponent(key))
   }
 
   const {
