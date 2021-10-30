@@ -20,12 +20,15 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   opacity: isDragging ? 0.8 : 1
 })
 
-const LectureList = React.memo(function LectureList({ section }: any) {
+const LectureList = React.memo(function LectureList({
+  section,
+  sectionId
+}: any) {
   return section.map((item, index: number) => {
     return (
       <>
         <Draggable
-          draggableId={`lecture${item.id.toString()}`}
+          draggableId={`lecture${item.id}`}
           index={index}
           key={item.id.toString()}
         >
@@ -41,7 +44,11 @@ const LectureList = React.memo(function LectureList({ section }: any) {
                 provided.draggableProps.style
               )}
             >
-              <Lecture order={index + 1} title={item.title} />
+              <Lecture
+                sectionId={sectionId}
+                order={index + 1}
+                title={item.title}
+              />
               {provided.placeholder}
             </div>
           )}
@@ -51,17 +58,17 @@ const LectureList = React.memo(function LectureList({ section }: any) {
   })
 })
 
-export default function LecturesContainer({ lecture, idSection }: any) {
+export default function LecturesContainer({ lecture, idSection, id }: any) {
   return (
     <>
-      <Droppable droppableId={idSection} type={TypeSection.LECTURE}>
+      <Droppable droppableId={id} type={TypeSection.LECTURE}>
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}
             style={getListStyle(snapshot.isDraggingOver)}
           >
             {/* <SelectLecture /> */}
-            <LectureList section={lecture} />
+            <LectureList section={lecture} sectionId={idSection} />
             {provided.placeholder}
           </div>
         )}

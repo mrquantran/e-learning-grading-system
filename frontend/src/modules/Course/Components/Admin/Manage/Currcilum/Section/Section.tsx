@@ -96,7 +96,12 @@ export default function Section({
   }
 
   const handleClickAddLecture = () => {
-    setInputLecture(<SelectLecture />)
+    setInputLecture(
+      <SelectLecture
+        sectionId={idSection}
+        handleCloseLecture={handleCloseLecture}
+      />
+    )
     setFocusLecture(true)
   }
 
@@ -178,7 +183,11 @@ export default function Section({
           {editSection}
           <Panel showArrow={!isFocusEdit} header={renderHeaderPanel()} key={id}>
             {inputLecture}
-            <LecturesContainer idSection={id} lecture={lecturesMaterial} />
+            <LecturesContainer
+              id={id}
+              idSection={idSection}
+              lecture={lecturesMaterial}
+            />
           </Panel>
         </Collapse>
       </SectionStyled>

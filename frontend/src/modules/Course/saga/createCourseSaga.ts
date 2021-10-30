@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  CREATE_LECTURE,
   UPDATE_COURSE_LECTURE,
   UPDATE_LECTURE_SECTION
 } from "./../action/manageCourseAction"
@@ -215,6 +216,51 @@ function* updateSection({ payload }: any) {
   }
 }
 
+function* createLecture({ payload }: any) {
+  const selectionCourse = yield select(getSectionOfCourse)
+  const {
+    sectionId,
+    //data create
+    data: { title, description }
+  } = payload
+  try {
+    yield put({
+      type: actionManageCourse.CREATE_LECTURE.REQUEST
+    })
+
+    const bodyData = { title, description }
+
+    const { data } = yield call(
+      API.lectureMaterialAPI.createLecture,
+      sectionId,
+      bodyData
+    )
+
+    let newSelection = [...selectionCourse]
+    newSelection = newSelection.map(item => {
+      const cloneLectureMaterial = [...item.lecturesMaterial, data]
+      if (item.id === sectionId)
+        return { ...item, lecturesMaterial: cloneLectureMaterial }
+      return item
+    })
+
+    yield put({
+      type: actionManageCourse.CREATE_LECTURE.SUCCESS,
+      payload: newSelection
+    })
+
+    const message = "Your lecture has been created successfully"
+    successNotification(message)
+    // yield fetchAndUpdateLectureCourse(courseId)
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionCreateCourse.CREATE_DRAFT_COURSE.ERROR,
+      payload: error.message
+    })
+  }
+}
+
 function* watchDeleteCourseSectionLecture() {
   yield takeLatest(DELETE_COURSE_LECTURE, deleteSectionLecture)
 }
@@ -239,12 +285,17 @@ function* watchUpdateSection() {
   yield takeLatest(UPDATE_LECTURE_SECTION, updateSection)
 }
 
+function* watchCreateLectureMaterial() {
+  yield takeLatest(CREATE_LECTURE, createLecture)
+}
+
 export default function* createCourseSaga() {
   yield all([
     watchCreateDraftCourse(),
     watchCreateCourseSectionLecture(),
     watchDeleteCourseSectionLecture(),
     watchUpdateLecture(),
-    watchUpdateSection()
+    watchUpdateSection(),
+    watchCreateLectureMaterial()
   ])
 }

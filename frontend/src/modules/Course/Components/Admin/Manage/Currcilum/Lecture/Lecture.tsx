@@ -8,6 +8,8 @@ import { SpanGroup } from "@/stylesheets/Text/Text.styled"
 import SelectLecture from "../SelectLecture/SelectLecture"
 import AddLectureArrow from "../AddLectureArrow/AddLectureArrow"
 import { TYPE_LECTURES2 } from "@/utils/ENUM"
+import ModeEditIcon from "@mui/icons-material/ModeEdit"
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 
 const { Panel } = Collapse
 
@@ -34,6 +36,30 @@ function HeaderPanel({ title, order }) {
             <FileTextOutlined style={{ paddingRight: "5px" }} />
             <span>{title}</span>
           </SpanGroup>
+          <FlexItemStyled className="editDeleteLectureGroup">
+            <ButtonStyled
+              // onClick={handleClickEditSection}
+              style={{ padding: "2px 8px" }}
+              transparent
+            >
+              <ModeEditIcon sx={{ fontSize: 15 }} />
+            </ButtonStyled>
+            <ButtonStyled
+              style={{
+                padding: "2px 0px"
+              }}
+              transparent
+              // onClick={() =>
+              //   showConfirm(
+              //     modal.title,
+              //     modal.description,
+              //     modal.buttonModalConfirm
+              //   )
+              // }
+            >
+              <DeleteForeverIcon sx={{ fontSize: 15 }} />
+            </ButtonStyled>
+          </FlexItemStyled>
         </FlexItemStyled>
         <FlexItemStyled>
           <ButtonStyled udemy>+ Content</ButtonStyled>
@@ -43,12 +69,17 @@ function HeaderPanel({ title, order }) {
   )
 }
 
-export default function Lecture({ title, order }) {
+export default function Lecture({ title, order, sectionId }) {
   const [isFocus, setFocus] = useState<boolean>(false)
   const [inputSection, setInputSection] = useState<any>(null)
 
   const handleClickAddLecture = () => {
-    setInputSection(<SelectLecture />)
+    setInputSection(
+      <SelectLecture
+        handleCloseLecture={handleCloseLecture}
+        sectionId={sectionId}
+      />
+    )
     setFocus(true)
   }
 

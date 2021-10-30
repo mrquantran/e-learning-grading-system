@@ -152,15 +152,6 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
           isFetching: true
         }
       }
-    case actionsManageCourse.FETCH_COURSE_LECTURE.SUCCESS:
-      return {
-        ...state,
-        curriculum: {
-          ...state.curriculum,
-          data: payload,
-          isFetching: false
-        }
-      }
     case actionsManageCourse.FETCH_COURSE_LECTURE.ERROR:
       return {
         ...state,
@@ -170,28 +161,17 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
           isFetching: false
         }
       }
+    case actionsManageCourse.FETCH_COURSE_LECTURE.SUCCESS:
     case actionsCreateCourse.CREATE_COURSE_SECTION_LECTURE.SUCCESS:
-      return {
-        ...state,
-        curriculum: {
-          ...state.curriculum,
-          data: payload
-        }
-      }
     case actionsManageCourse.DELETE_COURSE_LECTURE.SUCCESS:
+    case actionsManageCourse.UPDATE_LECTURE_SECTION.SUCCESS:
+    case actionsManageCourse.CREATE_LECTURE.SUCCESS: {
       return {
         ...state,
         curriculum: {
           ...state.curriculum,
-          data: payload
-        }
-      }
-    case actionsManageCourse.UPDATE_LECTURE_SECTION.SUCCESS: {
-      return {
-        ...state,
-        curriculum: {
-          ...state.curriculum,
-          data: payload
+          data: payload,
+          isFetching: false
         }
       }
     }

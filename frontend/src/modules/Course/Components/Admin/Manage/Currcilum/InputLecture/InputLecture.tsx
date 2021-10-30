@@ -12,7 +12,12 @@ import {
 } from "../Section/Section.styled"
 import { InputLectureWrapper, LectureInputStyled } from "./InputLecture.styled"
 
-export default function InputLecture({ typeLecture, handleClose }) {
+export default function InputLecture({
+  sectionId,
+  typeLecture,
+  handleClose,
+  handleCloseSelect
+}) {
   const { titleInput, submitText, formField, dispatchAction }: any =
     TYPE_LECTURE.find(item => {
       return item.id === typeLecture
@@ -58,7 +63,11 @@ export default function InputLecture({ typeLecture, handleClose }) {
                 onSubmit={async (values, { resetForm }) => {
                   // eslint-disable-next-line no-console
                   console.log("values", values)
-                  dispatch({ type: dispatchAction, payload: { data: values } })
+                  dispatch({
+                    type: dispatchAction,
+                    payload: { data: values, sectionId }
+                  })
+                  handleCloseSelect()
                   resetForm()
                 }}
               >

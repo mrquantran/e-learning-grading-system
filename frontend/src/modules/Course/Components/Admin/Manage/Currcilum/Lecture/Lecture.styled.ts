@@ -28,4 +28,16 @@ export const LectureStyled = styled.div`
 
 export const HeaderPanelStyled = styled.div`
   width: 100%;
+
+  &:hover {
+    .editDeleteLectureGroup {
+      opacity: 1;
+      transition: all 500ms;
+    }
+  }
+
+  .editDeleteLectureGroup {
+    opacity: 0;
+    font-size: 10px;
+  }
 `

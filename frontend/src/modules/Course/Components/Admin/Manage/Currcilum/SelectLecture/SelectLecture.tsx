@@ -8,7 +8,7 @@ import {
 import AddBoxIcon from "@mui/icons-material/AddBox"
 import InputLecture from "../InputLecture/InputLecture"
 
-export default function SelectLecture() {
+export default function SelectLecture({ sectionId, handleCloseLecture }) {
   const [inputLecture, setInputLecture] = useState<any>(null)
 
   const handerCloseLecture = () => {
@@ -22,7 +22,12 @@ export default function SelectLecture() {
       case TYPE_LECTURE_ID.CODING:
       case TYPE_LECTURE_ID.ASSIGNMENT:
         return setInputLecture(
-          <InputLecture typeLecture={id} handleClose={handerCloseLecture} />
+          <InputLecture
+            sectionId={sectionId}
+            typeLecture={id}
+            handleClose={handerCloseLecture}
+            handleCloseSelect={handleCloseLecture}
+          />
         )
       case TYPE_LECTURE_ID.PRACTICE_TEST:
         return null
