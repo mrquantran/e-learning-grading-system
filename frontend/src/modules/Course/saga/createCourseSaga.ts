@@ -3,6 +3,7 @@ import {
   CREATE_LECTURE,
   DELETE_LECTURE,
   UPDATE_COURSE_LECTURE,
+  UPDATE_LECTURE,
   UPDATE_LECTURE_SECTION
 } from "./../action/manageCourseAction"
 import {
@@ -309,6 +310,48 @@ function* deleteLecture({ payload }: any) {
   }
 }
 
+function* updateLecture({ payload }: any) {
+  const { sectionId, data: lectureUpdate, lectureId } = payload
+  const selectionCourse = yield select(getSectionOfCourse)
+  try {
+    const { data } = yield call(
+      API.lectureMaterialAPI.updateLecture,
+      lectureId,
+      lectureUpdate
+    )
+
+    let newSection = [...selectionCourse]
+    // eslint-disable-next-line array-callback-return
+    newSection = newSection.map(item => {
+      if (item.id === sectionId) {
+        return {
+          ...item,
+          lecturesMaterial: item.lecturesMaterial.map(lecture => {
+            if (lecture.id === lectureId)
+              return { ...lecture, title: data.title }
+            return lecture
+          })
+        }
+      }
+      return item
+    })
+
+    yield put({
+      type: actionManageCourse.UPDATE_LECTURE.SUCCESS,
+      payload: newSection
+    })
+
+    const message = "Your curriculum has been updated"
+    successNotification(message)
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionManageCourse.UPDATE_LECTURE_SECTION.ERROR,
+      payload: error.message
+    })
+  }
+}
+
 function* watchDeleteCourseSectionLecture() {
   yield takeLatest(DELETE_COURSE_LECTURE, deleteSectionLecture)
 }
@@ -340,6 +383,9 @@ function* watchCreateLectureMaterial() {
 function* watchDeleteLectureMaterial() {
   yield takeLatest(DELETE_LECTURE, deleteLecture)
 }
+function* watchUpdateLectureMaterial() {
+  yield takeLatest(UPDATE_LECTURE, updateLecture)
+}
 
 export default function* createCourseSaga() {
   yield all([
@@ -349,6 +395,7 @@ export default function* createCourseSaga() {
     watchUpdateLecture(),
     watchUpdateSection(),
     watchCreateLectureMaterial(),
-    watchDeleteLectureMaterial()
+    watchDeleteLectureMaterial(),
+    watchUpdateLectureMaterial()
   ])
 }

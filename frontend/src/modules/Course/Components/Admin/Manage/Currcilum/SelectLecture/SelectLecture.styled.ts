@@ -12,6 +12,6 @@ export const SelectLectureWrapper = styled.div`
   margin-left: 50px;
   margin-right: 10px;
 
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   position: relative;
 `

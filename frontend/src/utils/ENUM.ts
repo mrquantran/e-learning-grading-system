@@ -1,4 +1,7 @@
-import { CREATE_LECTURE } from "@/modules/Course/action/manageCourseAction"
+import {
+  CREATE_LECTURE,
+  UPDATE_LECTURE
+} from "@/modules/Course/action/manageCourseAction"
 
 export const REGEX_EMAIL =
   "^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$"
@@ -39,6 +42,7 @@ export const TYPE_LECTURE = [
     submitText: "Add Lecture",
     formField: [{ name: "title", placeHolder: "Enter a title" }],
     dispatchAction: CREATE_LECTURE,
+    updateAction: UPDATE_LECTURE,
     active: true
   },
   {
@@ -51,6 +55,7 @@ export const TYPE_LECTURE = [
       { name: "description", placeHolder: "Quiz description" }
     ],
     dispatchAction: CREATE_LECTURE,
+    updateAction: UPDATE_LECTURE,
     active: true
   },
   {
@@ -60,6 +65,7 @@ export const TYPE_LECTURE = [
     submitText: "Add Coding Exercise",
     formField: [{ name: "title", placeHolder: "Enter a title" }],
     dispatchAction: CREATE_LECTURE,
+    updateAction: UPDATE_LECTURE,
     active: true
   },
   {
@@ -69,6 +75,7 @@ export const TYPE_LECTURE = [
     submitText: "",
     formField: [{ name: "title", placeHolder: "Enter a title" }],
     dispatchAction: CREATE_LECTURE,
+    updateAction: UPDATE_LECTURE,
     active: false
   },
   {
@@ -77,6 +84,7 @@ export const TYPE_LECTURE = [
     titleInput: "",
     formField: [{ name: "title", placeHolder: "Enter a title" }],
     dispatchAction: CREATE_LECTURE,
+    updateAction: UPDATE_LECTURE,
     submitText: "Add Assignment",
     active: true
   }

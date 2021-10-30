@@ -20,4 +20,8 @@ router.delete('/lectures-material/:id', validate([param('id')
   .isNumeric()
   .withMessage('Id is not a number')]), isAuth, lecturesMaterial.deleteLecture);
 
+router.put('/lectures-material/:id', validate([param('id')
+  .isNumeric()
+  .withMessage('Id is not a number')]), isAuth, lecturesMaterial.updateLecture);
+
 export default router;

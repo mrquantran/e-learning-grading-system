@@ -46,9 +46,8 @@ export default function Lecture({ title, order, sectionId, id }) {
 
   const {
     title: titleInput,
-    submitText,
     formField,
-    dispatchAction
+    updateAction
   }: any = TYPE_LECTURE.find(item => {
     return item.id === TYPE_DEFAULT
   })
@@ -108,10 +107,10 @@ export default function Lecture({ title, order, sectionId, id }) {
             // eslint-disable-next-line no-console
             console.log("values", values)
             dispatch({
-              type: dispatchAction,
-              payload: { data: values, sectionId, positionAdd: order }
+              type: updateAction,
+              payload: { data: values, sectionId, lectureId: id }
             })
-            // handleCloseSelect()
+            handleCloseEditSection()
             resetForm()
           }}
         >
@@ -170,7 +169,7 @@ export default function Lecture({ title, order, sectionId, id }) {
           <FlexItemStyled baseline={isFocusEdit} w100={isFocusEdit}>
             <SpanGroup>
               <CheckCircleFilled style={{ paddingRight: "5px" }} />
-              <span>Lecture {order}</span>
+              <span style={{ whiteSpace: "nowrap" }}>Lecture {order}</span>
             </SpanGroup>
             {!isFocusEdit ? (
               <>
