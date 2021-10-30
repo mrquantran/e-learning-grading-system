@@ -2,9 +2,9 @@ import styled, { css } from "styled-components"
 
 export const LectureArrowStyled = styled.div`
   position: relative;
-  max-height: 0;
+
   margin-left: -38px;
-  top: -20px;
+  top: 0px;
   &:hover {
     .addLectureArrow {
       opacity: 1 !important;
@@ -13,7 +13,7 @@ export const LectureArrowStyled = styled.div`
   ${props =>
     props.type &&
     css`
-      top: 25px;
+      top: 45px;
       left: 14px;
     `}
 `

@@ -53,7 +53,7 @@ export const SectionStyled = styled.li`
 export const SectionContent = styled.div`
   width: 100%;
   border: 0;
-  padding: 10px 10px 20px 10px;
+  padding: 10px 10px 5px 10px;
 
   &:hover {
     .editDeleteGroup {

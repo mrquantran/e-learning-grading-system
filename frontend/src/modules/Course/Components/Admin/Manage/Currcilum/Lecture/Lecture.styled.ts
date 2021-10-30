@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const LectureStyled = styled.div`
   position: relative;
-  padding: 0 10px 20px 60px;
+  padding: 0 10px 0px 60px;
   // background-color: #f7f9fa;
   // border: 1px solid #6a6f73;
   // // border-top-color: transparent;
