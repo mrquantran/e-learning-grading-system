@@ -13,7 +13,7 @@ export const LectureArrowStyled = styled.div`
   ${props =>
     props.type &&
     css`
-      top: 45px;
+      top: 40px;
       left: 14px;
     `}
 `
