@@ -6,7 +6,9 @@ import TypeCourse, {
   validateSchemaTypeCourse
 } from "../Components/Admin/Step/TypeCourse/TypeCourse"
 import actionsCreateCourse from "../action/createCourseAction"
-import actionsManageCourse from "../action/manageCourseAction"
+import actionsManageCourse, {
+  CHANGE_SELECTED_COMPONENT
+} from "../action/manageCourseAction"
 import FilmEdit from "../Components/Admin/Manage/Film&Edit/FilmEdit"
 import Curriculum from "../Components/Admin/Manage/Currcilum/Curriculum"
 import Captions from "../Components/Admin/Manage/Captions/Captions"
@@ -20,6 +22,7 @@ const initialState = {
   isProcessing: false,
   error: null,
   step: null,
+  selectedComponent: null,
   detail: {
     data: {},
     isFetching: false
@@ -110,6 +113,11 @@ const initialState = {
 
 const createCourseReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case CHANGE_SELECTED_COMPONENT:
+      return {
+        ...state,
+        selectedComponent: payload
+      }
     case GO_TO_STEP:
       return { ...state, step: payload }
     case actionsCreateCourse.CREATE_DRAFT_COURSE.REQUEST:

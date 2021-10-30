@@ -1,6 +1,8 @@
 const store = "course"
 
 export const GO_TO_STEP = `${store}/GO_TO_STEP`
+export const CHANGE_SELECTED_COMPONENT = `${store}/CHANGE_SELECTED_COMPONENT`
+
 export const FETCH_INSTRUCTOR_COURSE_DETAIL = `${store}/FETCH_INSTRUCTOR_COURSE_DETAIL`
 export const UPDATE_INSTRUCTOR_COURSE = `${store}/UPDATE_INSTRUCTOR_COURSE`
 export const FETCH_COURSE_LECTURE = `${store}/FETCH_COURSE_LECTURE`
