@@ -220,6 +220,7 @@ function* createLecture({ payload }: any) {
   const selectionCourse = yield select(getSectionOfCourse)
   const {
     sectionId,
+    positionAdd,
     //data create
     data: { title, description }
   } = payload
@@ -239,6 +240,9 @@ function* createLecture({ payload }: any) {
     let newSelection = [...selectionCourse]
     newSelection = newSelection.map(item => {
       const cloneLectureMaterial = [...item.lecturesMaterial, data]
+      console.log(positionAdd)
+      cloneLectureMaterial.splice(positionAdd, 0, data)
+
       if (item.id === sectionId)
         return { ...item, lecturesMaterial: cloneLectureMaterial }
       return item

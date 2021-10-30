@@ -13,6 +13,7 @@ import {
 import { InputLectureWrapper, LectureInputStyled } from "./InputLecture.styled"
 
 export default function InputLecture({
+  positionAdd,
   sectionId,
   typeLecture,
   handleClose,
@@ -65,7 +66,7 @@ export default function InputLecture({
                   console.log("values", values)
                   dispatch({
                     type: dispatchAction,
-                    payload: { data: values, sectionId }
+                    payload: { data: values, sectionId, positionAdd }
                   })
                   handleCloseSelect()
                   resetForm()

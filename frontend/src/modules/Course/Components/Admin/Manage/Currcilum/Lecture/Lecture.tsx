@@ -78,6 +78,8 @@ export default function Lecture({ title, order, sectionId }) {
       <SelectLecture
         handleCloseLecture={handleCloseLecture}
         sectionId={sectionId}
+        // order -2 is index for item will be add
+        positionAdd={order - 1}
       />
     )
     setFocus(true)

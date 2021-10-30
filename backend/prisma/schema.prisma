@@ -39,6 +39,7 @@ model LecturesMaterial {
   createdAt DateTime @default(now())
   title     String
   lectureId Int
+  sort      Int?
   lecture   Lectures @relation(fields: [lectureId], references: [id])
 }
 

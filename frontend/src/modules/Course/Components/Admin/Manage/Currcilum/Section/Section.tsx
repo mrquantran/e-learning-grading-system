@@ -98,6 +98,7 @@ export default function Section({
   const handleClickAddLecture = () => {
     setInputLecture(
       <SelectLecture
+        positionAdd={0}
         sectionId={idSection}
         handleCloseLecture={handleCloseLecture}
       />
