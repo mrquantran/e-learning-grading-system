@@ -2,8 +2,9 @@ import { ButtonGroup, ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import { FlexItemStyled } from "@/stylesheets/Div/Div.styled"
 import { FormGroup, InputAntd } from "@/stylesheets/Input/Inputantd.styled"
 import { TYPE_LECTURE } from "@/utils/ENUM"
-import { Field, Formik } from "formik"
+import { Field, Form, Formik } from "formik"
 import React from "react"
+import { useDispatch } from "react-redux"
 import {
   SectionContent,
   SectionCreateInput,
@@ -12,9 +13,12 @@ import {
 import { InputLectureWrapper, LectureInputStyled } from "./InputLecture.styled"
 
 export default function InputLecture({ typeLecture, handleClose }) {
-  const { titleInput, submitText, formField }: any = TYPE_LECTURE.find(item => {
-    return item.id === typeLecture
-  })
+  const { titleInput, submitText, formField, dispatchAction }: any =
+    TYPE_LECTURE.find(item => {
+      return item.id === typeLecture
+    })
+
+  const dispatch = useDispatch()
 
   const renderField = () => {
     return formField.map(item => {
@@ -51,12 +55,15 @@ export default function InputLecture({ typeLecture, handleClose }) {
             <SectionCreateInput>
               <Formik
                 initialValues={{ title: "" }}
-                onSubmit={values => {
-                  // handleSubmit(values)
+                onSubmit={async (values, { resetForm }) => {
+                  // eslint-disable-next-line no-console
+                  console.log("values", values)
+                  dispatch({ type: dispatchAction, payload: { data: values } })
+                  resetForm()
                 }}
               >
                 {props => (
-                  <form onSubmit={props.handleSubmit}>
+                  <Form onSubmit={props.handleSubmit}>
                     <div style={{ flex: 1 }}>
                       {renderField()}
                       <ButtonGroup>
@@ -64,7 +71,7 @@ export default function InputLecture({ typeLecture, handleClose }) {
                           onClick={props.handleSubmit}
                           udemy
                           purple
-                          // type="submit"
+                          type="submit"
                         >
                           {submitText}
                         </ButtonStyled>
@@ -77,7 +84,7 @@ export default function InputLecture({ typeLecture, handleClose }) {
                         </ButtonStyled>
                       </ButtonGroup>
                     </div>
-                  </form>
+                  </Form>
                 )}
               </Formik>
             </SectionCreateInput>
