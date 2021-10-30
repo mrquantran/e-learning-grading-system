@@ -41,6 +41,7 @@ export const TYPE_LECTURE = [
     titleInput: "New Lecture:",
     submitText: "Add Lecture",
     formField: [{ name: "title", placeHolder: "Enter a title" }],
+    contentField: [{ name: "description", placeHolder: "Enter a description" }],
     dispatchAction: CREATE_LECTURE,
     updateAction: UPDATE_LECTURE,
     active: true
@@ -50,6 +51,7 @@ export const TYPE_LECTURE = [
     title: "Quiz",
     titleInput: "New Quiz:",
     submitText: "Add Quiz",
+    contentField: [{ name: "description", placeHolder: "Enter a description" }],
     formField: [
       { name: "title", placeHolder: "Enter a title" },
       { name: "description", placeHolder: "Quiz description" }
@@ -63,6 +65,7 @@ export const TYPE_LECTURE = [
     title: "Coding Exercise",
     titleInput: "New Coding Exercise:",
     submitText: "Add Coding Exercise",
+    contentField: [{ name: "description", placeHolder: "Enter a description" }],
     formField: [{ name: "title", placeHolder: "Enter a title" }],
     dispatchAction: CREATE_LECTURE,
     updateAction: UPDATE_LECTURE,
@@ -73,6 +76,7 @@ export const TYPE_LECTURE = [
     title: "Practice Test",
     titleInput: "New Practice Test:",
     submitText: "",
+    contentField: [{ name: "description", placeHolder: "Enter a description" }],
     formField: [{ name: "title", placeHolder: "Enter a title" }],
     dispatchAction: CREATE_LECTURE,
     updateAction: UPDATE_LECTURE,
@@ -82,6 +86,7 @@ export const TYPE_LECTURE = [
     id: "assignment",
     title: "Assignment:",
     titleInput: "",
+    contentField: [{ name: "description", placeHolder: "Enter a description" }],
     formField: [{ name: "title", placeHolder: "Enter a title" }],
     dispatchAction: CREATE_LECTURE,
     updateAction: UPDATE_LECTURE,
