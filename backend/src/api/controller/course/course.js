@@ -119,7 +119,6 @@ async function createDraftCourse(req, res) {
 
 async function getCourseById(req, res) {
   const { id } = req.params;
-  const token = await getDecodedToken(req);
 
   try {
     const courseById = await prisma.course.findFirst({
@@ -156,6 +155,7 @@ async function getCourseById(req, res) {
     const { members, isDraft, ...data } = courseById;
 
     if (isDraft) {
+      const token = await getDecodedToken(req);
       if (!await isTeacherEnroll(req, res)) {
         return res.status(403).json({ message: 'you dont have permission to perform this action' });
       }

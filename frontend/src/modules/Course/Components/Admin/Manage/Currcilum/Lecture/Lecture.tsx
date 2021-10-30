@@ -21,6 +21,7 @@ import InputLecture from "../InputLecture/InputLecture"
 import { FormGroup, InputAntd } from "@/stylesheets/Input/Inputantd.styled"
 import { Field, Form, Formik } from "formik"
 import { SectionCreateInput } from "../Section/Section.styled"
+import ContentLecture from "../ContentLecture/ContentLecture"
 
 const { Panel } = Collapse
 
@@ -233,7 +234,7 @@ export default function Lecture({ title, order, sectionId, id }) {
             header={<HeaderPanel title={title} order={order} />}
             key="1"
           >
-            <p>{text}</p>
+            <ContentLecture />
           </Panel>
         </Collapse>
       </LectureStyled>
