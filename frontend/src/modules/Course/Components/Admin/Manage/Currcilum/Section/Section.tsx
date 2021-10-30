@@ -150,14 +150,12 @@ export default function Section({
               </span>
             </SectionTitle>
           </FlexItemStyled>
-          {lecturesMaterial.length === 0 ? (
-            <AddLectureArrow
-              type={TYPE_LECTURES2.SECTION}
-              isFocus={isFocusLecture}
-              handleCloseLecture={handleCloseLecture}
-              handleClickAddLecture={handleClickAddLecture}
-            />
-          ) : null}
+          <AddLectureArrow
+            type={TYPE_LECTURES2.SECTION}
+            isFocus={isFocusLecture}
+            handleCloseLecture={handleCloseLecture}
+            handleClickAddLecture={handleClickAddLecture}
+          />
         </SectionContent>
       )
     }

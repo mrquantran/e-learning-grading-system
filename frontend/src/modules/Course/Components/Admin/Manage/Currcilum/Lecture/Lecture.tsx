@@ -1,7 +1,11 @@
 import React, { useState } from "react"
 import { Collapse, Row } from "antd"
 import { HeaderPanelStyled, LectureStyled } from "./Lecture.styled"
-import { FileTextOutlined, CheckCircleFilled } from "@ant-design/icons"
+import {
+  FileTextOutlined,
+  CheckCircleFilled,
+  CaretRightOutlined
+} from "@ant-design/icons"
 import { FlexItemStyled } from "@/stylesheets/Div/Div.styled"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import { SpanGroup } from "@/stylesheets/Text/Text.styled"
@@ -79,7 +83,7 @@ export default function Lecture({ title, order, sectionId }) {
         handleCloseLecture={handleCloseLecture}
         sectionId={sectionId}
         // order -2 is index for item will be add
-        positionAdd={order - 1}
+        positionAdd={order}
       />
     )
     setFocus(true)
@@ -92,6 +96,21 @@ export default function Lecture({ title, order, sectionId }) {
 
   return (
     <>
+      <LectureStyled>
+        <Collapse
+          // defaultActiveKey={["1"]}
+          className="lecture"
+          onChange={callback}
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => (
+            <CaretRightOutlined rotate={isActive ? 90 : 0} />
+          )}
+        >
+          <Panel header={<HeaderPanel title={title} order={order} />} key="1">
+            <p>{text}</p>
+          </Panel>
+        </Collapse>
+      </LectureStyled>
       <AddLectureArrow
         type={TYPE_LECTURES2.LECTURE}
         isFocus={isFocus}
@@ -99,18 +118,6 @@ export default function Lecture({ title, order, sectionId }) {
         handleClickAddLecture={handleClickAddLecture}
       />
       {inputSection}
-      <LectureStyled>
-        <Collapse
-          // defaultActiveKey={["1"]}
-          className="lecture"
-          onChange={callback}
-          expandIconPosition="right"
-        >
-          <Panel header={<HeaderPanel title={title} order={order} />} key="1">
-            <p>{text}</p>
-          </Panel>
-        </Collapse>
-      </LectureStyled>
     </>
   )
 }
