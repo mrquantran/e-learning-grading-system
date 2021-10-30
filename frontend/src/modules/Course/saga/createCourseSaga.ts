@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   CREATE_LECTURE,
+  DELETE_LECTURE,
   UPDATE_COURSE_LECTURE,
   UPDATE_LECTURE_SECTION
 } from "./../action/manageCourseAction"
@@ -264,6 +265,50 @@ function* createLecture({ payload }: any) {
   }
 }
 
+function* deleteLecture({ payload }: any) {
+  const selectionCourse = yield select(getSectionOfCourse)
+  const {
+    //sectionId will deleted
+    // id of course lecture create
+    lectureId,
+    sectionId
+  } = payload
+  try {
+    yield put({ type: actionManageCourse.DELETE_COURSE_LECTURE.REQUEST })
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { data } = yield call(API.lectureMaterialAPI.deleteLecture, lectureId)
+
+    let newSection = [...selectionCourse]
+    // eslint-disable-next-line array-callback-return
+    newSection = newSection.map(item => {
+      if (item.id === sectionId) {
+        return {
+          ...item,
+          lecturesMaterial: item.lecturesMaterial.filter(lecture =>
+            lecture.id !== lectureId ? true : false
+          )
+        }
+      }
+      return item
+    })
+
+    yield put({
+      type: actionManageCourse.DELETE_LECTURE.SUCCESS,
+      payload: newSection
+    })
+
+    const message = "Your section has been deleted"
+    successNotification(message)
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionManageCourse.DELETE_COURSE_LECTURE.ERROR,
+      payload: error.message
+    })
+  }
+}
+
 function* watchDeleteCourseSectionLecture() {
   yield takeLatest(DELETE_COURSE_LECTURE, deleteSectionLecture)
 }
@@ -292,6 +337,10 @@ function* watchCreateLectureMaterial() {
   yield takeLatest(CREATE_LECTURE, createLecture)
 }
 
+function* watchDeleteLectureMaterial() {
+  yield takeLatest(DELETE_LECTURE, deleteLecture)
+}
+
 export default function* createCourseSaga() {
   yield all([
     watchCreateDraftCourse(),
@@ -299,6 +348,7 @@ export default function* createCourseSaga() {
     watchDeleteCourseSectionLecture(),
     watchUpdateLecture(),
     watchUpdateSection(),
-    watchCreateLectureMaterial()
+    watchCreateLectureMaterial(),
+    watchDeleteLectureMaterial()
   ])
 }

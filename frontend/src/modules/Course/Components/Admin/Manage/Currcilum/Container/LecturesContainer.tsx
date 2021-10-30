@@ -45,6 +45,7 @@ const LectureList = React.memo(function LectureList({
               )}
             >
               <Lecture
+                id={item.id}
                 sectionId={sectionId}
                 order={index + 1}
                 title={item.title}

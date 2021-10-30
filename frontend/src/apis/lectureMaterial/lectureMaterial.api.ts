@@ -8,9 +8,9 @@ const createLecture = (sectionId, data): Promise<AxiosResponse<any>> => {
   return axios.post(`/lectures/${sectionId}/lectures-material`, data)
 }
 
-// const deleteSectionLecture = (sectionId): Promise<AxiosResponse<any>> => {
-//   return axios.delete(`/lectures/${sectionId}`)
-// }
+const deleteLecture = (lectureId): Promise<AxiosResponse<any>> => {
+  return axios.delete(`/lectures-material/${lectureId}`)
+}
 
 // const updateCourseLecture = (courseId, items): Promise<AxiosResponse<any>> => {
 //   const data = { items }
@@ -18,6 +18,7 @@ const createLecture = (sectionId, data): Promise<AxiosResponse<any>> => {
 // }
 
 const lectureMaterialAPI = {
-  createLecture
+  createLecture,
+  deleteLecture
 }
 export default lectureMaterialAPI

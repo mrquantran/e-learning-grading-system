@@ -42,9 +42,10 @@ const deleteLecture = async (req, res) => {
   try {
     const { id: lectureId } = req.params;
 
-    if (!await isTeacherEnrollWithLectureId(req, res)) {
-      return res.status(403).json({ message: 'you dont have permission to perform this action' });
-    }
+    // if (!await isTeacherEnrollWithLectureId(req, res)) {
+    // eslint-disable-next-line max-len
+    //   return res.status(403).json({ message: 'you dont have permission to perform this action' });
+    // }
 
     const getLectureMaterial = await prisma.lecturesMaterial.findUnique({
       where: {

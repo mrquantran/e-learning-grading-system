@@ -165,6 +165,7 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
     case actionsCreateCourse.CREATE_COURSE_SECTION_LECTURE.SUCCESS:
     case actionsManageCourse.DELETE_COURSE_LECTURE.SUCCESS:
     case actionsManageCourse.UPDATE_LECTURE_SECTION.SUCCESS:
+    case actionsManageCourse.DELETE_LECTURE.SUCCESS:
     case actionsManageCourse.CREATE_LECTURE.SUCCESS: {
       return {
         ...state,
