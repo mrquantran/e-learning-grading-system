@@ -47,9 +47,9 @@ export default function LeftMenuManage({ selectedKey, setSelectedKey }) {
       >
         {renderSubMenu()}
       </Menu>
-      <ButtonStyled type="submit" purple style={{ margin: "20px 20px 15px" }}>
+      {/* <ButtonStyled type="submit" purple style={{ margin: "20px 20px 15px" }}>
         Submit for Review
-      </ButtonStyled>
+      </ButtonStyled> */}
     </LeftMenuManageStyled>
   )
 }
