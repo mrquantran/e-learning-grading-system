@@ -17,7 +17,9 @@ export const ContentRow = styled.div`
     props.marginY &&
     css`
       &:hover {
-        border: 1px solid #d1d7dc;
+        .descriptionContent {
+          border: 1px solid #d1d7dc;
+        }
       }
       margin: 10px 0;
     `}

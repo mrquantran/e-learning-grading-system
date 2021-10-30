@@ -43,9 +43,14 @@ export default function ContentLecture({
     <>
       {description.component}
       <ContentRow marginY>
-        <ContentStyled onClick={handleClickDescription}>
-          {!description.isFocus ? <p>{content}</p> : null}
-        </ContentStyled>
+        {content ? (
+          <ContentStyled
+            className="descriptionContent"
+            onClick={handleClickDescription}
+          >
+            {!description.isFocus ? <p>{content}</p> : null}
+          </ContentStyled>
+        ) : null}
         {!content ? (
           <FlexItemStyled>
             <ButtonStyled udemy onClick={handleClickDescription}>
