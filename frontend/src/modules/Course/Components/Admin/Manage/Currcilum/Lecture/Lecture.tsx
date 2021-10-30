@@ -7,7 +7,7 @@ import {
   CaretRightOutlined
 } from "@ant-design/icons"
 import { FlexItemStyled } from "@/stylesheets/Div/Div.styled"
-import { ButtonGroup, ButtonStyled } from "@/stylesheets/Button/Button.styled"
+import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import { SpanGroup } from "@/stylesheets/Text/Text.styled"
 import SelectLecture from "../SelectLecture/SelectLecture"
 import AddLectureArrow from "../AddLectureArrow/AddLectureArrow"
@@ -17,10 +17,7 @@ import ModeEditIcon from "@mui/icons-material/ModeEdit"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import { DELETE_LECTURE } from "@/modules/Course/action/manageCourseAction"
 import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
-import InputLecture from "../InputLecture/InputLecture"
-import { FormGroup, InputAntd } from "@/stylesheets/Input/Inputantd.styled"
-import { Field, Form, Formik } from "formik"
-import { SectionCreateInput } from "../Section/Section.styled"
+import InputEditLecture from "../InputEditLecture/InputEditLecture"
 import ContentLecture from "../ContentLecture/ContentLecture"
 
 const { Panel } = Collapse
@@ -29,13 +26,7 @@ function callback(key) {
   // console.log(key)
 }
 
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`
-
-export default function Lecture({ title, order, sectionId, id }) {
+export default function Lecture({ title, order, sectionId, id, description }) {
   const [isFocus, setFocus] = useState<boolean>(false)
   const [inputSection, setInputSection] = useState<any>(null)
   const dispatch = useDispatch()
@@ -44,38 +35,6 @@ export default function Lecture({ title, order, sectionId, id }) {
   const [isFocusEdit, setFocusEdit] = useState<boolean>(false)
 
   const TYPE_DEFAULT = TYPE_LECTURE_ID.LECTURE
-
-  const {
-    title: titleInput,
-    formField,
-    updateAction
-  }: any = TYPE_LECTURE.find(item => {
-    return item.id === TYPE_DEFAULT
-  })
-
-  const renderField = () => {
-    return formField.map(item => {
-      return (
-        <FormGroup>
-          <Field name={item.name} type="text">
-            {({
-              field, // { name, value, onChange, onBlur }
-              form: { touched, errors }, // also values, setXXXX, handleXXXX, dirty, isValid, status, etc.
-              meta
-            }) => (
-              <InputAntd
-                section
-                id={item.name}
-                placeholder={item.placeHolder}
-                name={item.name}
-                {...field}
-              />
-            )}
-          </Field>
-        </FormGroup>
-      )
-    })
-  }
 
   const handleCloseEditSection = () => {
     setEditLecture(null)
@@ -101,46 +60,13 @@ export default function Lecture({ title, order, sectionId, id }) {
 
   const handleClickEditLecture = () => {
     setEditLecture(
-      <SectionCreateInput className="ml-5">
-        <Formik
-          initialValues={{ title: "" }}
-          onSubmit={async (values, { resetForm }) => {
-            // eslint-disable-next-line no-console
-            console.log("values", values)
-            dispatch({
-              type: updateAction,
-              payload: { data: values, sectionId, lectureId: id }
-            })
-            handleCloseEditSection()
-            resetForm()
-          }}
-        >
-          {props => (
-            <Form onSubmit={props.handleSubmit}>
-              <div style={{ flex: 1 }}>
-                {renderField()}
-                <ButtonGroup>
-                  <ButtonStyled
-                    onClick={props.handleSubmit}
-                    udemy
-                    purple
-                    type="submit"
-                  >
-                    Edit {titleInput}
-                  </ButtonStyled>
-                  <ButtonStyled
-                    onClick={handleCloseEditSection}
-                    dangerText
-                    transparent
-                  >
-                    Cancel
-                  </ButtonStyled>
-                </ButtonGroup>
-              </div>
-            </Form>
-          )}
-        </Formik>
-      </SectionCreateInput>
+      <InputEditLecture
+        editContent={false}
+        type={TYPE_DEFAULT}
+        handleClose={handleCloseEditSection}
+        lectureId={id}
+        sectionId={sectionId}
+      />
     )
     setFocusEdit(true)
   }
@@ -234,7 +160,11 @@ export default function Lecture({ title, order, sectionId, id }) {
             header={<HeaderPanel title={title} order={order} />}
             key="1"
           >
-            <ContentLecture />
+            <ContentLecture
+              lectureId={id}
+              sectionId={sectionId}
+              description={description}
+            />
           </Panel>
         </Collapse>
       </LectureStyled>

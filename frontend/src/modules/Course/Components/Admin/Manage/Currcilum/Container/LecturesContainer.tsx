@@ -49,6 +49,7 @@ const LectureList = React.memo(function LectureList({
                 sectionId={sectionId}
                 order={index + 1}
                 title={item.title}
+                description={item.description}
               />
               {provided.placeholder}
             </div>

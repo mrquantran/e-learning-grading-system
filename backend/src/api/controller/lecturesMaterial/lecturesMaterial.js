@@ -2,6 +2,7 @@
 /* eslint-disable import/prefer-default-export */
 import pkg from '@prisma/client';
 import { isTeacherEnrollWithLectureId } from '../../helpers/course/isStudentEnroll.js';
+import { removeEmpty } from '../../helpers/functionNeeded.js';
 
 const { PrismaClient } = pkg;
 const prisma = new PrismaClient();
@@ -79,7 +80,7 @@ const updateLecture = async (req, res) => {
   try {
     const { id: lectureId } = req.params;
 
-    const { title } = req.body;
+    const { title, description } = req.body;
 
     // if (!await isTeacherEnrollWithLectureId(req, res)) {
     // eslint-disable-next-line max-len
@@ -99,16 +100,17 @@ const updateLecture = async (req, res) => {
 
     const dataUpdate = {
       title,
+      description,
     };
+
+    const newData = removeEmpty(dataUpdate);
 
     // eslint-disable-next-line no-unused-vars
     const lectureMaterial = await prisma.lecturesMaterial.update({
       where: {
         id: Number(lectureId),
       },
-      data: {
-        title: dataUpdate.title,
-      },
+      data: newData,
     });
 
     // const message = 'Your curriculum has been updated';

@@ -31,6 +31,7 @@ const getLectureOfCourse = async (req, res) => {
                 id: true,
                 title: true,
                 sort: true,
+                description: true,
                 createdAt: true,
                 lectureId: true,
               },

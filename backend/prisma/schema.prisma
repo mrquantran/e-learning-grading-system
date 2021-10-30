@@ -35,12 +35,13 @@ model Lectures {
 }
 
 model LecturesMaterial {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  title     String
-  lectureId Int
-  sort      Int?
-  lecture   Lectures @relation(fields: [lectureId], references: [id])
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  title       String
+  description String?
+  lectureId   Int
+  sort        Int?
+  lecture     Lectures @relation(fields: [lectureId], references: [id])
 }
 
 model FavoriteCourse {

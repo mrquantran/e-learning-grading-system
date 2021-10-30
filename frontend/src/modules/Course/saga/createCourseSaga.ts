@@ -328,7 +328,11 @@ function* updateLecture({ payload }: any) {
           ...item,
           lecturesMaterial: item.lecturesMaterial.map(lecture => {
             if (lecture.id === lectureId)
-              return { ...lecture, title: data.title }
+              return {
+                ...lecture,
+                title: data.title,
+                description: data.description
+              }
             return lecture
           })
         }

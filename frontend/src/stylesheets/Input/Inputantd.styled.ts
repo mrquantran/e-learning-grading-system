@@ -64,18 +64,24 @@ export const InputAntd = styled(Input)`
   height: 44px;
 
   ${props =>
+    props.section &&
+    css`
+      height: 34px;
+      padding: 0 10px;
+      font-size: 13px;
+      line-height: 1.287;
+    `}
+
+  ${props =>
     props.description &&
     css`
       height: 75px;
     `}
 
-  ${props =>
-    props.section &&
+      ${props =>
+    props.smallDescription &&
     css`
-      height: 34px;
-      padding: 0 10 px;
-      font-size: 13px;
-      line-height: 1.287;
+      height: 50px;
     `}
 `
 
