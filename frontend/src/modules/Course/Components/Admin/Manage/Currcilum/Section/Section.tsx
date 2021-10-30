@@ -14,10 +14,17 @@ import InputSection from "../InputSection/InputSection"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import ModeEditIcon from "@mui/icons-material/ModeEdit"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
-import { TypeSection, TYPE_INPUT } from "@/utils/ENUM"
+import {
+  TypeSection,
+  TYPE_INPUT,
+  TYPE_LECTURES,
+  TYPE_LECTURES2
+} from "@/utils/ENUM"
 import { useDispatch } from "react-redux"
 import { DELETE_COURSE_LECTURE } from "@/modules/Course/action/manageCourseAction"
 import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
+import AddLectureArrow from "../AddLectureArrow/AddLectureArrow"
+import SelectLecture from "../SelectLecture/SelectLecture"
 
 const { Panel } = Collapse
 
@@ -33,6 +40,9 @@ export default function Section({
   const [editSection, setEditSection] = useState<any>(null)
   const [isFocusEdit, setFocusEdit] = useState<boolean>(false)
   const idSection = Number(id.replace(TypeSection.SECTION, ""))
+
+  const [isFocusLecture, setFocusLecture] = useState<boolean>(false)
+  const [inputLecture, setInputLecture] = useState<any>(null)
 
   const dispatch = useDispatch()
 
@@ -85,6 +95,22 @@ export default function Section({
     }
   }
 
+  const handleClickAddLecture = () => {
+    setInputLecture(
+      <SelectLecture
+        positionAdd={0}
+        sectionId={idSection}
+        handleCloseLecture={handleCloseLecture}
+      />
+    )
+    setFocusLecture(true)
+  }
+
+  const handleCloseLecture = () => {
+    setInputLecture(null)
+    setFocusLecture(false)
+  }
+
   const renderHeaderPanel = () => {
     if (!isFocusEdit) {
       return (
@@ -124,6 +150,12 @@ export default function Section({
               </span>
             </SectionTitle>
           </FlexItemStyled>
+          <AddLectureArrow
+            type={TYPE_LECTURES2.SECTION}
+            isFocus={isFocusLecture}
+            handleCloseLecture={handleCloseLecture}
+            handleClickAddLecture={handleClickAddLecture}
+          />
         </SectionContent>
       )
     }
@@ -132,11 +164,11 @@ export default function Section({
   return (
     <div style={{ position: "relative" }}>
       <EditArrow
+        type={TYPE_LECTURES.CHAPTER}
         isFocus={isFocus}
         handleCloseAddSection={handleCloseAddSection}
         handleClickAddSection={handleClickAddSection}
       />
-      {/* <InputSection /> */}
       {inputSection}
       <SectionStyled key={id}>
         <Collapse
@@ -149,10 +181,13 @@ export default function Section({
         >
           {editSection}
           <Panel showArrow={!isFocusEdit} header={renderHeaderPanel()} key={id}>
-            <LecturesContainer idSection={id} lecture={lecturesMaterial} />
+            {inputLecture}
+            <LecturesContainer
+              id={id}
+              idSection={idSection}
+              lecture={lecturesMaterial}
+            />
           </Panel>
-
-          {/* <Lecture /> */}
         </Collapse>
       </SectionStyled>
     </div>

@@ -6,16 +6,19 @@ import account from './account/index.js';
 import enrollCourse from './enrollment/index.js';
 import users from './user/index.js';
 import lectures from './lectures/index.js';
+import lecturesMaterial from './lectureMaterial/index.js';
 
 const path = {
   paths: {
     ...account,
     ...courses,
     ...lectures,
+    ...lecturesMaterial,
     ...enrollCourse,
     ...tests,
     ...testResult,
     ...users,
+
   },
 };
 

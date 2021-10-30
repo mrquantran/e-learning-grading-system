@@ -10,47 +10,70 @@ export const lectureArray = [
   { id: "Lecture4", content: "Hello" }
 ]
 
-const LectureList = React.memo(function LectureList({ section }: any) {
-  return section.map((item, index: number) => {
-    return (
-      <Draggable
-        draggableId={`lecture${item.id.toString()}`}
-        index={index}
-        key={item.id.toString()}
-      >
-        {provided => (
-          <div
-            ref={provided.innerRef}
-            {...provided.draggableProps}
-            {...provided.dragHandleProps}
-            index={index}
-          >
-            <Lecture order={index + 1} title={item.title} />
-            {provided.placeholder}
-          </div>
-        )}
-      </Draggable>
-    )
-  })
-})
-
 const getListStyle = isDraggingOver => ({
   padding: 8,
   margin: "10px 0"
 })
 
-export default function LecturesContainer({ lecture, idSection }: any) {
-  return (
-    <Droppable droppableId={idSection} type={TypeSection.LECTURE}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          style={getListStyle(snapshot.isDraggingOver)}
+const getItemStyle = (isDragging, draggableStyle) => ({
+  ...draggableStyle,
+  opacity: isDragging ? 0.8 : 1
+})
+
+const LectureList = React.memo(function LectureList({
+  section,
+  sectionId
+}: any) {
+  return section.map((item, index: number) => {
+    return (
+      <>
+        <Draggable
+          draggableId={`lecture${item.id}`}
+          index={index}
+          key={item.id.toString()}
         >
-          <LectureList section={lecture} />
-          {provided.placeholder}
-        </div>
-      )}
-    </Droppable>
+          {(provided, snapshot) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.draggableProps}
+              {...provided.dragHandleProps}
+              key={item.id}
+              index={index}
+              style={getItemStyle(
+                snapshot.isDragging,
+                provided.draggableProps.style
+              )}
+            >
+              <Lecture
+                id={item.id}
+                sectionId={sectionId}
+                order={index + 1}
+                title={item.title}
+              />
+              {provided.placeholder}
+            </div>
+          )}
+        </Draggable>
+      </>
+    )
+  })
+})
+
+export default function LecturesContainer({ lecture, idSection, id }: any) {
+  return (
+    <>
+      <Droppable droppableId={id} type={TypeSection.LECTURE}>
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            style={getListStyle(snapshot.isDraggingOver)}
+          >
+            {/* <SelectLecture /> */}
+            <LectureList section={lecture} sectionId={idSection} />
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+    </>
   )
 }

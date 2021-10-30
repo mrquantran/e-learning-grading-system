@@ -5,9 +5,9 @@ import express from 'express';
 import coursesList from './courses/coursesList.js';
 import testResults from './test-result/testResult.js';
 import coursesEnrollment from './enrollment/enrollmentCourse.js';
-import testResultTopScore from './test-result/testResultTopScore.js';
+// import testResultTopScore from './test-result/testResultTopScore.js';
 import users from './user/user.js';
-
+import lecturesMaterial from './lectureMaterial/lecturesMaterial.js';
 import test from './test/test.js';
 import login from './account/login.js';
 import email from './account/email.js';
@@ -36,6 +36,9 @@ router.use('/courses/tests', testResults);
 
 // lectures
 router.use('/', lectures);
+
+// lectures material
+router.use('/', lecturesMaterial);
 
 // router.use('/user/top', testResultTopScore);
 

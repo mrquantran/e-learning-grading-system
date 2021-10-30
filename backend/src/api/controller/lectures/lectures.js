@@ -30,6 +30,7 @@ const getLectureOfCourse = async (req, res) => {
               select: {
                 id: true,
                 title: true,
+                sort: true,
                 createdAt: true,
                 lectureId: true,
               },
@@ -42,9 +43,13 @@ const getLectureOfCourse = async (req, res) => {
     const data = [];
 
     lectures.lectures.sort((a, b) => a.sort - b.sort);
+    const newItem = lectures.lectures.map((item) => {
+      const sortLectureMaterial = [...item.lecturesMaterial];
+      return { ...item, lecturesMaterial: sortLectureMaterial.sort((a, b) => a.sort - b.sort) };
+    });
 
     // eslint-disable-next-line array-callback-return
-    lectures.lectures.map(({ lecturesMaterial, ...rest }, index) => {
+    newItem.map(({ lecturesMaterial, ...rest }, index) => {
       data.push({ ...rest, objectIndex: index + 1, _class: 'chapter' });
       for (const section of lecturesMaterial) {
         data.push({
@@ -167,13 +172,14 @@ const updateSection = async (req, res) => {
 
       });
 
-      lecture.lecturesMaterial.forEach(async (item) => {
+      lecture.lecturesMaterial.forEach(async (item, indexLecture) => {
         await prisma.lecturesMaterial.update({
           where: {
             id: Number(item.id),
           },
           data: {
             title: item.title,
+            sort: indexLecture,
             lecture: {
               connect: {
                 id: Number(item.lectureId),

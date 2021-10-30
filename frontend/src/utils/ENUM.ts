@@ -1,3 +1,8 @@
+import {
+  CREATE_LECTURE,
+  UPDATE_LECTURE
+} from "@/modules/Course/action/manageCourseAction"
+
 export const REGEX_EMAIL =
   "^[a-z][a-z0-9_.]{5,32}@[a-z0-9]{2,}(.[a-z0-9]{2,4}){1,2}$"
 
@@ -19,9 +24,78 @@ export const TYPE_LECTURES = {
   SECTION: "section"
 }
 
+export const TYPE_LECTURES2 = {
+  SECTION: "section",
+  LECTURE: "lecture"
+}
+
 export const TYPE_CREATE_COURSE = {
   COURSE: "course",
   TEST: "test"
+}
+
+export const TYPE_LECTURE = [
+  {
+    id: "lecture",
+    title: "Lecture",
+    titleInput: "New Lecture:",
+    submitText: "Add Lecture",
+    formField: [{ name: "title", placeHolder: "Enter a title" }],
+    dispatchAction: CREATE_LECTURE,
+    updateAction: UPDATE_LECTURE,
+    active: true
+  },
+  {
+    id: "quiz",
+    title: "Quiz",
+    titleInput: "New Quiz:",
+    submitText: "Add Quiz",
+    formField: [
+      { name: "title", placeHolder: "Enter a title" },
+      { name: "description", placeHolder: "Quiz description" }
+    ],
+    dispatchAction: CREATE_LECTURE,
+    updateAction: UPDATE_LECTURE,
+    active: true
+  },
+  {
+    id: "coding",
+    title: "Coding Exercise",
+    titleInput: "New Coding Exercise:",
+    submitText: "Add Coding Exercise",
+    formField: [{ name: "title", placeHolder: "Enter a title" }],
+    dispatchAction: CREATE_LECTURE,
+    updateAction: UPDATE_LECTURE,
+    active: true
+  },
+  {
+    id: "practiceTest",
+    title: "Practice Test",
+    titleInput: "New Practice Test:",
+    submitText: "",
+    formField: [{ name: "title", placeHolder: "Enter a title" }],
+    dispatchAction: CREATE_LECTURE,
+    updateAction: UPDATE_LECTURE,
+    active: false
+  },
+  {
+    id: "assignment",
+    title: "Assignment:",
+    titleInput: "",
+    formField: [{ name: "title", placeHolder: "Enter a title" }],
+    dispatchAction: CREATE_LECTURE,
+    updateAction: UPDATE_LECTURE,
+    submitText: "Add Assignment",
+    active: true
+  }
+]
+
+export const TYPE_LECTURE_ID = {
+  LECTURE: "lecture",
+  QUIZ: "quiz",
+  CODING: "coding",
+  PRACTICE_TEST: "practiceTest",
+  ASSIGNMENT: "assignment"
 }
 
 export const OPTIONS_LEVEL = [

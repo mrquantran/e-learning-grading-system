@@ -83,7 +83,7 @@ export const ButtonEdit = styled.button`
     }
   }
 
-  .anticon{
+  .addSectionIcon{
     transition: all .5s ease-in-out;
       animation: ${({ isFocus }) =>
         isFocus

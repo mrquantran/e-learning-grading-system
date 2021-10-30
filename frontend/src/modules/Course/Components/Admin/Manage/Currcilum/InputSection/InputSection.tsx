@@ -60,12 +60,16 @@ export default function InputSection({
     return type === TYPE_INPUT.CREATE ? "Add section " : "Save section"
   }
 
+  const editOrAddTItle = () => {
+    return type === TYPE_INPUT.CREATE ? "Add Section " : "Edit Section"
+  }
+
   return (
     <SectionStyled type={type} input onClick={e => e.stopPropagation()}>
       <SectionContent>
         <FlexItemStyled baseline>
           <SectionTitle>
-            <span>New Section:{/* Section {order}:{" "} */}</span>
+            <span>{editOrAddTItle()}</span>
           </SectionTitle>
           <SectionCreateInput>
             {/* <FileTextOutlined /> */}
