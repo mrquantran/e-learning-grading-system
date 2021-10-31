@@ -10,6 +10,7 @@ import {
   UPDATE_COURSE_LECTURE
 } from "@/modules/Course/action/manageCourseAction"
 import { RootState } from "@/redux/reducer/rootReducer"
+import { ManageWrapperComponentStyled } from "@/modules/Course/Container/Admin/ManageContentContainer/ManageContainer.styled"
 
 // a little function to help us with reordering the result
 const reorder = (list, startIndex, endIndex) => {
@@ -185,44 +186,46 @@ export default function Curriculum() {
   }
 
   return (
-    <CurriculumContainer>
-      <CurriculumTitle>
-        <div className="pb20">
-          Start putting together your course by creating sections, lectures and
-          practice (quizzes, coding exercises and assignments).
-        </div>
-        <p data-purpose="free-course-message">
-          If you’re intending to offer your course for free, the total length of
-          video content must be less than 2 hours.
-        </p>
-      </CurriculumTitle>
-      <div>
-        <ul style={{ padding: 0 }}>
-          {/*Drag Drop container Section*/}
-          <DragDropContext
-            onDragEnd={onDragEnd}
-            onDragUpdate={e => {
-              // console.log(e)
-            }}
-          >
-            <Droppable
-              droppableId={TypeSection.SECTION}
-              type={TypeSection.SECTION}
+    <ManageWrapperComponentStyled>
+      <CurriculumContainer>
+        <CurriculumTitle>
+          <div className="pb20">
+            Start putting together your course by creating sections, lectures
+            and practice (quizzes, coding exercises and assignments).
+          </div>
+          <p data-purpose="free-course-message">
+            If you’re intending to offer your course for free, the total length
+            of video content must be less than 2 hours.
+          </p>
+        </CurriculumTitle>
+        <div>
+          <ul style={{ padding: 0 }}>
+            {/*Drag Drop container Section*/}
+            <DragDropContext
+              onDragEnd={onDragEnd}
+              onDragUpdate={e => {
+                // console.log(e)
+              }}
             >
-              {provided => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.draggableProps}
-                  {...provided.dragHandleProps}
-                >
-                  <SectionList section={state.section} />
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
-        </ul>
-      </div>
-    </CurriculumContainer>
+              <Droppable
+                droppableId={TypeSection.SECTION}
+                type={TypeSection.SECTION}
+              >
+                {provided => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <SectionList section={state.section} />
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </ul>
+        </div>
+      </CurriculumContainer>
+    </ManageWrapperComponentStyled>
   )
 }

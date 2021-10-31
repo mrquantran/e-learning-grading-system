@@ -17,17 +17,23 @@ export default function LeftMenuManage({ selectedKey, setSelectedKey }) {
 
   useEffect(() => {
     setSelectedKey(course[0].childTabs[1].id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const renderSubMenu = () => {
     return course.map(item => (
       <SubMenu key={item.id} title={item.title}>
-        {item.childTabs.map(child => (
-          <Menu.Item key={child.id}>
-            <RadioAntd disabled={true} />
-            {child.title}
-          </Menu.Item>
-        ))}
+        {item.childTabs.map(child => {
+          if (child.id === "settings") {
+            return null
+          }
+          return (
+            <Menu.Item key={child.id}>
+              <RadioAntd disabled={true} />
+              {child.title}
+            </Menu.Item>
+          )
+        })}
       </SubMenu>
     ))
   }
@@ -37,7 +43,8 @@ export default function LeftMenuManage({ selectedKey, setSelectedKey }) {
       <Menu
         // theme={this.state.theme}
         // onClick={this.handleClick}
-        defaultSelectedKeys={[course[0].childTabs[1].id]}
+        selectedKeys={selectedKey}
+        // defaultSelectedKeys={[selectedKey]}
         style={{ width: 256 }}
         defaultOpenKeys={course.map(item => item.id)}
         mode="inline"

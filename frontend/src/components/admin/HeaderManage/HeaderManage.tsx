@@ -5,9 +5,10 @@ import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 
 import { SettingOutlined } from "@ant-design/icons"
 import { RootState } from "@/redux/reducer/rootReducer"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { history } from "@/App/App"
 import pathRoute from "@/routes/routePath"
+import ManageCourseAction from "@/modules/Course/action/manageCourseAction"
 
 const button = [
   { id: "film&Edit", button: <ButtonStyled /> },
@@ -32,6 +33,13 @@ export default function HeaderManage({ headerExtra }) {
     (state: RootState) => state.create.detail.data
   )
 
+  const dispatch = useDispatch()
+
+  const handleChangeSetting = () => {
+    const settingComponent = "settings"
+    dispatch(ManageCourseAction.changeSelectedComponent(settingComponent))
+  }
+
   return (
     <ContainerHeaderManage>
       <PageHeader
@@ -40,7 +48,10 @@ export default function HeaderManage({ headerExtra }) {
         title={title}
         subTitle="0min of video content uploaded"
         tags={<Tag color="blue">Draft</Tag>}
-        extra={[buttonExtra?.button, <SettingOutlined />]}
+        extra={[
+          buttonExtra?.button,
+          <SettingOutlined onClick={handleChangeSetting} />
+        ]}
       ></PageHeader>
     </ContainerHeaderManage>
   )

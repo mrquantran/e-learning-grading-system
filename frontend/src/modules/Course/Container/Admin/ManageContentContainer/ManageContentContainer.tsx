@@ -3,10 +3,7 @@ import { FETCH_INSTRUCTOR_COURSE_DETAIL } from "@/modules/Course/action/manageCo
 import TitleContent from "@/modules/Course/Components/Admin/Manage/TitleContent/TitleContent"
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
-import {
-  ManageContentContainerStyled,
-  ManageWrapperComponentStyled
-} from "./ManageContainer.styled"
+import { ManageContentContainerStyled } from "./ManageContainer.styled"
 
 export default function ManageContentContainer({ selectedComponent }) {
   const router = useRouter()
@@ -26,9 +23,7 @@ export default function ManageContentContainer({ selectedComponent }) {
       <div>
         <TitleContent title={selectedComponent.title} />
       </div>
-      <ManageWrapperComponentStyled>
-        <selectedComponent.component />
-      </ManageWrapperComponentStyled>
+      <selectedComponent.component />
     </ManageContentContainerStyled>
   )
 }

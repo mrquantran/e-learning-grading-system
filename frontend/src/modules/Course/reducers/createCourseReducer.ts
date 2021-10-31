@@ -16,6 +16,7 @@ import Pricing from "../Components/Admin/Manage/Pricing/Pricing"
 import Promotions from "../Components/Admin/Manage/Promotions/Promotions"
 import CourseMessage from "../Components/Admin/Manage/CourseMessage/CourseMessage"
 import LandingPageCourse from "@/modules/Course/Components/Admin/Manage/LandingPageCourse/LandingPageCourse"
+import Settings from "../Components/Admin/Manage/Settings/Settings"
 
 const initialState = {
   isFetching: false,
@@ -77,6 +78,11 @@ const initialState = {
             id: "courseMessage",
             title: "Course Message",
             component: CourseMessage
+          },
+          {
+            id: "settings",
+            title: "Settings",
+            component: Settings
           }
         ]
       }

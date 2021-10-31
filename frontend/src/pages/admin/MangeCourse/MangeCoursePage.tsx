@@ -1,11 +1,9 @@
 import HeaderManage from "@/components/admin/HeaderManage/HeaderManage"
 import LeftMenuManage from "@/components/admin/LeftMenuManage/LeftMenuManage"
-import ManageCourseAction, {
-  CHANGE_SELECTED_COMPONENT
-} from "@/modules/Course/action/manageCourseAction"
+import ManageCourseAction from "@/modules/Course/action/manageCourseAction"
 import ManageContentContainer from "@/modules/Course/Container/Admin/ManageContentContainer/ManageContentContainer"
 import { RootState } from "@/redux/reducer/rootReducer"
-import React, { useState } from "react"
+import React from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { ManageCourseStyled } from "./ManageCourse.styled"
 
