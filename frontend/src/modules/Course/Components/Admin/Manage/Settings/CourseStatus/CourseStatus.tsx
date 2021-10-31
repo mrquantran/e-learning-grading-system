@@ -1,8 +1,21 @@
+import { useRouter } from "@/hooks/useRouter"
+import ManageCourseAction from "@/modules/Course/action/manageCourseAction"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import React from "react"
+import { useDispatch } from "react-redux"
 import { CourseStatusWrapper, SettingWrapper } from "../Settings.styled"
 
 export default function CourseStatus() {
+  const dispatch = useDispatch()
+
+  const router = useRouter()
+  const { courseId } = router.query
+
+  const handleDeleteCourse = () => {
+    console.log("click")
+    dispatch(ManageCourseAction.deleteCourse(courseId))
+  }
+
   return (
     <SettingWrapper>
       <span>
@@ -19,7 +32,13 @@ export default function CourseStatus() {
         </p>
       </CourseStatusWrapper>
       <CourseStatusWrapper>
-        <ButtonStyled delete sizeSm style={{ flex: 1 }}>
+        <ButtonStyled
+          delete
+          sizeSm
+          type="button"
+          style={{ flex: 1 }}
+          onClick={handleDeleteCourse}
+        >
           Delete
         </ButtonStyled>
         <p style={{ flex: 4, paddingLeft: "20px" }}>

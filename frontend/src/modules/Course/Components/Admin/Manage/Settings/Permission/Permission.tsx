@@ -69,7 +69,7 @@ export default function Permission() {
         </TableContainer>
         <div className="mt-20">
           <FormGroup>
-            <InputAntd placeHolder="Enter an email associated with a Udemy account" />
+            <InputAntd placeholder="Enter an email associated with a Udemy account" />
           </FormGroup>
         </div>
         <div>

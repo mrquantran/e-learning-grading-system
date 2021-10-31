@@ -14,11 +14,24 @@ export const CREATE_LECTURE = `${store}/CREATE_LECTURE`
 export const DELETE_LECTURE = `${store}/DELETE_LECTURE`
 export const UPDATE_LECTURE = `${store}/UPDATE_LECTURE`
 
+export const DELETE_COURSE = `${store}/DELETE_COURSE`
+
 export default class ManageCourseAction {
   static changeSelectedComponent = key => ({
     type: CHANGE_SELECTED_COMPONENT,
     payload: key
   })
+
+  static deleteCourse = id => ({
+    type: DELETE_COURSE,
+    payload: id
+  })
+
+  static DELETE_COURSE = {
+    REQUEST: `${store}/DELETE_COURSE_REQUEST`,
+    SUCCESS: `${store}/DELETE_COURSE_SUCCESS`,
+    ERROR: `${store}/DELETE_COURSE_ERROR`
+  }
 
   static FETCH_INSTRUCTOR_COURSE_DETAIL = {
     REQUEST: `${store}/FETCH_INSTRUCTOR_COURSE_DETAIL_REQUEST`,
