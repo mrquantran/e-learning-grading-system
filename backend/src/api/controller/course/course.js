@@ -249,6 +249,70 @@ async function updateCourse(req, res) {
     return res.status(500).json({ message: httpError });
   }
 }
+
+async function deleteCourse(req, res) {
+  const { id } = req.params;
+  try {
+    if (!await isTeacherEnroll(req, res)) {
+      return res.status(403).json({ message: 'you dont have permission to perform this action' });
+    }
+
+    // update course
+    // eslint-disable-next-line no-unused-vars
+
+    const lectureInCourse = await prisma.lectures.findMany({
+      where: {
+        courseId: Number(id),
+      },
+    });
+
+    lectureInCourse.forEach(async (item) => {
+      await prisma.lectures.update({
+        where: {
+          id: Number(item.id),
+        },
+        data: {
+          lecturesMaterial: {
+            deleteMany: {},
+          },
+        },
+      });
+    });
+
+    await prisma.course.update({
+      where: { id: Number(id) },
+      data: {
+        lectures: {
+          deleteMany: {},
+        },
+        favoriteCourse: {
+          deleteMany: {},
+        },
+        members: {
+          deleteMany: {},
+        },
+        tests: {
+          deleteMany: {},
+        },
+      },
+    });
+
+    // eslint-disable-next-line no-shadow
+    await prisma.course.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    return res.status(200).json({ message: 'Your course has been deleted' });
+  } catch (error) {
+    console.log(error);
+    // 500 (Internal Server Error) - Something has gone wrong in your application.
+    const httpError = createHttpError(500, error);
+    return res.status(500).json({ message: httpError });
+  }
+}
+
 export const coursesController = {
   getCoursePublic,
   getEnrollCourses,
@@ -256,4 +320,5 @@ export const coursesController = {
   getDraftCourse,
   getCourseById,
   updateCourse,
+  deleteCourse,
 };

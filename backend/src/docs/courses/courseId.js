@@ -96,6 +96,9 @@ const getCoursesById = {
     tags: ['Courses'],
     description: 'Delete courses',
     operationId: 'deleteCourse',
+    security: [
+      { bearerAuth: [] },
+    ],
     parameters: [
       // expected params.
       {
