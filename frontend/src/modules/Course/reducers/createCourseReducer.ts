@@ -191,6 +191,18 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
         }
       }
     }
+    case actionsManageCourse.PUBLISH_COURSE.SUCCESS: {
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          data: {
+            ...state.detail.data,
+            isPublic: payload
+          }
+        }
+      }
+    }
     default:
       return state
   }

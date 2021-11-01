@@ -1,9 +1,10 @@
 import ModalConfirm, { defaultButton } from "@/components/Modal/ModalConfirm"
 import { useRouter } from "@/hooks/useRouter"
 import ManageCourseAction from "@/modules/Course/action/manageCourseAction"
+import { RootState } from "@/redux/reducer/rootReducer"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import React from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { CourseStatusWrapper, SettingWrapper } from "../Settings.styled"
 
 export default function CourseStatus() {
@@ -12,8 +13,33 @@ export default function CourseStatus() {
   const router = useRouter()
   const { courseId } = router.query
 
+  const {
+    data: { isPublic }
+  } = useSelector((state: RootState) => state.create.detail)
+
   const handleDispatchDelete = () => {
     dispatch(ManageCourseAction.deleteCourse(courseId))
+  }
+
+  const handleDispatchPublish = () => {
+    dispatch(ManageCourseAction.publishCourse(courseId))
+  }
+
+  const handlePublishCourse = () => {
+    if (isPublic) {
+      const defaultButtonModal = defaultButton({
+        text: "Yes",
+        confirm: handleDispatchPublish
+      })
+
+      ModalConfirm({
+        title: "Unpublish your course?",
+        content: "Are you sure you want to unpublish this course?",
+        button: defaultButtonModal
+      })
+    } else {
+      handleDispatchPublish()
+    }
   }
 
   const handleDeleteCourse = () => {
@@ -21,8 +47,6 @@ export default function CourseStatus() {
       text: "Yes",
       confirm: handleDispatchDelete
     })
-
-    console.log(defaultButtonModal)
 
     ModalConfirm({
       title: "Delete Your Course?",
@@ -39,8 +63,13 @@ export default function CourseStatus() {
         <p>This course is not published on the Udemy marketplace.</p>
       </span>
       <CourseStatusWrapper>
-        <ButtonStyled disabled2 sizeSm style={{ flex: 1 }}>
-          Unpublished
+        <ButtonStyled
+          onClick={handlePublishCourse}
+          disabled2
+          sizeSm
+          style={{ flex: 1 }}
+        >
+          {isPublic ? "Unpublished" : "Published"}
         </ButtonStyled>
         <p style={{ flex: 4, paddingLeft: "20px" }}>
           New students cannot find your course via search, but existing students

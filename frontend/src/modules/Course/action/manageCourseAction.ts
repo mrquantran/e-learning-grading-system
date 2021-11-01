@@ -16,6 +16,8 @@ export const UPDATE_LECTURE = `${store}/UPDATE_LECTURE`
 
 export const DELETE_COURSE = `${store}/DELETE_COURSE`
 
+export const PUBLISH_COURSE = `${store}/PUBLISH_COURSE`
+
 export default class ManageCourseAction {
   static changeSelectedComponent = key => ({
     type: CHANGE_SELECTED_COMPONENT,
@@ -26,6 +28,17 @@ export default class ManageCourseAction {
     type: DELETE_COURSE,
     payload: id
   })
+
+  static publishCourse = courseId => ({
+    type: PUBLISH_COURSE,
+    payload: courseId
+  })
+
+  static PUBLISH_COURSE = {
+    REQUEST: `${store}/PUBLISH_COURSE_REQUEST`,
+    SUCCESS: `${store}/PUBLISH_COURSE_SUCCESS`,
+    ERROR: `${store}/PUBLISH_COURSE_ERROR`
+  }
 
   static DELETE_COURSE = {
     REQUEST: `${store}/DELETE_COURSE_REQUEST`,

@@ -1,5 +1,5 @@
-import { all, call, put, takeLatest } from "@redux-saga/core/effects"
-import { DELETE_COURSE } from "../action/manageCourseAction"
+import { all, call, put, select, takeLatest } from "@redux-saga/core/effects"
+import { DELETE_COURSE, PUBLISH_COURSE } from "../action/manageCourseAction"
 import actionManageCourse from "../action/manageCourseAction"
 import {
   errorNotification,
@@ -9,6 +9,7 @@ import {
 import { API } from "@/apis"
 import { history } from "@/App/App"
 import pathRoute from "@/routes/routePath"
+import { getDetailManage } from "."
 
 function* deleteCourse({ payload: id }: any) {
   try {
@@ -35,10 +36,40 @@ function* deleteCourse({ payload: id }: any) {
   }
 }
 
+function* publishCourse({ payload: id }: any) {
+  const { isPublic } = yield select(getDetailManage)
+  try {
+    yield put({
+      type: actionManageCourse.PUBLISH_COURSE.REQUEST
+    })
+
+    const {
+      data: { message }
+    } = yield call(API.courseAPI.publishCourse, id)
+
+    yield put({
+      type: actionManageCourse.PUBLISH_COURSE.SUCCESS,
+      payload: !isPublic
+    })
+
+    successNotification(message)
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionManageCourse.DELETE_COURSE.ERROR,
+      payload: error.message
+    })
+  }
+}
+
 function* watchDeleteCourse() {
   yield takeLatest(DELETE_COURSE, deleteCourse)
 }
 
+function* watchPublishCourse() {
+  yield takeLatest(PUBLISH_COURSE, publishCourse)
+}
+
 export default function* settingSaga() {
-  yield all([watchDeleteCourse()])
+  yield all([watchDeleteCourse(), watchPublishCourse()])
 }

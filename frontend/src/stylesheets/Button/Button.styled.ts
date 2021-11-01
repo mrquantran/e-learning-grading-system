@@ -150,8 +150,7 @@ export const ButtonStyled = styled.button`
     css`
       background-color: transparent !important;
       border-color: #d1d7dc !important;
-      color: #6a6f73 !important;
-      opacity: 0.65;
+      color: #111 !important;
       cursor: not-allowed;
     `}
 
