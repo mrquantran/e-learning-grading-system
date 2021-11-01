@@ -1,3 +1,4 @@
+import ModalConfirm, { defaultButton } from "@/components/Modal/ModalConfirm"
 import { useRouter } from "@/hooks/useRouter"
 import ManageCourseAction from "@/modules/Course/action/manageCourseAction"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
@@ -11,9 +12,24 @@ export default function CourseStatus() {
   const router = useRouter()
   const { courseId } = router.query
 
-  const handleDeleteCourse = () => {
-    console.log("click")
+  const handleDispatchDelete = () => {
     dispatch(ManageCourseAction.deleteCourse(courseId))
+  }
+
+  const handleDeleteCourse = () => {
+    const defaultButtonModal = defaultButton({
+      text: "Yes",
+      confirm: handleDispatchDelete
+    })
+
+    console.log(defaultButtonModal)
+
+    ModalConfirm({
+      title: "Delete Your Course?",
+      content:
+        "Are you sure you want to delete this course? This is permanent and cannot be undone.",
+      button: defaultButtonModal
+    })
   }
 
   return (

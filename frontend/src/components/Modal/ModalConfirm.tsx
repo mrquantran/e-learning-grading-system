@@ -3,8 +3,8 @@ import { Modal } from "antd"
 import { ExclamationCircleOutlined } from "@ant-design/icons"
 
 interface button {
-  text: string
-  function: any
+  text?: string
+  function?: any
 }
 
 interface buttons {
@@ -35,11 +35,11 @@ export default function ModalConfirm({
   button: buttons
 }) {
   return Modal.confirm({
-    title: { title },
+    title: title,
     icon: <ExclamationCircleOutlined />,
-    content: { content },
-    okText: `${button.confirm.text}`,
+    content: content,
+    okText: button.confirm.text,
     onOk: button.confirm.function,
-    cancelText: `${button.cancel.text}`
+    cancelText: button.cancel.text
   })
 }
