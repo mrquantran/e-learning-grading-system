@@ -198,7 +198,6 @@ async function getDraftCourse(req, res) {
     // when creating a course make the authenticated user a teacher of the course
     const courses = await prisma.course.findMany({
       where: {
-        isDraft: true,
         members: {
           every: {
             userId: Number(token.id),
@@ -213,7 +212,7 @@ async function getDraftCourse(req, res) {
         name: true,
         courseDetails: true,
         isDraft: true,
-
+        isPublic: true,
       },
     });
 
@@ -316,6 +315,67 @@ async function deleteCourse(req, res) {
   }
 }
 
+async function publishCourse(req, res) {
+  const { id } = req.params;
+  try {
+    if (!await isTeacherEnroll(req, res)) {
+      return res.status(403).json({ message: 'you dont have permission to perform this action' });
+    }
+
+    const { isPublic, isDraft } = await prisma.course.findUnique({
+      where: {
+        id: Number(id),
+      },
+      select: {
+        isPublic: true,
+        isDraft: true,
+      },
+    });
+
+    const text = !isPublic ? 'Publish' : 'Unpublish';
+
+    const lecture = await prisma.lectures.findMany({
+      where: {
+        courseId: Number(id),
+      },
+      include: {
+        lecturesMaterial: true,
+      },
+    });
+
+    if (lecture.length === 0) {
+      return res.status(401).json({ message: `You have to create lecture to ${text.toLowerCase()} your course` });
+    }
+
+    const lectureNoMaterial = lecture.filter((item) => item.lecturesMaterial.length === 0);
+
+    if (lectureNoMaterial.length !== 0) {
+      return res.status(401).json({ message: 'You have to have at least one lecture in section' });
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const course = await prisma.course.update({
+      where: {
+        id: Number(id),
+      },
+      data: {
+        isPublic: !isPublic,
+        isDraft: !isDraft,
+      },
+    });
+
+    // update course
+    // eslint-disable-next-line no-unused-vars
+
+    return res.status(200).json({ message: `${text} course successfully!!` });
+  } catch (error) {
+    console.log(error);
+    // 500 (Internal Server Error) - Something has gone wrong in your application.
+    const httpError = createHttpError(500, error);
+    return res.status(500).json({ message: httpError });
+  }
+}
+
 export const coursesController = {
   getCoursePublic,
   getEnrollCourses,
@@ -324,4 +384,5 @@ export const coursesController = {
   getCourseById,
   updateCourse,
   deleteCourse,
+  publishCourse,
 };

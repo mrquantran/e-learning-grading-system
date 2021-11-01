@@ -149,4 +149,10 @@ router.delete('/:id', validate([
     .withMessage('Id is not a number')]), isAuth,
 (req, res, next) => coursesController.deleteCourse(req, res));
 
+router.post('/:id/publish', validate([
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number')]), isAuth,
+(req, res, next) => coursesController.publishCourse(req, res));
+
 export default router;
