@@ -205,6 +205,9 @@ async function getDraftCourse(req, res) {
           },
         },
       },
+      orderBy: {
+        id: 'desc',
+      },
       select: {
         id: true,
         name: true,
