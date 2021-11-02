@@ -194,6 +194,7 @@ async function getCourseById(req, res) {
 
 async function getDraftCourse(req, res) {
   const token = await getDecodedToken(req);
+
   try {
     // when creating a course make the authenticated user a teacher of the course
     const courses = await prisma.course.findMany({

@@ -219,18 +219,69 @@ const courses = [
       },
     ],
     member: [
-      { role: 'TEACHER', email: 'waston@hey.com' },
+      { role: 'TEACHER', email: 'quantran2381@gmail.com' },
       { role: 'STUDENT', email: 'jessica@hey.com' },
       { role: 'STUDENT', email: 'alex@hey.com' },
       { role: 'STUDENT', email: 'tim@hey.com' },
-      { role: 'STUDENT', email: 'quantran2381@gmail.com' },
     ],
   },
   {
     name: 'Javascript Basic 6',
     favoriteCourse: ['tim@hey.com', 'quantran2381@gmail.com', 'gate@hey.com'],
     courseDetails: 'c43214',
-    lectures: [],
+    lectures: [
+      {
+        title: 'Introduction',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'What is TypeScript?',
+          },
+          {
+            title: 'Typescript Basic',
+          },
+        ],
+      },
+      {
+        title: 'Terminal',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'Update about terminal section',
+          },
+          {
+            title: 'Section Introduction',
+          },
+          {
+            title: 'Moving between directories',
+          },
+          {
+            title: 'Working with files & direstories',
+          },
+        ],
+      },
+      {
+        title: 'Github',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'Section Introduction',
+          },
+          {
+            title: 'What is github?',
+          },
+          {
+            title: 'Creating a git hub account',
+          },
+          {
+            title: 'Creating your first repo',
+          },
+          {
+            title: 'Viewing other repo',
+          },
+        ],
+      },
+    ],
     testing: [
       {
         name: 'Test4',
@@ -261,7 +312,59 @@ const courses = [
     name: 'Javascript Basic 7',
     courseDetails: 'c43214',
     favoriteCourse: [],
-    lectures: [],
+    lectures: [
+      {
+        title: 'Introduction',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'What is TypeScript?',
+          },
+          {
+            title: 'Typescript Basic',
+          },
+        ],
+      },
+      {
+        title: 'Terminal',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'Update about terminal section',
+          },
+          {
+            title: 'Section Introduction',
+          },
+          {
+            title: 'Moving between directories',
+          },
+          {
+            title: 'Working with files & direstories',
+          },
+        ],
+      },
+      {
+        title: 'Github',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'Section Introduction',
+          },
+          {
+            title: 'What is github?',
+          },
+          {
+            title: 'Creating a git hub account',
+          },
+          {
+            title: 'Creating your first repo',
+          },
+          {
+            title: 'Viewing other repo',
+          },
+        ],
+      },
+    ],
     testing: [
       {
         name: 'Test12',
@@ -314,7 +417,59 @@ const courses = [
     name: 'Javascript Basic 8',
     courseDetails: 'c43214',
     favoriteCourse: [],
-    lectures: [],
+    lectures: [
+      {
+        title: 'Introduction',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'What is TypeScript?',
+          },
+          {
+            title: 'Typescript Basic',
+          },
+        ],
+      },
+      {
+        title: 'Terminal',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'Update about terminal section',
+          },
+          {
+            title: 'Section Introduction',
+          },
+          {
+            title: 'Moving between directories',
+          },
+          {
+            title: 'Working with files & direstories',
+          },
+        ],
+      },
+      {
+        title: 'Github',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'Section Introduction',
+          },
+          {
+            title: 'What is github?',
+          },
+          {
+            title: 'Creating a git hub account',
+          },
+          {
+            title: 'Creating your first repo',
+          },
+          {
+            title: 'Viewing other repo',
+          },
+        ],
+      },
+    ],
     testing: [
       {
         name: 'Test6',
@@ -340,7 +495,59 @@ const courses = [
     name: 'Javascript Basic ',
     favoriteCourse: ['gate@hey.com', 'quantran2381@gmail.com'],
     courseDetails: 'c43214',
-    lectures: [],
+    lectures: [
+      {
+        title: 'Introduction',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'What is TypeScript?',
+          },
+          {
+            title: 'Typescript Basic',
+          },
+        ],
+      },
+      {
+        title: 'Terminal',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'Update about terminal section',
+          },
+          {
+            title: 'Section Introduction',
+          },
+          {
+            title: 'Moving between directories',
+          },
+          {
+            title: 'Working with files & direstories',
+          },
+        ],
+      },
+      {
+        title: 'Github',
+        description: 'Typescript course description',
+        lecturesMaterial: [
+          {
+            title: 'Section Introduction',
+          },
+          {
+            title: 'What is github?',
+          },
+          {
+            title: 'Creating a git hub account',
+          },
+          {
+            title: 'Creating your first repo',
+          },
+          {
+            title: 'Viewing other repo',
+          },
+        ],
+      },
+    ],
     testing: [
       {
         name: 'Test9',

@@ -9,7 +9,7 @@ import {
 import { validate } from '../../validation/validate.js';
 import { isAuth } from '../../middleware/auth.js';
 import { accessTokenSecret } from '../../../config.js';
-
+import { coursesEnrollment } from '../../controller/courseEnrollment/courseEnrollment.js';
 import * as jwtHelper from '../../helpers/jwt.helper.js';
 
 const router = express.Router();
@@ -38,6 +38,12 @@ async function postEnrollment(courseId, role, token) {
   });
   return courses;
 }
+
+router.get('/courses/:id/enroll', isAuth, validate([
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number'),
+]), (req, res) => coursesEnrollment.getUserEnroll(req, res));
 
 router.post('/courses/:id/enroll', isAuth, validate([
   param('id')
