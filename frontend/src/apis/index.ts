@@ -1,6 +1,7 @@
 import courseAPI from "./courses/courses.api"
 import lectureAPI from "./lectures/lectures.api"
 import lectureMaterialAPI from "./lectureMaterial/lectureMaterial.api"
+import userAPI from "./users/users.api"
 import axios, { AxiosRequestConfig } from "axios"
 import { isObject, map, flatten } from "underscore"
 import { BASE_URL } from "./const"
@@ -58,5 +59,6 @@ export const API = {
   lectureAPI,
   lectureMaterialAPI,
   courseAPI,
-  Account
+  Account,
+  userAPI
 }

@@ -1,5 +1,9 @@
 import { all, call, put, select, takeLatest } from "@redux-saga/core/effects"
-import { DELETE_COURSE, PUBLISH_COURSE } from "../action/manageCourseAction"
+import {
+  DELETE_COURSE,
+  GET_USER_ENROLL,
+  PUBLISH_COURSE
+} from "../action/manageCourseAction"
 import actionManageCourse from "../action/manageCourseAction"
 import {
   errorNotification,
@@ -62,6 +66,28 @@ function* publishCourse({ payload: id }: any) {
   }
 }
 
+function* userEnroll({ payload }: any) {
+  const { courseId, type } = payload
+  try {
+    yield put({
+      type: actionManageCourse.GET_USER_ENROLL.REQUEST
+    })
+
+    const { data } = yield call(API.userAPI.userEnroll, courseId, type)
+
+    yield put({
+      type: actionManageCourse.GET_USER_ENROLL.SUCCESS,
+      payload: data
+    })
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionManageCourse.GET_USER_ENROLL.ERROR,
+      payload: error.message
+    })
+  }
+}
+
 function* watchDeleteCourse() {
   yield takeLatest(DELETE_COURSE, deleteCourse)
 }
@@ -70,6 +96,10 @@ function* watchPublishCourse() {
   yield takeLatest(PUBLISH_COURSE, publishCourse)
 }
 
+function* watchUserEnroll() {
+  yield takeLatest(GET_USER_ENROLL, userEnroll)
+}
+
 export default function* settingSaga() {
-  yield all([watchDeleteCourse(), watchPublishCourse()])
+  yield all([watchDeleteCourse(), watchPublishCourse(), watchUserEnroll()])
 }

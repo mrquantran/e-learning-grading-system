@@ -16,7 +16,7 @@ export const TYPE_INPUT = {
 
 export const TYPE_USER = {
   student: "STUDENT",
-  teacher: " TEACHER"
+  teacher: "TEACHER"
 }
 
 export const TYPE_LECTURES = {

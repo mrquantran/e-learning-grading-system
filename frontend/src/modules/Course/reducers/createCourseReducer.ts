@@ -32,6 +32,11 @@ const initialState = {
     data: [],
     isFetching: false
   },
+  settings: {
+    isProcessing: false,
+    isFetching: false,
+    data: []
+  },
   manageTabs: {
     course: [
       {
@@ -200,6 +205,15 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
             ...state.detail.data,
             isPublic: payload
           }
+        }
+      }
+    }
+    case actionsManageCourse.GET_USER_ENROLL.SUCCESS: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          data: payload
         }
       }
     }
