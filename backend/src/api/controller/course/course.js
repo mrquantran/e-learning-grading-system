@@ -203,6 +203,7 @@ async function getDraftCourse(req, res) {
     const courses = await prisma.courseEnrollment.findMany({
       where: {
         userId: Number(token.id),
+        role: 'TEACHER',
       },
       include: {
         course: {
