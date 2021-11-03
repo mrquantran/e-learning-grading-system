@@ -20,6 +20,8 @@ export const DELETE_COURSE = `${store}/DELETE_COURSE`
 
 export const PUBLISH_COURSE = `${store}/PUBLISH_COURSE`
 
+export const ENROLL_COURSE_AS_INSTRUCTOR = `${store}/ENROLL_COURSE_AS_INSTRUCTOR`
+
 export default class ManageCourseAction {
   static changeSelectedComponent = key => ({
     type: CHANGE_SELECTED_COMPONENT,
@@ -40,6 +42,17 @@ export default class ManageCourseAction {
     type: GET_USER_ENROLL,
     payload: { courseId, type }
   })
+
+  static enrollCourseAsInstructor = (courseId, data) => ({
+    type: ENROLL_COURSE_AS_INSTRUCTOR,
+    payload: { courseId, data }
+  })
+
+  static ENROLL_COURSE_AS_INSTRUCTOR = {
+    REQUEST: `${store}/ENROLL_COURSE_AS_INSTRUCTOR_REQUEST`,
+    SUCCESS: `${store}/ENROLL_COURSE_AS_INSTRUCTOR_SUCCESS`,
+    ERROR: `${store}/ENROLL_COURSE_AS_INSTRUCTOR_ERROR`
+  }
 
   static PUBLISH_COURSE = {
     REQUEST: `${store}/PUBLISH_COURSE_REQUEST`,

@@ -159,16 +159,19 @@ async function getCourseById(req, res) {
       if (!await isTeacherEnroll(req, res)) {
         return res.status(403).json({ message: 'you dont have permission to perform this action' });
       }
-      const dataJson = await prisma.course.findFirst({
+      const course = await prisma.courseEnrollment.findUnique({
         where: {
-          id: Number(id),
-          members: {
-            every: {
-              userId: Number(token.id),
-            },
+          userId_courseId: {
+            courseId: Number(id),
+            userId: Number(token.id),
           },
         },
+        include: {
+          course: true,
+        },
       });
+
+      const dataJson = course.course;
 
       if (!dataJson) {
         return res.status(401).json({ message: 'dont have data' });
@@ -197,27 +200,27 @@ async function getDraftCourse(req, res) {
 
   try {
     // when creating a course make the authenticated user a teacher of the course
-    const courses = await prisma.course.findMany({
+    const courses = await prisma.courseEnrollment.findMany({
       where: {
-        members: {
-          every: {
-            userId: Number(token.id),
+        userId: Number(token.id),
+      },
+      include: {
+        course: {
+          select: {
+            id: true,
+            name: true,
+            courseDetails: true,
+            isDraft: true,
+            isPublic: true,
           },
         },
-      },
-      orderBy: {
-        id: 'desc',
-      },
-      select: {
-        id: true,
-        name: true,
-        courseDetails: true,
-        isDraft: true,
-        isPublic: true,
+
       },
     });
 
-    return res.status(200).json(courses);
+    const data = courses.map((item) => item.course).sort((a, b) => b.id - a.id);
+
+    return res.status(200).json(data);
   } catch (error) {
     console.log(error);
     // 500 (Internal Server Error) - Something has gone wrong in your application.

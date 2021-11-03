@@ -35,7 +35,9 @@ const initialState = {
   settings: {
     isProcessing: false,
     isFetching: false,
-    data: []
+    data: [],
+    error: null,
+    message: null
   },
   manageTabs: {
     course: [
@@ -214,6 +216,34 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
         settings: {
           ...state.settings,
           data: payload
+        }
+      }
+    }
+    case actionsManageCourse.ENROLL_COURSE_AS_INSTRUCTOR.REQUEST: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          error: null,
+          message: null
+        }
+      }
+    }
+    case actionsManageCourse.ENROLL_COURSE_AS_INSTRUCTOR.SUCCESS: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          message: payload
+        }
+      }
+    }
+    case actionsManageCourse.ENROLL_COURSE_AS_INSTRUCTOR.ERROR: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          error: payload
         }
       }
     }

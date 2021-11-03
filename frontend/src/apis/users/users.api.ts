@@ -6,8 +6,16 @@ const userEnroll = (courseId, type): Promise<AxiosResponse<any>> => {
   })
 }
 
+const enrollUserAsInstructor = (
+  courseId,
+  data
+): Promise<AxiosResponse<any>> => {
+  return axios.post(`/courses/${courseId}/course-has-instructor`, data)
+}
+
 const userAPI = {
-  userEnroll
+  userEnroll,
+  enrollUserAsInstructor
 }
 
 export default userAPI

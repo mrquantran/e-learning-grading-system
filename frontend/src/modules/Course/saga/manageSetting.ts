@@ -1,6 +1,7 @@
 import { all, call, put, select, takeLatest } from "@redux-saga/core/effects"
 import {
   DELETE_COURSE,
+  ENROLL_COURSE_AS_INSTRUCTOR,
   GET_USER_ENROLL,
   PUBLISH_COURSE
 } from "../action/manageCourseAction"
@@ -88,6 +89,29 @@ function* userEnroll({ payload }: any) {
   }
 }
 
+function* enrollUserAsInstructor({ payload }: any) {
+  const { courseId, data: dataForm } = payload
+  try {
+    yield put({
+      type: actionManageCourse.ENROLL_COURSE_AS_INSTRUCTOR.REQUEST
+    })
+
+    const {
+      data: { message }
+    } = yield call(API.userAPI.enrollUserAsInstructor, courseId, dataForm)
+
+    yield put({
+      type: actionManageCourse.ENROLL_COURSE_AS_INSTRUCTOR.SUCCESS,
+      payload: message
+    })
+  } catch (error: any) {
+    yield put({
+      type: actionManageCourse.ENROLL_COURSE_AS_INSTRUCTOR.ERROR,
+      payload: error.response.data.message
+    })
+  }
+}
+
 function* watchDeleteCourse() {
   yield takeLatest(DELETE_COURSE, deleteCourse)
 }
@@ -100,6 +124,15 @@ function* watchUserEnroll() {
   yield takeLatest(GET_USER_ENROLL, userEnroll)
 }
 
+function* watchEnrollUserAsInstructor() {
+  yield takeLatest(ENROLL_COURSE_AS_INSTRUCTOR, enrollUserAsInstructor)
+}
+
 export default function* settingSaga() {
-  yield all([watchDeleteCourse(), watchPublishCourse(), watchUserEnroll()])
+  yield all([
+    watchDeleteCourse(),
+    watchPublishCourse(),
+    watchUserEnroll(),
+    watchEnrollUserAsInstructor()
+  ])
 }

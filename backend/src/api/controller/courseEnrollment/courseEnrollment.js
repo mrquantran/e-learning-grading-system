@@ -76,7 +76,7 @@ async function enrollCourseInstructor(req, res) {
     });
 
     if (!user) {
-      return res.status(401).json({ message: 'User not found' });
+      return res.status(401).json({ message: 'This email address is not valid for a user on Elearn' });
     }
 
     // CHECK USER HAS ENROLL
@@ -90,7 +90,7 @@ async function enrollCourseInstructor(req, res) {
     });
 
     if (enroll) {
-      return res.status(401).json({ message: 'User has been enroll' });
+      return res.status(401).json({ message: 'Instructor is already added.' });
     }
 
     // eslint-disable-next-line no-unused-vars
