@@ -5,6 +5,8 @@ import enrollCourse from './enrollCourse.js';
 import courseIdStatus from './courseIdStatus.js';
 import getCourseEnroll from './getCourseEnroll.js';
 import getDraftCourse from './getDraftCourse.js';
+import publishCourse from './publishCourse.js';
+import enrollCourseAsInstructor from './enrollCourseAsInstructor.js';
 
 const pathCourses = {
   '/courses': {
@@ -13,18 +15,26 @@ const pathCourses = {
   '/courses/{id}/status': {
     ...courseIdStatus,
   },
+  '/courses/{id}/publish': {
+    ...publishCourse,
+  },
+  '/courses/{id}/enroll': {
+    ...enrollCourse,
+  },
+  '/courses/{id}/course-has-instructor': {
+    ...enrollCourseAsInstructor,
+  },
   '/courses/enroll': {
     ...getCourseEnroll,
   },
   '/courses/draft': {
     ...getDraftCourse,
   },
-  '/courses/{id}/enroll': {
-    ...enrollCourse,
-  },
+
   '/courses/{id}': {
     ...courseId,
   },
+
 };
 
 export default pathCourses;

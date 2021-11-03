@@ -37,6 +37,20 @@ const fetchCourseLectures = (courseId): Promise<AxiosResponse<any>> => {
   return axios.get(`/courses/${courseId}/lectures`)
 }
 
+const deleteCourse = (params): Promise<AxiosResponse<any>> => {
+  return axios.delete(`/courses/${params}`)
+}
+
+const publishCourse = (params): Promise<AxiosResponse<any>> => {
+  return axios.post(`/courses/${params}/publish`)
+}
+
+const userEnroll = (courseId, params): Promise<AxiosResponse<any>> => {
+  return axios.get(`/courses/${courseId}/enroll`, {
+    params: { params }
+  })
+}
+
 const courseAPI = {
   fetchCourses,
   fetchDetailCourse,
@@ -46,7 +60,10 @@ const courseAPI = {
   fetchDraftCourses,
   enrollCourse,
   createDraftCourse,
-  updateCourse
+  updateCourse,
+  deleteCourse,
+  publishCourse,
+  userEnroll
 }
 
 export default courseAPI

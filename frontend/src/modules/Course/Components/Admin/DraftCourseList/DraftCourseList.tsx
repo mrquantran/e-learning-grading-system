@@ -10,7 +10,11 @@ export default function DraftCourseList() {
 
   const renderDraftCourse = () => {
     return data.map(course => (
-      <DraftCourse id={course.id} title={course.name} />
+      <DraftCourse
+        id={course.id}
+        title={course.name}
+        isPublic={course.isPublic}
+      />
     ))
   }
 

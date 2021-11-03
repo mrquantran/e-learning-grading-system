@@ -1,4 +1,63 @@
 const enrollCourse = {
+  get: {
+    tags: ['Courses'],
+    description: 'Enroll courses',
+    operationId: 'userenrollCourse',
+    security: [
+      { bearerAuth: [] },
+    ],
+    parameters: [
+      // expected params.
+      {
+        name: 'id', // name of the param
+        in: 'path', // location of the param
+        schema: {
+          $ref: '#/components/schemas/id', // data model of the param
+        },
+        required: true, // Mandatory param
+        description: 'A single course id', // param desc.
+      },
+      {
+        name: 'type', // name of the param
+        allowReserved: true,
+        in: 'query', // location of the param
+        schema: {
+          type: 'string',
+          properties: {
+            type: {
+              type: 'string',
+              description: 'Title of user',
+              example: 'STUDENT',
+            },
+          },
+        },
+        required: false, // Mandatory param
+        description: 'A single course id', // param desc.
+      },
+    ],
+    responses: {
+      200: {
+        description: 'User were obtained',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/Users',
+            },
+          },
+        },
+      },
+      404: {
+        description: 'Courses is not found',
+        content: {
+          'application/json': {
+            schema: {
+              $ref: '#/components/schemas/Error',
+            },
+          },
+        },
+      },
+    },
+  },
   post: {
     tags: ['Courses'],
     description: 'Enroll courses',

@@ -8,9 +8,26 @@ import {
   CourseProgressStyled,
   HoverDraftCourse
 } from "../DraftCourseList/DraftCourseList.styled"
-import { NavLink } from "react-router-dom"
 
-export default function DraftCourse({ id, title }) {
+export default function DraftCourse({ id, title, isPublic }) {
+  const renderDraftPublish = () => {
+    if (isPublic)
+      return (
+        <p className="font-size-12 mb-0">
+          <span className="text-fade">Draft</span>{" "}
+          <span className="font-weight-500">Public</span>
+        </p>
+      )
+    else {
+      return (
+        <p className="font-size-12 mb-0">
+          <span className="font-weight-500">Draft</span>{" "}
+          <span className="text-fade">Public</span>
+        </p>
+      )
+    }
+  }
+
   return (
     <Row>
       <Col span={12}>
@@ -41,7 +58,7 @@ export default function DraftCourse({ id, title }) {
               </div> */}
                     <div className="ml-15">
                       <h5 className="mb-0">{title}</h5>
-                      <p className="text-fade font-size-12 mb-0">Draft</p>
+                      <div>{renderDraftPublish()}</div>
                     </div>
                   </div>
                 </FlexItemStyled>

@@ -3,13 +3,14 @@ import express from 'express';
 import pkg from '@prisma/client';
 import createHttpError from 'http-errors';
 import {
+  body,
   param,
 } from 'express-validator';
 // eslint-disable-next-line import/extensions
 import { validate } from '../../validation/validate.js';
 import { isAuth } from '../../middleware/auth.js';
 import { accessTokenSecret } from '../../../config.js';
-
+import { coursesEnrollment } from '../../controller/courseEnrollment/courseEnrollment.js';
 import * as jwtHelper from '../../helpers/jwt.helper.js';
 
 const router = express.Router();
@@ -38,6 +39,22 @@ async function postEnrollment(courseId, role, token) {
   });
   return courses;
 }
+
+router.get('/courses/:id/enroll', isAuth, validate([
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number'),
+]), (req, res) => coursesEnrollment.getUserEnroll(req, res));
+
+router.post('/courses/:id/course-has-instructor', isAuth,
+  validate([
+    body('email')
+      .notEmpty()
+      .withMessage('Email has not been exist')
+      .isString()
+      .withMessage('Email must be a string'),
+  ]),
+  (req, res) => coursesEnrollment.enrollCourseInstructor(req, res));
 
 router.post('/courses/:id/enroll', isAuth, validate([
   param('id')

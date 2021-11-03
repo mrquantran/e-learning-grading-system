@@ -16,6 +16,7 @@ import Pricing from "../Components/Admin/Manage/Pricing/Pricing"
 import Promotions from "../Components/Admin/Manage/Promotions/Promotions"
 import CourseMessage from "../Components/Admin/Manage/CourseMessage/CourseMessage"
 import LandingPageCourse from "@/modules/Course/Components/Admin/Manage/LandingPageCourse/LandingPageCourse"
+import Settings from "../Components/Admin/Manage/Settings/Settings"
 
 const initialState = {
   isFetching: false,
@@ -30,6 +31,13 @@ const initialState = {
   curriculum: {
     data: [],
     isFetching: false
+  },
+  settings: {
+    isProcessing: false,
+    isFetching: false,
+    data: [],
+    error: null,
+    message: null
   },
   manageTabs: {
     course: [
@@ -77,6 +85,11 @@ const initialState = {
             id: "courseMessage",
             title: "Course Message",
             component: CourseMessage
+          },
+          {
+            id: "settings",
+            title: "Settings",
+            component: Settings
           }
         ]
       }
@@ -182,6 +195,55 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
           ...state.curriculum,
           data: payload,
           isFetching: false
+        }
+      }
+    }
+    case actionsManageCourse.PUBLISH_COURSE.SUCCESS: {
+      return {
+        ...state,
+        detail: {
+          ...state.detail,
+          data: {
+            ...state.detail.data,
+            isPublic: payload
+          }
+        }
+      }
+    }
+    case actionsManageCourse.GET_USER_ENROLL.SUCCESS: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          data: payload
+        }
+      }
+    }
+    case actionsManageCourse.ENROLL_COURSE_AS_INSTRUCTOR.REQUEST: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          error: null,
+          message: null
+        }
+      }
+    }
+    case actionsManageCourse.ENROLL_COURSE_AS_INSTRUCTOR.SUCCESS: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          message: payload
+        }
+      }
+    }
+    case actionsManageCourse.ENROLL_COURSE_AS_INSTRUCTOR.ERROR: {
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          error: payload
         }
       }
     }

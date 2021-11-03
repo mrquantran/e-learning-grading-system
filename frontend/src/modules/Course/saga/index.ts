@@ -17,6 +17,9 @@ import { errorNotification, getError } from "@/utils/notification"
 import { ENROLL_COURSE } from "../action/enrollAction"
 import { TYPE_LECTURES, TYPE_USER } from "@/utils/ENUM"
 import { FETCH_INSTRUCTOR_COURSE_DETAIL } from "../action/manageCourseAction"
+import { RootState } from "@/redux/reducer/rootReducer"
+
+export const getDetailManage = (state: RootState) => state.create.detail.data
 
 const mappingData = list => {
   let section = list

@@ -46,37 +46,6 @@ async function createCourse(name, courseDetails, userId) {
   return createdCourse;
 }
 
-async function deleteCourse(id) {
-  // Delete all enrollments
-  const deletedCourse = await prisma.$transaction([
-    prisma.courseEnrollment.deleteMany({
-      where: {
-        courseId: Number(id),
-      },
-    }),
-    prisma.course.delete({
-      where: {
-        id: Number(id),
-      },
-    }),
-  ]);
-
-  return deletedCourse;
-}
-
-async function updateCourse(name, courseDetails, id) {
-  // update course
-  const updatedCourse = await prisma.course.update({
-    where: { id: Number(id) },
-    data: {
-      name,
-      courseDetails,
-    },
-  });
-
-  return updatedCourse;
-}
-
 async function getCourseStatus(req) {
   const { id } = req.params;
   const token = await getDecodedToken(req);
@@ -177,17 +146,13 @@ router.put('/:id', validate([
 router.delete('/:id', validate([
   param('id')
     .isNumeric()
-    .withMessage('Id is not a number')]),
-(req, res, next) => {
-  const { id } = req.params;
+    .withMessage('Id is not a number')]), isAuth,
+(req, res, next) => coursesController.deleteCourse(req, res));
 
-  // delete course
-  deleteCourse(id).then((deletedCourse) => res.json({ message: 'delete succesfully' }))
-    .catch((error) => {
-    // 500 (Internal Server Error) - Something has gone wrong in your application.
-      const httpError = createHttpError(500, error);
-      next(httpError);
-    });
-});
+router.post('/:id/publish', validate([
+  param('id')
+    .isNumeric()
+    .withMessage('Id is not a number')]), isAuth,
+(req, res, next) => coursesController.publishCourse(req, res));
 
 export default router;

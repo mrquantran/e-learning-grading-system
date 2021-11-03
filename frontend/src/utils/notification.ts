@@ -1,6 +1,7 @@
 import { message } from "antd"
 
 interface error {
+  message: any
   msg: string
 }
 
@@ -9,10 +10,11 @@ interface error {
 // -> we will display try again for user
 export function getError(err) {
   let error = "Error! Please try again"
-
   if (err.response && err.response.data.errors) {
     const firstError: error = err.response.data.errors[0]
-    error = firstError.msg
+    if (firstError.msg) {
+      error = firstError.msg
+    }
   } else if (err.message || err) {
     error = err.message || err
   }

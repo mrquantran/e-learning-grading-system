@@ -134,4 +134,31 @@ export const ButtonStyled = styled.button`
       background-color: transparent !important;
       border: 1 px solid transparent !important;
     `}
+
+  ${props =>
+    props.sizeSm &&
+    css`
+      padding: 6px 10px;
+      font-size: 15px;
+      line-height: 1.35135;
+    `}
+
+
+
+  ${props =>
+    props.disabled2 &&
+    css`
+      background-color: transparent !important;
+      border-color: #d1d7dc !important;
+      color: #111 !important;
+      cursor: not-allowed;
+    `}
+
+      ${props =>
+    props.delete &&
+    css`
+      color: #612012;
+      background-color: #fff;
+      border: 1px solid #612012;
+    `}
 `

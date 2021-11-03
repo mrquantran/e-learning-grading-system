@@ -1,17 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   CREATE_LECTURE,
+  DELETE_COURSE,
   DELETE_LECTURE,
   UPDATE_COURSE_LECTURE,
   UPDATE_LECTURE,
   UPDATE_LECTURE_SECTION
-} from "./../action/manageCourseAction"
+} from "../action/manageCourseAction"
 import {
   getError,
   successNotification,
   warningNotification
 } from "@/utils/notification"
-import { errorNotification } from "./../../../utils/notification"
+import { errorNotification } from "../../../utils/notification"
 import {
   all,
   call,
@@ -33,6 +34,7 @@ import { TypeSection, TYPE_CREATE_COURSE } from "@/utils/ENUM"
 import { fetchCourseLectures } from "."
 import { RootState } from "@/redux/reducer/rootReducer"
 import { DELETE_COURSE_LECTURE } from "../action/manageCourseAction"
+import settingSaga from "./manageSetting"
 
 const getSectionOfCourse = (state: RootState) => state.create.curriculum.data
 const getSectionId = id => Number(id.replace(TypeSection.SECTION, ""))
@@ -387,6 +389,7 @@ function* watchCreateLectureMaterial() {
 function* watchDeleteLectureMaterial() {
   yield takeLatest(DELETE_LECTURE, deleteLecture)
 }
+
 function* watchUpdateLectureMaterial() {
   yield takeLatest(UPDATE_LECTURE, updateLecture)
 }
@@ -400,6 +403,7 @@ export default function* createCourseSaga() {
     watchUpdateSection(),
     watchCreateLectureMaterial(),
     watchDeleteLectureMaterial(),
-    watchUpdateLectureMaterial()
+    watchUpdateLectureMaterial(),
+    settingSaga()
   ])
 }

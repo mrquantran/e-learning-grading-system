@@ -7,6 +7,7 @@ export const FETCH_COURSES_DRAFT = `${store}/FETCH_COURSES_DRAFT`
 
 export const noop = () => {}
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const createAction = (
   type,
   payload = {},
