@@ -58,6 +58,68 @@ const getUserEnroll = async (req, res) => {
   }
 };
 
+async function enrollCourseInstructor(req, res) {
+  try {
+    const { id: courseId } = req.params;
+    const { email } = req.body;
+    const role = 'TEACHER';
+
+    if (!await isTeacherEnroll(req, res)) {
+      return res.status(403).json({ message: 'you dont have permission to perform this action' });
+    }
+
+    // CHECK USER HAS IN DATABASE
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      return res.status(401).json({ message: 'User not found' });
+    }
+
+    // CHECK USER HAS ENROLL
+    const enroll = await prisma.courseEnrollment.findUnique({
+      where: {
+        userId_courseId: {
+          courseId: Number(courseId),
+          userId: Number(user.id),
+        },
+      },
+    });
+
+    if (enroll) {
+      return res.status(401).json({ message: 'User has been enroll' });
+    }
+
+    // eslint-disable-next-line no-unused-vars
+    const courses = await prisma.courseEnrollment.create({
+      data: {
+        user: {
+          connect: {
+            email,
+          },
+        },
+        course: {
+          connect: {
+            id: Number(courseId),
+          },
+        },
+        role,
+      },
+    });
+
+    return res.status(200).json({ message: 'Enroll user successfully' });
+  } catch (error) {
+  // 500 (Internal Server Error) - Something has gone wrong in your application.
+    console.log(error);
+    const httpError = createHttpError(500, error);
+    return res.status(500).json({ message: httpError });
+  }
+}
+
 export const coursesEnrollment = {
   getUserEnroll,
+  enrollCourseInstructor,
 };

@@ -59,6 +59,7 @@ export default function Permission() {
               rowExpandable: record => record.name !== "Not Expandable"
             }}
             dataSource={mappingData}
+            pagination={false}
           />
         </TableContainer>
         <div className="mt-20">

@@ -3,6 +3,7 @@ import express from 'express';
 import pkg from '@prisma/client';
 import createHttpError from 'http-errors';
 import {
+  body,
   param,
 } from 'express-validator';
 // eslint-disable-next-line import/extensions
@@ -44,6 +45,16 @@ router.get('/courses/:id/enroll', isAuth, validate([
     .isNumeric()
     .withMessage('Id is not a number'),
 ]), (req, res) => coursesEnrollment.getUserEnroll(req, res));
+
+router.post('/courses/:id/course-has-instructor', isAuth,
+  validate([
+    body('email')
+      .notEmpty()
+      .withMessage('Email has not been exist')
+      .isString()
+      .withMessage('Email must be a string'),
+  ]),
+  (req, res) => coursesEnrollment.enrollCourseInstructor(req, res));
 
 router.post('/courses/:id/enroll', isAuth, validate([
   param('id')
