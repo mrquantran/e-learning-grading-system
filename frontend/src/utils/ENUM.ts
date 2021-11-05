@@ -20,8 +20,9 @@ export const TYPE_USER = {
 }
 
 export const TYPE_LECTURES = {
-  CHAPTER: "chapter",
-  SECTION: "section"
+  CHAPTER: "SECTION",
+  SECTION: "LECTURE",
+  QUIZ: "QUIZ"
 }
 
 export const TYPE_LECTURES2 = {

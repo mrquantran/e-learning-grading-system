@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-fallthrough */
 /* eslint-disable import/extensions */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
@@ -20,12 +22,21 @@ const getLectureOfCourse = async (req, res) => {
         id: Number(id),
       },
       select: {
+
         lectures: {
           select: {
             id: true,
             title: true,
             createdAt: true,
             sort: true,
+            quiz: {
+              select: {
+                id: true,
+                title: true,
+                createdAt: true,
+                sort: true,
+              },
+            },
             lecturesMaterial: {
               select: {
                 id: true,
@@ -43,18 +54,44 @@ const getLectureOfCourse = async (req, res) => {
 
     const data = [];
 
+    // sort parent as section in frontend
     lectures.lectures.sort((a, b) => a.sort - b.sort);
-    const newItem = lectures.lectures.map((item) => {
-      const sortLectureMaterial = [...item.lecturesMaterial];
-      return { ...item, lecturesMaterial: sortLectureMaterial.sort((a, b) => a.sort - b.sort) };
+
+    const TYPE_LECTURE = {
+      SECTION: 'SECTION',
+      LECTURE: 'LECTURE',
+      QUIZ: 'QUIZ',
+    };
+
+    // get Quiz Array and lectureMaterial array
+    const quizzes = [];
+    const lectureMaterials = [];
+    //   = lectures.lectures.reduce((item) => item.quiz.map((quiz) => ({ ...quiz, _class: TYPE_LECTURE.QUIZ })));
+    //  = lectures.lectures.reduce((item) => item.lecturesMaterial.map((lectureMaterial) => ({ ...lectureMaterial, _class: TYPE_LECTURE.LECTURE })));
+
+    lectures.lectures.forEach((item) => {
+      item.quiz.forEach((child) => {
+        quizzes.push({ ...child, _class: TYPE_LECTURE.QUIZ });
+      });
+
+      item.lecturesMaterial.forEach((quiz) => {
+        lectureMaterials.push({ ...quiz, _class: TYPE_LECTURE.LECTURE });
+      });
+    });
+
+    // sort Quiz and lectureMaterial
+    const newItem = lectures.lectures.map(({ quiz, lecturesMaterial, ...rest }) => {
+      const sortItem = [...lectureMaterials, ...quizzes];
+      return { ...rest, itemCurriculum: sortItem.sort((a, b) => a.sort - b.sort) };
     });
 
     // eslint-disable-next-line array-callback-return
-    newItem.map(({ lecturesMaterial, ...rest }, index) => {
-      data.push({ ...rest, objectIndex: index + 1, _class: 'chapter' });
-      for (const section of lecturesMaterial) {
+    newItem.map(({ itemCurriculum, ...rest }, index) => {
+      data.push({ ...rest, objectIndex: index + 1, _class: TYPE_LECTURE.SECTION });
+      for (const item of itemCurriculum) {
+        // eslint-disable-next-line no-underscore-dangle
         data.push({
-          ...section, _class: 'section', objectIndex: index + 1,
+          ...item, objectIndex: index + 1,
         });
       }
     });
