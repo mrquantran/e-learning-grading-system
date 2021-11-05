@@ -1,5 +1,5 @@
 import React from "react"
-import Lecture from "../Lecture/Lecture"
+import Lecture from "../Item/ItemCurriculum"
 import { Droppable, Draggable } from "react-beautiful-dnd"
 import { TypeSection } from "@/utils/ENUM"
 
@@ -49,6 +49,7 @@ const LectureList = React.memo(function LectureList({
                 sectionId={sectionId}
                 order={index + 1}
                 title={item.title}
+                type={item._class}
                 description={item.description}
               />
               {provided.placeholder}

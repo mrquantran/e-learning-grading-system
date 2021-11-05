@@ -88,21 +88,24 @@ export default function CollapseLectures() {
   const renderPanel = () => {
     // eslint-disable-next-line array-callback-return
     const chapter = data.filter(item => {
-      if (item._class === TYPE_LECTURES.CHAPTER) {
+      if (item._class === TYPE_LECTURES.SECTION) {
         return true
       }
     })
 
     // eslint-disable-next-line array-callback-return
     const section = data.filter(item => {
-      if (item._class === TYPE_LECTURES.SECTION) {
+      if (item._class === TYPE_LECTURES.LECTURE) {
         return true
       }
     })
 
     return chapter.map((item, index) => {
       return (
-        <Panel header={`Section ${index + 1}: ${item.title}`} key={index + 1}>
+        <Panel
+          header={`${TYPE_LECTURES.SECTION}${index + 1}: ${item.title}`}
+          key={index + 1}
+        >
           {renderSection(section, index + 1)}
         </Panel>
       )

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react"
 import Section from "./Section/Section"
 import { CurriculumContainer, CurriculumTitle } from "./Curriculum.styled"
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-import { TypeSection } from "@/utils/ENUM"
+import { TypeSection, TYPE_LECTURES } from "@/utils/ENUM"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "@/hooks/useRouter"
 import {
@@ -96,10 +96,10 @@ export default function Curriculum() {
      * get destIndex = index end drop
      */
     const sourceParentId = Number(
-      result.source.droppableId.replace(TypeSection.SECTION, "")
+      result.source.droppableId.replace(TYPE_LECTURES.SECTION, "")
     )
     const destParentId = Number(
-      result.destination.droppableId.replace(TypeSection.SECTION, "")
+      result.destination.droppableId.replace(TYPE_LECTURES.SECTION, "")
     )
 
     const sourceIndex = result.source.index

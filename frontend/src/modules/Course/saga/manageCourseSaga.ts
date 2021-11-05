@@ -30,14 +30,14 @@ import actionManageCourse from "../action/manageCourseAction"
 import { API } from "@/apis"
 import { history } from "@/App/App"
 import pathRoute from "@/routes/routePath"
-import { TypeSection, TYPE_CREATE_COURSE } from "@/utils/ENUM"
+import { TypeSection, TYPE_CREATE_COURSE, TYPE_LECTURES } from "@/utils/ENUM"
 import { fetchCourseLectures } from "."
 import { RootState } from "@/redux/reducer/rootReducer"
 import { DELETE_COURSE_LECTURE } from "../action/manageCourseAction"
 import settingSaga from "./manageSetting"
 
 const getSectionOfCourse = (state: RootState) => state.create.curriculum.data
-const getSectionId = id => Number(id.replace(TypeSection.SECTION, ""))
+const getSectionId = id => Number(id.replace(TYPE_LECTURES.SECTION, ""))
 
 function* createDraftCourse({ payload }: any) {
   try {

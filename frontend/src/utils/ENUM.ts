@@ -20,14 +20,10 @@ export const TYPE_USER = {
 }
 
 export const TYPE_LECTURES = {
-  CHAPTER: "SECTION",
-  SECTION: "LECTURE",
+  // CHAPTER: "SECTION",
+  SECTION: "SECTION",
+  LECTURE: "LECTURE",
   QUIZ: "QUIZ"
-}
-
-export const TYPE_LECTURES2 = {
-  SECTION: "section",
-  LECTURE: "lecture"
 }
 
 export const TYPE_CREATE_COURSE = {
