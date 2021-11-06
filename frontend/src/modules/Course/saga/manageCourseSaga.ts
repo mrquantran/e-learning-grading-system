@@ -241,10 +241,12 @@ function* createLecture({ payload }: any) {
       bodyData
     )
 
+    const newItemData = { ...data, _class: TYPE_LECTURES.LECTURE }
+
     let newSelection = [...selectionCourse]
     newSelection = newSelection.map(item => {
       const cloneLectureMaterial = [...item.lecturesMaterial]
-      cloneLectureMaterial.splice(positionAdd, 0, data)
+      cloneLectureMaterial.splice(positionAdd, 0, newItemData)
 
       if (item.id === sectionId)
         return { ...item, lecturesMaterial: cloneLectureMaterial }

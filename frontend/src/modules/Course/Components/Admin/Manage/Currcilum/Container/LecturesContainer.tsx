@@ -26,37 +26,35 @@ const LectureList = React.memo(function LectureList({
 }: any) {
   return section.map((item, index: number) => {
     return (
-      <>
-        <Draggable
-          draggableId={`lecture${item.id}`}
-          index={index}
-          key={item.id.toString()}
-        >
-          {(provided, snapshot) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
-              key={item.id}
-              index={index}
-              style={getItemStyle(
-                snapshot.isDragging,
-                provided.draggableProps.style
-              )}
-            >
-              <Lecture
-                id={item.id}
-                sectionId={sectionId}
-                order={index + 1}
-                title={item.title}
-                type={item._class}
-                description={item.description}
-              />
-              {provided.placeholder}
-            </div>
-          )}
-        </Draggable>
-      </>
+      <Draggable
+        draggableId={`lecture${item.id}`}
+        index={index}
+        key={item.id.toString()}
+      >
+        {(provided, snapshot) => (
+          <div
+            ref={provided.innerRef}
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            key={item.id}
+            index={index}
+            style={getItemStyle(
+              snapshot.isDragging,
+              provided.draggableProps.style
+            )}
+          >
+            <Lecture
+              id={item.id}
+              sectionId={sectionId}
+              order={index + 1}
+              title={item.title}
+              type={item._class}
+              description={item.description}
+            />
+            {provided.placeholder}
+          </div>
+        )}
+      </Draggable>
     )
   })
 })

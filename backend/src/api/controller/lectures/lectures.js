@@ -5,6 +5,7 @@
 /* eslint-disable max-len */
 /* eslint-disable import/prefer-default-export */
 import pkg from '@prisma/client';
+import { TYPE_LECTURES } from '../../constant/ENUM.js';
 import { isTeacherEnroll, isTeacherEnrollWithLectureId } from '../../helpers/course/isStudentEnroll.js';
 
 const { PrismaClient } = pkg;
@@ -22,7 +23,6 @@ const getLectureOfCourse = async (req, res) => {
         id: Number(id),
       },
       select: {
-
         lectures: {
           select: {
             id: true,
@@ -33,8 +33,10 @@ const getLectureOfCourse = async (req, res) => {
               select: {
                 id: true,
                 title: true,
+                description: true,
                 createdAt: true,
                 sort: true,
+                lectureId: true,
               },
             },
             lecturesMaterial: {
@@ -64,24 +66,21 @@ const getLectureOfCourse = async (req, res) => {
     };
 
     // get Quiz Array and lectureMaterial array
-    const quizzes = [];
-    const lectureMaterials = [];
-    //   = lectures.lectures.reduce((item) => item.quiz.map((quiz) => ({ ...quiz, _class: TYPE_LECTURE.QUIZ })));
-    //  = lectures.lectures.reduce((item) => item.lecturesMaterial.map((lectureMaterial) => ({ ...lectureMaterial, _class: TYPE_LECTURE.LECTURE })));
-
-    lectures.lectures.forEach((item) => {
-      item.quiz.forEach((child) => {
-        quizzes.push({ ...child, _class: TYPE_LECTURE.QUIZ });
-      });
-
-      item.lecturesMaterial.forEach((quiz) => {
-        lectureMaterials.push({ ...quiz, _class: TYPE_LECTURE.LECTURE });
-      });
-    });
-
     // sort Quiz and lectureMaterial
     const newItem = lectures.lectures.map(({ quiz, lecturesMaterial, ...rest }) => {
+      const quizzes = [];
+      const lectureMaterials = [];
+
+      quiz.forEach((child) => {
+        if (child.lectureId === rest.id) quizzes.push({ ...child, _class: TYPE_LECTURE.QUIZ });
+      });
+
+      lecturesMaterial.forEach((lecture) => {
+        if (lecture.lectureId === rest.id) { lectureMaterials.push({ ...lecture, _class: TYPE_LECTURE.LECTURE }); }
+      });
+
       const sortItem = [...lectureMaterials, ...quizzes];
+
       return { ...rest, itemCurriculum: sortItem.sort((a, b) => a.sort - b.sort) };
     });
 
@@ -196,35 +195,55 @@ const updateSection = async (req, res) => {
       return res.status(403).json({ message: 'you dont have permission to perform this action' });
     }
 
+    // console.log('items3', items);
+
     // eslint-disable-next-line no-shadow
     items.forEach(async (lecture, index) => {
+      lecture.lecturesMaterial.forEach(async (item, indexLecture) => {
+        // eslint-disable-next-line no-underscore-dangle
+        if (item._class === TYPE_LECTURES.LECTURE) {
+          await prisma.lecturesMaterial.update({
+            where: {
+              id: Number(item.id),
+            },
+            data: {
+              title: item.title,
+              sort: indexLecture,
+              lecture: {
+                connect: {
+                  id: Number(item.lectureId),
+                },
+              },
+            },
+          });
+        // eslint-disable-next-line no-underscore-dangle
+        } else if (item._class === TYPE_LECTURES.QUIZ) {
+          await prisma.quiz.update({
+            where: {
+              id: Number(item.id),
+            },
+            data: {
+              title: item.title,
+              sort: indexLecture,
+              lectures: {
+                connect: {
+                  id: Number(item.lectureId),
+                },
+              },
+            },
+          });
+        }
+      });
+
       await prisma.lectures.updateMany({
         where: {
-          courseId: Number(id),
           id: Number(lecture.id),
+          courseId: Number(id),
         },
         data: {
           title: lecture.title,
           sort: index,
         },
-
-      });
-
-      lecture.lecturesMaterial.forEach(async (item, indexLecture) => {
-        await prisma.lecturesMaterial.update({
-          where: {
-            id: Number(item.id),
-          },
-          data: {
-            title: item.title,
-            sort: indexLecture,
-            lecture: {
-              connect: {
-                id: Number(item.lectureId),
-              },
-            },
-          },
-        });
       });
     });
 

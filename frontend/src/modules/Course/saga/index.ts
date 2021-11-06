@@ -45,12 +45,13 @@ const mappingData = list => {
     }
   })
 
-  const itemCurriculum = [...lecture, ...quiz]
+  let itemCurriculum = [...lecture, ...quiz]
+  itemCurriculum = itemCurriculum.sort((a, b) => a.sort - b.sort)
 
   const newItems = [...section]
 
-  section = section?.map(item => {
-    itemCurriculum.map(childItem => {
+  section = section?.forEach(item => {
+    itemCurriculum.forEach(childItem => {
       if (childItem.objectIndex === item.objectIndex) {
         newItems[item.objectIndex - 1].lecturesMaterial.push(childItem)
       }

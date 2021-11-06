@@ -33,7 +33,7 @@ const SectionList = function SectionList({ section }: any) {
             // style={{ position: "relative" }}
           >
             <Section
-              id={`Section${item.id.toString()}`}
+              id={`${TYPE_LECTURES.SECTION}${item.id.toString()}`}
               draggableHandle={...provided.dragHandleProps}
               title={item.title}
               order={index + 1}
