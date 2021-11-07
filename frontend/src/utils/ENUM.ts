@@ -1,3 +1,4 @@
+import { CREATE_QUIZ } from "./../modules/Course/action/manageCourseAction"
 import {
   CREATE_LECTURE,
   UPDATE_LECTURE
@@ -53,7 +54,7 @@ export const TYPE_LECTURE = [
       { name: "title", placeHolder: "Enter a title" },
       { name: "description", placeHolder: "Quiz description" }
     ],
-    dispatchAction: CREATE_LECTURE,
+    dispatchAction: CREATE_QUIZ,
     updateAction: UPDATE_LECTURE,
     active: true
   },

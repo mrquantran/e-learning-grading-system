@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   CREATE_LECTURE,
+  CREATE_QUIZ,
   DELETE_COURSE,
   DELETE_LECTURE,
   UPDATE_COURSE_LECTURE,
@@ -270,6 +271,56 @@ function* createLecture({ payload }: any) {
   }
 }
 
+function* createQuiz({ payload }: any) {
+  const selectionCourse = yield select(getSectionOfCourse)
+  const {
+    sectionId,
+    positionAdd,
+    //data create
+    data: { title, description }
+  } = payload
+  try {
+    yield put({
+      type: actionManageCourse.CREATE_QUIZ.REQUEST
+    })
+
+    const bodyData = { title, description }
+
+    const { data } = yield call(
+      API.lectureMaterialAPI.createQuiz,
+      sectionId,
+      bodyData
+    )
+
+    const newItemData = { ...data, _class: TYPE_LECTURES.QUIZ }
+
+    let newSelection = [...selectionCourse]
+    newSelection = newSelection.map(item => {
+      const cloneLectureMaterial = [...item.lecturesMaterial]
+      cloneLectureMaterial.splice(positionAdd, 0, newItemData)
+
+      if (item.id === sectionId)
+        return { ...item, lecturesMaterial: cloneLectureMaterial }
+      return item
+    })
+
+    yield put({
+      type: actionManageCourse.CREATE_QUIZ.SUCCESS,
+      payload: newSelection
+    })
+
+    const message = "Your quiz has been created successfully"
+    successNotification(message)
+    // yield fetchAndUpdateLectureCourse(courseId)
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionManageCourse.CREATE_QUIZ.ERROR,
+      payload: error.message
+    })
+  }
+}
+
 function* deleteLecture({ payload }: any) {
   const selectionCourse = yield select(getSectionOfCourse)
   const {
@@ -396,11 +447,16 @@ function* watchUpdateLectureMaterial() {
   yield takeLatest(UPDATE_LECTURE, updateLecture)
 }
 
+function* watchCreateQuiz() {
+  yield takeLatest(CREATE_QUIZ, createQuiz)
+}
+
 export default function* createCourseSaga() {
   yield all([
     watchCreateDraftCourse(),
     watchCreateCourseSectionLecture(),
     watchDeleteCourseSectionLecture(),
+    watchCreateQuiz(),
     watchUpdateLecture(),
     watchUpdateSection(),
     watchCreateLectureMaterial(),

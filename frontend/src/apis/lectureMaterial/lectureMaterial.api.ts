@@ -8,6 +8,10 @@ const createLecture = (sectionId, data): Promise<AxiosResponse<any>> => {
   return axios.post(`/lectures/${sectionId}/lectures-material`, data)
 }
 
+const createQuiz = (sectionId, data): Promise<AxiosResponse<any>> => {
+  return axios.post(`/lectures/${sectionId}/quiz`, data)
+}
+
 const deleteLecture = (lectureId): Promise<AxiosResponse<any>> => {
   return axios.delete(`/lectures-material/${lectureId}`)
 }
@@ -19,6 +23,7 @@ const updateLecture = (lectureId, data): Promise<AxiosResponse<any>> => {
 const lectureMaterialAPI = {
   createLecture,
   deleteLecture,
-  updateLecture
+  updateLecture,
+  createQuiz
 }
 export default lectureMaterialAPI

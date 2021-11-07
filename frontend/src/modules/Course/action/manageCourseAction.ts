@@ -9,18 +9,14 @@ export const FETCH_COURSE_LECTURE = `${store}/FETCH_COURSE_LECTURE`
 export const DELETE_COURSE_LECTURE = `${store}/DELETE_COURSE_LECTURE`
 export const UPDATE_COURSE_LECTURE = `${store}/UPDATE_COURSE_LECTURE`
 export const UPDATE_LECTURE_SECTION = `${store}/UPDATE_LECTURE_SECTION`
-
 export const GET_USER_ENROLL = `${store}/GET_USER_ENROLL`
-
 export const CREATE_LECTURE = `${store}/CREATE_LECTURE`
 export const DELETE_LECTURE = `${store}/DELETE_LECTURE`
 export const UPDATE_LECTURE = `${store}/UPDATE_LECTURE`
-
 export const DELETE_COURSE = `${store}/DELETE_COURSE`
-
 export const PUBLISH_COURSE = `${store}/PUBLISH_COURSE`
-
 export const ENROLL_COURSE_AS_INSTRUCTOR = `${store}/ENROLL_COURSE_AS_INSTRUCTOR`
+export const CREATE_QUIZ = `${store}/CREATE_QUIZ`
 
 export default class ManageCourseAction {
   static changeSelectedComponent = key => ({
@@ -47,6 +43,17 @@ export default class ManageCourseAction {
     type: ENROLL_COURSE_AS_INSTRUCTOR,
     payload: { courseId, data }
   })
+
+  static createQuiz = (lectureId, data, positionAdd) => ({
+    type: CREATE_QUIZ,
+    payload: { lectureId, data, positionAdd }
+  })
+
+  static CREATE_QUIZ = {
+    REQUEST: `${store}/CREATE_QUIZ_REQUEST`,
+    SUCCESS: `${store}/CREATE_QUIZ_SUCCESS`,
+    ERROR: `${store}/CREATE_QUIZ_ERROR`
+  }
 
   static ENROLL_COURSE_AS_INSTRUCTOR = {
     REQUEST: `${store}/ENROLL_COURSE_AS_INSTRUCTOR_REQUEST`,
