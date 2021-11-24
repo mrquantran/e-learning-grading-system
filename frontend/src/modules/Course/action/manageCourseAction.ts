@@ -17,6 +17,7 @@ export const DELETE_COURSE = `${store}/DELETE_COURSE`
 export const PUBLISH_COURSE = `${store}/PUBLISH_COURSE`
 export const ENROLL_COURSE_AS_INSTRUCTOR = `${store}/ENROLL_COURSE_AS_INSTRUCTOR`
 export const CREATE_QUIZ = `${store}/CREATE_QUIZ`
+export const SELECT_CONTENT = `${store}/SELECT_CONTENT`
 
 export default class ManageCourseAction {
   static changeSelectedComponent = key => ({
@@ -27,6 +28,11 @@ export default class ManageCourseAction {
   static deleteCourse = id => ({
     type: DELETE_COURSE,
     payload: id
+  })
+
+  static selectContent = boolean => ({
+    type: SELECT_CONTENT,
+    payload: !boolean
   })
 
   static publishCourse = courseId => ({

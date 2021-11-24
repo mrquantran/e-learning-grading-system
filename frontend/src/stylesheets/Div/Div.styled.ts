@@ -27,6 +27,12 @@ export const FlexItemStyled = styled.div`
       justify-content: space-between;
     `}
 
+      ${props =>
+    props.center &&
+    css`
+      justify-content: center;
+    `}
+
     
 
   ${props =>

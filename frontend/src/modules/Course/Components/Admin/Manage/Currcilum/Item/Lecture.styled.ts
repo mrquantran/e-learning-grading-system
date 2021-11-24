@@ -24,6 +24,10 @@ export const LectureStyled = styled.div`
     padding-right: 40px !important;
     padding-left: 5px !important;
   }
+
+  .ant-collapse-content-box {
+    position: relative;
+  }
 `
 
 export const HeaderPanelStyled = styled.div`

@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux"
 import { DELETE_COURSE_LECTURE } from "@/modules/Course/action/manageCourseAction"
 import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
 import AddLectureArrow from "../AddLectureArrow/AddLectureArrow"
-import SelectLecture from "../SelectLecture/SelectLecture"
+import SelectLecture from "../SelectTypeLecture/SelectLecture"
 
 const { Panel } = Collapse
 
