@@ -1,3 +1,4 @@
+import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import { FlexItemStyled } from "@/stylesheets/Div/Div.styled"
 import { FormGroup, InputAntd } from "@/stylesheets/Input/Inputantd.styled"
 import { LabelAntdStyled } from "@/stylesheets/Input/LabelAntd.styled"
@@ -26,7 +27,11 @@ export default function InputQuestion() {
     return answer.map((item, index) => (
       <FormGroup>
         <FlexItemStyled>
-          <Radio value={index} onChange={onChange} />
+          <Radio
+            value={index}
+            checked={correctAnswer === index}
+            onChange={onChange}
+          />
           <InputAntd description name={`questions${index}`} />
         </FlexItemStyled>
       </FormGroup>
@@ -54,6 +59,9 @@ export default function InputQuestion() {
                 <LabelAntdStyled>Answer</LabelAntdStyled>
                 {renderAnswerInput()}
               </FormGroup>
+              <div style={{ textAlign: "right" }}>
+                <ButtonStyled purple>Save</ButtonStyled>
+              </div>
             </Form>
           )}
         </Formik>
