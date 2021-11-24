@@ -9,3 +9,10 @@ export function isValidDate(value) {
 }
 
 export const FORMAT_DATE = "yyyy-MM-dd'T'HH:mm:ss.SSSxxx";
+
+export const TYPE_LECTURES = {
+  // CHAPTER: "SECTION",
+  SECTION: 'SECTION',
+  LECTURE: 'LECTURE',
+  QUIZ: 'QUIZ',
+};

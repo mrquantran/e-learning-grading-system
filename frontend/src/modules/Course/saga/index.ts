@@ -24,7 +24,7 @@ export const getDetailManage = (state: RootState) => state.create.detail.data
 const mappingData = list => {
   let section = list
     .filter(item => {
-      if (item._class === TYPE_LECTURES.CHAPTER) {
+      if (item._class === TYPE_LECTURES.SECTION) {
         return true
       }
     })
@@ -34,17 +34,26 @@ const mappingData = list => {
     })
 
   const lecture = list.filter(item => {
-    if (item._class === TYPE_LECTURES.SECTION) {
+    if (item._class === TYPE_LECTURES.LECTURE) {
       return true
     }
   })
 
+  const quiz = list.filter(item => {
+    if (item._class === TYPE_LECTURES.QUIZ) {
+      return true
+    }
+  })
+
+  let itemCurriculum = [...lecture, ...quiz]
+  itemCurriculum = itemCurriculum.sort((a, b) => a.sort - b.sort)
+
   const newItems = [...section]
 
-  section = section?.map(item => {
-    lecture.map(lecture => {
-      if (lecture.objectIndex === item.objectIndex) {
-        newItems[item.objectIndex - 1].lecturesMaterial.push(lecture)
+  section = section?.forEach(item => {
+    itemCurriculum.forEach(childItem => {
+      if (childItem.objectIndex === item.objectIndex) {
+        newItems[item.objectIndex - 1].lecturesMaterial.push(childItem)
       }
     })
   })

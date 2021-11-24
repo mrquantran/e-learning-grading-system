@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   CREATE_LECTURE,
+  CREATE_QUIZ,
   DELETE_COURSE,
   DELETE_LECTURE,
   UPDATE_COURSE_LECTURE,
@@ -30,14 +31,14 @@ import actionManageCourse from "../action/manageCourseAction"
 import { API } from "@/apis"
 import { history } from "@/App/App"
 import pathRoute from "@/routes/routePath"
-import { TypeSection, TYPE_CREATE_COURSE } from "@/utils/ENUM"
+import { TypeSection, TYPE_CREATE_COURSE, TYPE_LECTURES } from "@/utils/ENUM"
 import { fetchCourseLectures } from "."
 import { RootState } from "@/redux/reducer/rootReducer"
 import { DELETE_COURSE_LECTURE } from "../action/manageCourseAction"
 import settingSaga from "./manageSetting"
 
 const getSectionOfCourse = (state: RootState) => state.create.curriculum.data
-const getSectionId = id => Number(id.replace(TypeSection.SECTION, ""))
+const getSectionId = id => Number(id.replace(TYPE_LECTURES.SECTION, ""))
 
 function* createDraftCourse({ payload }: any) {
   try {
@@ -241,10 +242,12 @@ function* createLecture({ payload }: any) {
       bodyData
     )
 
+    const newItemData = { ...data, _class: TYPE_LECTURES.LECTURE }
+
     let newSelection = [...selectionCourse]
     newSelection = newSelection.map(item => {
       const cloneLectureMaterial = [...item.lecturesMaterial]
-      cloneLectureMaterial.splice(positionAdd, 0, data)
+      cloneLectureMaterial.splice(positionAdd, 0, newItemData)
 
       if (item.id === sectionId)
         return { ...item, lecturesMaterial: cloneLectureMaterial }
@@ -263,6 +266,56 @@ function* createLecture({ payload }: any) {
     errorNotification(getError(error))
     yield put({
       type: actionCreateCourse.CREATE_DRAFT_COURSE.ERROR,
+      payload: error.message
+    })
+  }
+}
+
+function* createQuiz({ payload }: any) {
+  const selectionCourse = yield select(getSectionOfCourse)
+  const {
+    sectionId,
+    positionAdd,
+    //data create
+    data: { title, description }
+  } = payload
+  try {
+    yield put({
+      type: actionManageCourse.CREATE_QUIZ.REQUEST
+    })
+
+    const bodyData = { title, description }
+
+    const { data } = yield call(
+      API.lectureMaterialAPI.createQuiz,
+      sectionId,
+      bodyData
+    )
+
+    const newItemData = { ...data, _class: TYPE_LECTURES.QUIZ }
+
+    let newSelection = [...selectionCourse]
+    newSelection = newSelection.map(item => {
+      const cloneLectureMaterial = [...item.lecturesMaterial]
+      cloneLectureMaterial.splice(positionAdd, 0, newItemData)
+
+      if (item.id === sectionId)
+        return { ...item, lecturesMaterial: cloneLectureMaterial }
+      return item
+    })
+
+    yield put({
+      type: actionManageCourse.CREATE_QUIZ.SUCCESS,
+      payload: newSelection
+    })
+
+    const message = "Your quiz has been created successfully"
+    successNotification(message)
+    // yield fetchAndUpdateLectureCourse(courseId)
+  } catch (error: any) {
+    errorNotification(getError(error))
+    yield put({
+      type: actionManageCourse.CREATE_QUIZ.ERROR,
       payload: error.message
     })
   }
@@ -394,11 +447,16 @@ function* watchUpdateLectureMaterial() {
   yield takeLatest(UPDATE_LECTURE, updateLecture)
 }
 
+function* watchCreateQuiz() {
+  yield takeLatest(CREATE_QUIZ, createQuiz)
+}
+
 export default function* createCourseSaga() {
   yield all([
     watchCreateDraftCourse(),
     watchCreateCourseSectionLecture(),
     watchDeleteCourseSectionLecture(),
+    watchCreateQuiz(),
     watchUpdateLecture(),
     watchUpdateSection(),
     watchCreateLectureMaterial(),

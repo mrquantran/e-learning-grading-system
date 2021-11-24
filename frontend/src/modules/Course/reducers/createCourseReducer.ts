@@ -7,7 +7,8 @@ import TypeCourse, {
 } from "../Components/Admin/Step/TypeCourse/TypeCourse"
 import actionsCreateCourse from "../action/createCourseAction"
 import actionsManageCourse, {
-  CHANGE_SELECTED_COMPONENT
+  CHANGE_SELECTED_COMPONENT,
+  SELECT_CONTENT
 } from "../action/manageCourseAction"
 import FilmEdit from "../Components/Admin/Manage/Film&Edit/FilmEdit"
 import Curriculum from "../Components/Admin/Manage/Currcilum/Curriculum"
@@ -24,6 +25,7 @@ const initialState = {
   error: null,
   step: null,
   selectedComponent: null,
+  isSelectedTab: false,
   detail: {
     data: {},
     isFetching: false
@@ -126,6 +128,11 @@ const initialState = {
 
 const createCourseReducer = (state = initialState, { type, payload }) => {
   switch (type) {
+    case SELECT_CONTENT:
+      return {
+        ...state,
+        isSelectedTab: payload
+      }
     case CHANGE_SELECTED_COMPONENT:
       return {
         ...state,
@@ -188,6 +195,7 @@ const createCourseReducer = (state = initialState, { type, payload }) => {
     case actionsManageCourse.UPDATE_LECTURE_SECTION.SUCCESS:
     case actionsManageCourse.DELETE_LECTURE.SUCCESS:
     case actionsManageCourse.UPDATE_LECTURE.SUCCESS:
+    case actionsManageCourse.CREATE_QUIZ.SUCCESS:
     case actionsManageCourse.CREATE_LECTURE.SUCCESS: {
       return {
         ...state,

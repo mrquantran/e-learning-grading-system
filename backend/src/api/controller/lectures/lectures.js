@@ -1,8 +1,11 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-fallthrough */
 /* eslint-disable import/extensions */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable max-len */
 /* eslint-disable import/prefer-default-export */
 import pkg from '@prisma/client';
+import { TYPE_LECTURES } from '../../constant/ENUM.js';
 import { isTeacherEnroll, isTeacherEnrollWithLectureId } from '../../helpers/course/isStudentEnroll.js';
 
 const { PrismaClient } = pkg;
@@ -26,6 +29,16 @@ const getLectureOfCourse = async (req, res) => {
             title: true,
             createdAt: true,
             sort: true,
+            quiz: {
+              select: {
+                id: true,
+                title: true,
+                description: true,
+                createdAt: true,
+                sort: true,
+                lectureId: true,
+              },
+            },
             lecturesMaterial: {
               select: {
                 id: true,
@@ -43,18 +56,41 @@ const getLectureOfCourse = async (req, res) => {
 
     const data = [];
 
+    // sort parent as section in frontend
     lectures.lectures.sort((a, b) => a.sort - b.sort);
-    const newItem = lectures.lectures.map((item) => {
-      const sortLectureMaterial = [...item.lecturesMaterial];
-      return { ...item, lecturesMaterial: sortLectureMaterial.sort((a, b) => a.sort - b.sort) };
+
+    const TYPE_LECTURE = {
+      SECTION: 'SECTION',
+      LECTURE: 'LECTURE',
+      QUIZ: 'QUIZ',
+    };
+
+    // get Quiz Array and lectureMaterial array
+    // sort Quiz and lectureMaterial
+    const newItem = lectures.lectures.map(({ quiz, lecturesMaterial, ...rest }) => {
+      const quizzes = [];
+      const lectureMaterials = [];
+
+      quiz.forEach((child) => {
+        if (child.lectureId === rest.id) quizzes.push({ ...child, _class: TYPE_LECTURE.QUIZ });
+      });
+
+      lecturesMaterial.forEach((lecture) => {
+        if (lecture.lectureId === rest.id) { lectureMaterials.push({ ...lecture, _class: TYPE_LECTURE.LECTURE }); }
+      });
+
+      const sortItem = [...lectureMaterials, ...quizzes];
+
+      return { ...rest, itemCurriculum: sortItem.sort((a, b) => a.sort - b.sort) };
     });
 
     // eslint-disable-next-line array-callback-return
-    newItem.map(({ lecturesMaterial, ...rest }, index) => {
-      data.push({ ...rest, objectIndex: index + 1, _class: 'chapter' });
-      for (const section of lecturesMaterial) {
+    newItem.map(({ itemCurriculum, ...rest }, index) => {
+      data.push({ ...rest, objectIndex: index + 1, _class: TYPE_LECTURE.SECTION });
+      for (const item of itemCurriculum) {
+        // eslint-disable-next-line no-underscore-dangle
         data.push({
-          ...section, _class: 'section', objectIndex: index + 1,
+          ...item, objectIndex: index + 1,
         });
       }
     });
@@ -159,35 +195,55 @@ const updateSection = async (req, res) => {
       return res.status(403).json({ message: 'you dont have permission to perform this action' });
     }
 
+    // console.log('items3', items);
+
     // eslint-disable-next-line no-shadow
     items.forEach(async (lecture, index) => {
+      lecture.lecturesMaterial.forEach(async (item, indexLecture) => {
+        // eslint-disable-next-line no-underscore-dangle
+        if (item._class === TYPE_LECTURES.LECTURE) {
+          await prisma.lecturesMaterial.update({
+            where: {
+              id: Number(item.id),
+            },
+            data: {
+              title: item.title,
+              sort: indexLecture,
+              lecture: {
+                connect: {
+                  id: Number(item.lectureId),
+                },
+              },
+            },
+          });
+        // eslint-disable-next-line no-underscore-dangle
+        } else if (item._class === TYPE_LECTURES.QUIZ) {
+          await prisma.quiz.update({
+            where: {
+              id: Number(item.id),
+            },
+            data: {
+              title: item.title,
+              sort: indexLecture,
+              lectures: {
+                connect: {
+                  id: Number(item.lectureId),
+                },
+              },
+            },
+          });
+        }
+      });
+
       await prisma.lectures.updateMany({
         where: {
-          courseId: Number(id),
           id: Number(lecture.id),
+          courseId: Number(id),
         },
         data: {
           title: lecture.title,
           sort: index,
         },
-
-      });
-
-      lecture.lecturesMaterial.forEach(async (item, indexLecture) => {
-        await prisma.lecturesMaterial.update({
-          where: {
-            id: Number(item.id),
-          },
-          data: {
-            title: item.title,
-            sort: indexLecture,
-            lecture: {
-              connect: {
-                id: Number(item.lectureId),
-              },
-            },
-          },
-        });
       });
     });
 

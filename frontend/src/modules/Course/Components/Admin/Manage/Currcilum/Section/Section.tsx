@@ -14,17 +14,12 @@ import InputSection from "../InputSection/InputSection"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import ModeEditIcon from "@mui/icons-material/ModeEdit"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
-import {
-  TypeSection,
-  TYPE_INPUT,
-  TYPE_LECTURES,
-  TYPE_LECTURES2
-} from "@/utils/ENUM"
+import { TypeSection, TYPE_INPUT, TYPE_LECTURES } from "@/utils/ENUM"
 import { useDispatch } from "react-redux"
 import { DELETE_COURSE_LECTURE } from "@/modules/Course/action/manageCourseAction"
 import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
 import AddLectureArrow from "../AddLectureArrow/AddLectureArrow"
-import SelectLecture from "../SelectLecture/SelectLecture"
+import SelectLecture from "../SelectTypeLecture/SelectLecture"
 
 const { Panel } = Collapse
 
@@ -39,7 +34,7 @@ export default function Section({
   const [isFocus, setFocus] = useState<boolean>(false)
   const [editSection, setEditSection] = useState<any>(null)
   const [isFocusEdit, setFocusEdit] = useState<boolean>(false)
-  const idSection = Number(id.replace(TypeSection.SECTION, ""))
+  const idSection = Number(id.replace(TYPE_LECTURES.SECTION, ""))
 
   const [isFocusLecture, setFocusLecture] = useState<boolean>(false)
   const [inputLecture, setInputLecture] = useState<any>(null)
@@ -151,7 +146,7 @@ export default function Section({
             </SectionTitle>
           </FlexItemStyled>
           <AddLectureArrow
-            type={TYPE_LECTURES2.SECTION}
+            type={TYPE_LECTURES.SECTION}
             isFocus={isFocusLecture}
             handleCloseLecture={handleCloseLecture}
             handleClickAddLecture={handleClickAddLecture}
@@ -164,7 +159,7 @@ export default function Section({
   return (
     <div style={{ position: "relative" }}>
       <EditArrow
-        type={TYPE_LECTURES.CHAPTER}
+        type={TYPE_LECTURES.SECTION}
         isFocus={isFocus}
         handleCloseAddSection={handleCloseAddSection}
         handleClickAddSection={handleClickAddSection}

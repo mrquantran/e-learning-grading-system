@@ -1,3 +1,4 @@
+import { CREATE_QUIZ } from "./../modules/Course/action/manageCourseAction"
 import {
   CREATE_LECTURE,
   UPDATE_LECTURE
@@ -14,19 +15,38 @@ export const TYPE_INPUT = {
   UPDATE: "update"
 }
 
+export const TYPE_QUIZ = {
+  MULTIPLE_CHOICE: {
+    id: "multipleChoice",
+    title: "Multiple Choice"
+  }
+}
+
+export const TYPE_SELECT_CONTENT_LECTURE = {
+  LECTURE: [
+    { id: "video", title: "Video", icon: null },
+    { id: "videoSlide", title: "Video & Slide Mashup", icon: null },
+    { id: "article", title: "Article", icon: null }
+  ],
+  QUIZ: [
+    {
+      id: TYPE_QUIZ.MULTIPLE_CHOICE.id,
+      title: TYPE_QUIZ.MULTIPLE_CHOICE.title,
+      icon: null
+    }
+  ]
+}
+
 export const TYPE_USER = {
   student: "STUDENT",
   teacher: "TEACHER"
 }
 
 export const TYPE_LECTURES = {
-  CHAPTER: "chapter",
-  SECTION: "section"
-}
-
-export const TYPE_LECTURES2 = {
-  SECTION: "section",
-  LECTURE: "lecture"
+  // CHAPTER: "SECTION",
+  SECTION: "SECTION",
+  LECTURE: "LECTURE",
+  QUIZ: "QUIZ"
 }
 
 export const TYPE_CREATE_COURSE = {
@@ -36,7 +56,7 @@ export const TYPE_CREATE_COURSE = {
 
 export const TYPE_LECTURE = [
   {
-    id: "lecture",
+    id: TYPE_LECTURES.LECTURE,
     title: "Lecture",
     titleInput: "New Lecture:",
     submitText: "Add Lecture",
@@ -47,7 +67,7 @@ export const TYPE_LECTURE = [
     active: true
   },
   {
-    id: "quiz",
+    id: TYPE_LECTURES.QUIZ,
     title: "Quiz",
     titleInput: "New Quiz:",
     submitText: "Add Quiz",
@@ -56,7 +76,7 @@ export const TYPE_LECTURE = [
       { name: "title", placeHolder: "Enter a title" },
       { name: "description", placeHolder: "Quiz description" }
     ],
-    dispatchAction: CREATE_LECTURE,
+    dispatchAction: CREATE_QUIZ,
     updateAction: UPDATE_LECTURE,
     active: true
   },
@@ -96,8 +116,8 @@ export const TYPE_LECTURE = [
 ]
 
 export const TYPE_LECTURE_ID = {
-  LECTURE: "lecture",
-  QUIZ: "quiz",
+  LECTURE: TYPE_LECTURES.LECTURE,
+  QUIZ: TYPE_LECTURES.QUIZ,
   CODING: "coding",
   PRACTICE_TEST: "practiceTest",
   ASSIGNMENT: "assignment"

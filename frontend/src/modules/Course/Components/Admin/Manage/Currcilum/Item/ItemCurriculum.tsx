@@ -9,16 +9,17 @@ import {
 import { FlexItemStyled } from "@/stylesheets/Div/Div.styled"
 import { ButtonStyled } from "@/stylesheets/Button/Button.styled"
 import { SpanGroup } from "@/stylesheets/Text/Text.styled"
-import SelectLecture from "../SelectLecture/SelectLecture"
+import SelectLecture from "../SelectTypeLecture/SelectLecture"
 import AddLectureArrow from "../AddLectureArrow/AddLectureArrow"
-import { TYPE_LECTURES2, TYPE_LECTURE_ID } from "@/utils/ENUM"
+import { TYPE_LECTURES, TYPE_LECTURE_ID } from "@/utils/ENUM"
 import { useDispatch } from "react-redux"
 import ModeEditIcon from "@mui/icons-material/ModeEdit"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import { DELETE_LECTURE } from "@/modules/Course/action/manageCourseAction"
 import { showConfirm } from "@/stylesheets/Modal/Modal.styled"
 import InputEditLecture from "../InputEditLecture/InputEditLecture"
-import ContentLecture from "../ContentLecture/ContentLecture"
+import ContentLecture from "../ContentItem/ContentLecture"
+import ContentQuiz from "../ContentItem/ContentQuiz"
 
 const { Panel } = Collapse
 
@@ -26,7 +27,14 @@ function callback(key) {
   // console.log(key)
 }
 
-export default function Lecture({ title, order, sectionId, id, description }) {
+export default function Lecture({
+  title,
+  order,
+  sectionId,
+  id,
+  description,
+  type
+}) {
   const [isFocus, setFocus] = useState<boolean>(false)
   const [inputSection, setInputSection] = useState<any>(null)
   const dispatch = useDispatch()
@@ -34,7 +42,52 @@ export default function Lecture({ title, order, sectionId, id, description }) {
   const [editLecture, setEditLecture] = useState<any>(null)
   const [isFocusEdit, setFocusEdit] = useState<boolean>(false)
 
-  const TYPE_DEFAULT = TYPE_LECTURE_ID.LECTURE
+  const renderType = () => {
+    switch (type) {
+      case TYPE_LECTURES.LECTURE:
+        return "Lecture"
+      case TYPE_LECTURES.QUIZ:
+        return "Quiz"
+    }
+  }
+
+  const renderHeaderButton = () => {
+    switch (type) {
+      case TYPE_LECTURES.LECTURE:
+        return (
+          <FlexItemStyled>
+            <ButtonStyled udemy>+ Content</ButtonStyled>
+          </FlexItemStyled>
+        )
+
+      case TYPE_LECTURES.QUIZ:
+        return null
+      default:
+        return null
+    }
+  }
+
+  const renderContent = () => {
+    switch (type) {
+      case TYPE_LECTURES.LECTURE:
+        return (
+          <ContentLecture
+            lectureId={id}
+            sectionId={sectionId}
+            description={description}
+          />
+        )
+
+      case TYPE_LECTURES.QUIZ:
+        return (
+          <ContentQuiz
+            lectureId={id}
+            sectionId={sectionId}
+            description={description}
+          />
+        )
+    }
+  }
 
   const handleCloseEditSection = () => {
     setEditLecture(null)
@@ -62,7 +115,7 @@ export default function Lecture({ title, order, sectionId, id, description }) {
     setEditLecture(
       <InputEditLecture
         editContent={false}
-        type={TYPE_DEFAULT}
+        type={type}
         handleClose={handleCloseEditSection}
         lectureId={id}
         sectionId={sectionId}
@@ -96,7 +149,9 @@ export default function Lecture({ title, order, sectionId, id, description }) {
           <FlexItemStyled baseline={isFocusEdit} w100={isFocusEdit}>
             <SpanGroup>
               <CheckCircleFilled style={{ paddingRight: "5px" }} />
-              <span style={{ whiteSpace: "nowrap" }}>Lecture {order}</span>
+              <span style={{ whiteSpace: "nowrap" }}>
+                {renderType()} {order}
+              </span>
             </SpanGroup>
             {!isFocusEdit ? (
               <>
@@ -133,11 +188,7 @@ export default function Lecture({ title, order, sectionId, id, description }) {
               <>{editLecture}</>
             )}
           </FlexItemStyled>
-          {!isFocusEdit ? (
-            <FlexItemStyled>
-              <ButtonStyled udemy>+ Content</ButtonStyled>
-            </FlexItemStyled>
-          ) : null}
+          {!isFocusEdit ? renderHeaderButton() : null}
         </Row>
       </HeaderPanelStyled>
     )
@@ -160,16 +211,12 @@ export default function Lecture({ title, order, sectionId, id, description }) {
             header={<HeaderPanel title={title} order={order} />}
             key="1"
           >
-            <ContentLecture
-              lectureId={id}
-              sectionId={sectionId}
-              description={description}
-            />
+            {renderContent()}
           </Panel>
         </Collapse>
       </LectureStyled>
       <AddLectureArrow
-        type={TYPE_LECTURES2.LECTURE}
+        type={TYPE_LECTURES.LECTURE}
         isFocus={isFocus}
         handleCloseLecture={handleCloseLecture}
         handleClickAddLecture={handleClickAddLecture}
